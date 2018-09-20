@@ -1,0 +1,80 @@
+// Media query mixins
+@mixin media-tablet
+  @media (min-width: 768px)
+    @content
+
+@mixin media-large
+  @media (min-width: 992px)
+    @content
+
+// Colors
+$text-primary: #071013
+$light: #FFFFFF
+$sunny-blue: #72E7EC
+$pro-red: #E50909
+
+.c-pro-red
+  color: $pro-red
+
+// Spacing
+$ratio: 0.75
+$s: 50px
+$s-s-1: $s * $ratio
+$s-s-2: $s * $ratio * $ratio
+$s-s-3: $s * $ratio * $ratio * $ratio
+$s-s-4: $s * $ratio * $ratio * $ratio * $ratio
+$s-s-5: $s * $ratio * $ratio * $ratio * $ratio * $ratio
+$s-s-6: $s * $ratio * $ratio * $ratio * $ratio * $ratio * $ratio
+$s-l-1: $s / $ratio
+$s-l-2: $s / $ratio / $ratio
+$s-l-3: $s / $ratio / $ratio / $ratio
+$s-l-4: $s / $ratio / $ratio / $ratio / $ratio
+$s-l-5: $s / $ratio / $ratio / $ratio / $ratio / $ratio
+$s-l-6: $s / $ratio / $ratio / $ratio / $ratio / $ratio / $ratio
+
+body *
+  font-family: 'Open Sans', sans-serif
+  color: $text-primary
+  font-weight: 400
+  font-size: 16px
+  overflow: hidden
+
+// Font Scale
+// Font sizes are derived by dividing/multiplying
+// 16px by 0.75
+.fs-medium
+  font-size: 16px
+
+.fs-small
+  font-size: 12px
+
+.fs-moderate
+  font-size: 21px
+
+.fs-large
+  font-size: 28px
+
+.fs-xl
+  font-size: 38px
+
+// Font Weights
+.fw-light
+  font-weight: 300
+
+.fw-reg
+  font-weight: 400
+
+.fw-semi, b
+  font-weight: 600
+
+html, body
+  height: 100%
+
+body
+  background-color: $light
+
+.row
+  margin: 0
+
+h1, h2, h3, h4, h5, h6
+  margin: 0

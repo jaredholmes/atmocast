@@ -27,7 +27,6 @@ export default {
 
   nav
     padding: 0
-    // max-height: $s
     background-color: $sunny-blue
     // Prevents thin white line between nav and main section
     padding-bottom: $s + 1px
@@ -42,7 +41,6 @@ export default {
   .navbar-collapse
     text-align: right
     background-color: $light
-    // max-width: 67%
     float: right
     padding-right: $s-s-3
 

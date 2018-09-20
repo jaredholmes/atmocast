@@ -8,7 +8,7 @@ import '../stylesheets/styles.sass';
 import IndexPage from '../components/IndexPage.vue';
 
 const routes = [
-  { path: '/weather', component: IndexPage }
+  { path: '/weather/', component: IndexPage }
 ];
 
 const router = new VueRouter({

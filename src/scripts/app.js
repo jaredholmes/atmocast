@@ -8,7 +8,7 @@ import '../stylesheets/styles.sass';
 import IndexPage from '../components/IndexPage.vue';
 
 const routes = [
-  { path: '/weather/', component: IndexPage }
+  { path: '', component: IndexPage }
 ];
 
 const router = new VueRouter({
@@ -19,6 +19,11 @@ const router = new VueRouter({
 Vue.use(VueRouter);
 
 Vue.mixin ({
+  data() {
+    return {
+      $metricUnits: true,
+    }
+  },
   methods: {
     $momentUnixHour(unix, index) {
       if (index === 0) {
@@ -27,8 +32,20 @@ Vue.mixin ({
         return moment(moment.unix(unix)._d).format('HH:mm');
       }
     },
+    $momentAddDays(days) {
+      if (days <= 0) {
+        return 'Today';
+      } else if (days === 1) {
+        return 'Tomorrow';
+      } else {
+        return moment().add(days, 'days').format('dddd');
+      }
+    },
     $fToC(f) {
       return (f - 32) * 5/9;
+    },
+    $mToKm(m) {
+      return m * 1.609344;
     },
   }
 })

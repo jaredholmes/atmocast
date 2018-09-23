@@ -8,8 +8,14 @@
       <div id="nav-collapse" class="collapse navbar-collapse ml-auto">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a href="#" class="nav-link fw-semi">Change Location</a></li>
-          <li class="nav-item"><a href="#" class="nav-link fw-semi">Units</a></li>
-          <li class="nav-item"><a href="#" class="nav-link fw-semi c-pro-red">Go Pro</a></li>
+          <li class="nav-item"><a href="#" class="nav-link fw-semi"
+            @click="toggle">
+            Units:
+            <span id="metric-toggle">Metric</span>
+            <img class="toggle-units" id="toggle-units-icon" src="/icons/switch-off.png" alt="Metric units">
+            <span id="imperial-toggle">Imperial</span>
+          </a></li>
+          <!-- <li class="nav-item"><a href="#" class="nav-link c-pro-red  fw-semi">Go Pro</a></li> -->
         </ul>
       </div>
     </div>
@@ -19,6 +25,29 @@
 <script>
 export default {
   name: 'NavbarItem',
+  props: ['metricUnits'],
+  data() {
+    return {
+      t: true,
+    }
+  },
+  methods: {
+    toggle() {
+      // TODO: Figure out how to globally manipulate metrcUnits variable/prop
+      // Clean this code
+      if (this.metricUnits) {
+        document.getElementById('toggle-units-icon').src = '/icons/switch-on.png';
+        document.getElementById('imperial-toggle').classList.add('toggle-active');
+        document.getElementById('metric-toggle').classList.remove('toggle-active');
+        this.metricUnits = false;
+      } else {
+        document.getElementById('toggle-units-icon').src = '/icons/switch-off.png';
+        document.getElementById('imperial-toggle').classList.remove('toggle-active');
+        document.getElementById('metric-toggle').classList.add('toggle-active');
+        this.metricUnits = true;
+      }
+    }
+  }
 }
 </script>
 
@@ -38,6 +67,9 @@ export default {
   .navbar-brand
     min-width: 75%
 
+    @include media-large
+      min-width: 0
+
   .navbar-collapse
     text-align: right
     background-color: $light
@@ -47,7 +79,13 @@ export default {
     @include media-large
       background-color: $sunny-blue
 
+  .nav-item
+    padding: $s-s-6
+
   .nav-link:hover
+    // text-decoration: underline
+
+  .toggle-active
     text-decoration: underline
 
   .navbar-toggler

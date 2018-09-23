@@ -9,12 +9,23 @@
 
 // Colors
 $text-primary: #071013
+$text-secondary: #2f3f3f
 $light: #FFFFFF
-$sunny-blue: #72E7EC
+$light-accent: rgba(227, 237, 237, 0.8)
+$light-accent-hover: rgba(227, 237, 237, 0.4)
+$sunny-blue: #c1f2f2
+$night-blue: #9fa5e0
+$cloudy-grey: #bcc6c6
 $pro-red: #E50909
+
+.c-secondary
+  color: $text-secondary
 
 .c-pro-red
   color: $pro-red
+
+.bc-light-accent
+  background-color: $light-accent
 
 // Spacing
 $ratio: 0.75
@@ -33,9 +44,11 @@ $s-l-5: $s / $ratio / $ratio / $ratio / $ratio / $ratio
 $s-l-6: $s / $ratio / $ratio / $ratio / $ratio / $ratio / $ratio
 
 body *
-  font-family: 'Open Sans', sans-serif
+  // font-family: 'Open Sans', sans-serif
+  font-family: 'Lato', sans-serif
+  font-family: 'Poppins', sans-serif
   color: $text-primary
-  font-weight: 400
+  font-weight: 300
   font-size: 16px
   overflow: hidden
 
@@ -65,7 +78,7 @@ body *
   font-weight: 400
 
 .fw-semi, b
-  font-weight: 600
+  font-weight: 500
 
 html, body
   height: 100%

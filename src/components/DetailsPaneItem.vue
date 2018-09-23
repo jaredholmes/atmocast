@@ -1,19 +1,24 @@
 <template lang="html">
-  <div class="card details-card hourly-card">
-    <h5 class="card-title fw-semi">Hourly</h5>
+  <div class="card details-card">
+    <h5 class="card-title fw-semi">{{ cardTitle }}</h5>
     <div class="card-body details-card-body">
-      <div class="inner-card-container">
-        <details-card-item v-for="i, x in hourlyData10"
+      <div class="inner-card-container"
+      :class="{'hourly-inner': modeHourly}">
+        <details-card-item v-for="i, x in 10"
         :key="x"
         :datumIndex="x"
-        :hourlyDatum="hourlyData10[x]"
+        :weatherDatum="weatherDetails[x]"
+        :modeHourly="modeHourly"
         ></details-card-item>
       </div>
     </div>
-    <more-details-collapse v-for="i, x in hourlyData10"
+    <more-details-collapse v-for="i, x in 10"
       :key="x"
       :datumIndex="x"
-      :hourlyDatum="hourlyData10[x]"
+      :weatherDatum="weatherDetails[x]"
+      :metricUnits="metricUnits"
+      :modeHourly="modeHourly"
+
     ></more-details-collapse>
   </div>
 </template>
@@ -25,18 +30,20 @@ import MoreDetailsCollapse from './MoreDetailsCollapse.vue';
 export default {
   name: 'DetailsPaneItem',
   components : { DetailsCardItem, MoreDetailsCollapse },
-  props: ['hourlyData'],
+  props: ['weatherDetails', 'modeHourly', 'metricUnits'],
   data() {
     return {
-      hourlyData10: [],
     }
   },
-  mounted() {
-    for (var i = 0; i < 10; i++) {
-      this.hourlyData10.push(this.hourlyData.data[i]);
+  computed: {
+    cardTitle() {
+      if (this.modeHourly) {
+        return 'Hourly';
+      } else {
+        return 'Daily';
+      }
     }
-    console.log(this.hourlyData10);
-  }
+  },
 }
 </script>
 
@@ -75,8 +82,11 @@ export default {
       margin: $s-s-6 0 $s-s-2 0
 
       .inner-card-container
-        width: $s-l-3 * 10
+        width: $s-l-4 * 8
         margin: auto
         display: flex
         align-items: stretch
+
+      .hourly-inner
+        width: $s-l-4 * 10
 </style>

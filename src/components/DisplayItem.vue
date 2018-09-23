@@ -4,8 +4,8 @@
       <h1 class="fw-semi fs-xl display-temp">{{ Math.round(currentTemp) }}&deg;</h1>
       <h3 class="fs-moderate">{{ currentSummary }}</h3>
       <br>
-      <img src="/icons/sun-500.png" alt="sunny">
-      <h2 class="fw-semi fs-large">London</h2>
+      <img :src="'/icons/' + currentIcon + '-small.png'" alt="sunny">
+      <h2 class="fw-reg fs-large">{{ currentCity }}</h2>
     </div>
   </div>
 </template>
@@ -13,7 +13,7 @@
 <script>
 export default {
   name: "DisplayItem",
-  props: ['currentTemp', 'currentSummary'],
+  props: ['currentTemp', 'currentSummary', 'currentCity', 'currentIcon'],
 }
 </script>
 
@@ -28,11 +28,11 @@ export default {
   .display-main-section
     text-align: center
     padding: 0
-    background: rgb(114,231,236)
-    background: -moz-linear-gradient(180deg, rgba(114,231,236,1) 0%, rgba(255,255,255,1) 100%)
-    background: -webkit-linear-gradient(180deg, rgba(114,231,236,1) 0%, rgba(255,255,255,1) 100%)
-    background: linear-gradient(180deg, rgba(114,231,236,1) 0%, rgba(255,255,255,1) 100%)
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#72e7ec",endColorstr="#ffffff",GradientType=1)
+    background: $sunny-blue
+    background: -moz-linear-gradient(180deg, $sunny-blue 0%, $light 100%)
+    background: -webkit-linear-gradient(180deg, $sunny-blue 0%, $light 100%)
+    background: linear-gradient(180deg, $sunny-blue 0%, $light 100%)
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$sunny-blue,endColorstr=$light,GradientType=1)
 
   .display-temp
     margin-bottom: $s-s-5

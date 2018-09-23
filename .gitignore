@@ -2,3 +2,5 @@
 .DS_Store?
 .xd
 node_modules
+location.json
+data.json

@@ -1,10 +1,10 @@
 <template lang="html">
   <div class="row">
-    <div class="col-12 display-main-section">
+    <div class="col-12 display-main-section" id="display">
       <h1 class="fw-semi fs-xl display-temp">{{ Math.round(currentTemp) }}&deg;</h1>
       <h3 class="fs-moderate">{{ currentSummary }}</h3>
       <br>
-      <img :src="'/icons/' + currentIcon + '-small.png'" alt="sunny">
+      <img :src="'/icons/' + currentIcon + '-large.png'" alt="sunny">
       <h2 class="fw-reg fs-large">{{ currentCity }}</h2>
     </div>
   </div>
@@ -14,6 +14,50 @@
 export default {
   name: "DisplayItem",
   props: ['currentTemp', 'currentSummary', 'currentCity', 'currentIcon'],
+  methods: {
+    setGradientFromIcon(icon) {
+      const display = document.getElementById('display');
+      let grClass;
+      switch (icon) {
+        case 'clear-day':
+          grClass = 'gr-sunny';
+          break;
+        case 'clear-night':
+          grClass = 'gr-night';
+          break;
+        case 'partly-cloudy-day':
+          grClass = 'gr-partly-cloudy-day';
+          break;
+        case 'partly-cloudy-night':
+          grClass = 'gr-partly-cloudy-night';
+          break;
+        case 'cloudy':
+          grClass = 'gr-cloudy';
+          break;
+        case 'fog':
+          grClass = 'gr-fog';
+          break;
+        case 'rain':
+          grClass = 'gr-rain';
+          break;
+        case 'sleet':
+          grClass = 'gr-sleet';
+          break;
+        case 'snow':
+          grClass = 'gr-snow';
+          break;
+        case 'wind':
+          grClass = 'gr-wind';
+          break;
+        default:
+          grClass = 'bc-light';
+      }
+      display.classList.add(grClass);
+    },
+  },
+  mounted() {
+    this.setGradientFromIcon(this.currentIcon);
+  },
 }
 </script>
 
@@ -25,20 +69,19 @@ export default {
     // Prevents thin white line between nav and main section
     bottom: 1px
 
+  .row *
+    z-index: 0
+
   .display-main-section
     text-align: center
     padding: 0
-    background: $sunny-blue
-    background: -moz-linear-gradient(180deg, $sunny-blue 0%, $light 100%)
-    background: -webkit-linear-gradient(180deg, $sunny-blue 0%, $light 100%)
-    background: linear-gradient(180deg, $sunny-blue 0%, $light 100%)
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$sunny-blue,endColorstr=$light,GradientType=1)
+    padding-bottom: $s
 
   .display-temp
     margin-bottom: $s-s-5
 
   img
-    max-width: $s-l-5
+    max-width: $s-l-4
     margin: $s-s-2 auto $s auto
     display: block
 </style>

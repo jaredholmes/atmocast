@@ -16,13 +16,124 @@ $light-accent-hover: rgba(227, 237, 237, 0.4)
 $sunny-blue: #c1f2f2
 $night-blue: #9fa5e0
 $cloudy-grey: #bcc6c6
+$fog-grey: #dee2e2
+$partly-cloudy-day-blue: #ddffff
+$partly-cloudy-night-blue: #babdd8
+$rain-grey: #a0a0a0
+$sleet-grey: #dae5e5
+$snow-blue: #e8f9f9
+$wind-blue: #cedddd
 $pro-red: #E50909
+
+.bc-sunny
+  background-color: $sunny-blue
+
+.gr-sunny
+  background: $sunny-blue
+  background: -moz-linear-gradient(180deg, $sunny-blue 0%, $light 100%)
+  background: -webkit-linear-gradient(180deg, $sunny-blue 0%, $light 100%)
+  background: linear-gradient(180deg, $sunny-blue 0%, $light 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$sunny-blue,endColorstr=$light,GradientType=1)
+
+.bc-night
+  background-color: $night-blue
+
+.gr-night
+  background: $night-blue
+  background: -moz-linear-gradient(180deg, $night-blue 0%, $light 100%)
+  background: -webkit-linear-gradient(180deg, $night-blue 0%, $light 100%)
+  background: linear-gradient(180deg, $night-blue 0%, $light 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$night-blue,endColorstr=$light,GradientType=1)
+
+
+.bc-cloudy
+  background-color: $cloudy-grey
+
+.gr-cloudy
+  background: $cloudy-grey
+  background: -moz-linear-gradient(180deg, $cloudy-grey 0%, $light 100%)
+  background: -webkit-linear-gradient(180deg, $cloudy-grey 0%, $light 100%)
+  background: linear-gradient(180deg, $cloudy-grey 0%, $light 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$cloudy-grey,endColorstr=$light,GradientType=1)
+
+.bc-fog
+  background-color: $fog-grey
+
+.gr-fog
+  background: $fog-grey
+  background: -moz-linear-gradient(180deg, $fog-grey 0%, $light 100%)
+  background: -webkit-linear-gradient(180deg, $fog-grey 0%, $light 100%)
+  background: linear-gradient(180deg, $fog-grey 0%, $light 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$fog-grey,endColorstr=$light,GradientType=1)
+
+.bc-partly-cloudy-day
+  background-color: $partly-cloudy-day-blue
+
+.gr-partly-cloudy-day
+  background: $partly-cloudy-day-blue
+  background: -moz-linear-gradient(180deg, $partly-cloudy-day-blue 0%, $light 100%)
+  background: -webkit-linear-gradient(180deg, $partly-cloudy-day-blue 0%, $light 100%)
+  background: linear-gradient(180deg, $partly-cloudy-day-blue 0%, $light 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$partly-cloudy-day-blue,endColorstr=$light,GradientType=1)
+
+.bc-partly-cloudy-night
+  background-color: $partly-cloudy-night-blue
+
+.gr-partly-cloudy-night
+  background: $partly-cloudy-night-blue
+  background: -moz-linear-gradient(180deg, $partly-cloudy-night-blue 0%, $light 100%)
+  background: -webkit-linear-gradient(180deg, $partly-cloudy-night-blue 0%, $light 100%)
+  background: linear-gradient(180deg, $partly-cloudy-night-blue 0%, $light 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$partly-cloudy-night-blue,endColorstr=$light,GradientType=1)
+
+.bc-rain
+  background-color: $rain-grey
+
+.gr-rain
+  background: $rain-grey
+  background: -moz-linear-gradient(180deg, $rain-grey 0%, $light 100%)
+  background: -webkit-linear-gradient(180deg, $rain-grey 0%, $light 100%)
+  background: linear-gradient(180deg, $rain-grey 0%, $light 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$rain-grey,endColorstr=$light,GradientType=1)
+
+.bc-sleet
+  background-color: $sleet-grey
+
+.gr-sleet
+  background: $sleet-grey
+  background: -moz-linear-gradient(180deg, $sleet-grey 0%, $light 100%)
+  background: -webkit-linear-gradient(180deg, $sleet-grey 0%, $light 100%)
+  background: linear-gradient(180deg, $sleet-grey 0%, $light 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$sleet-grey,endColorstr=$light,GradientType=1)
+
+.bc-snow
+  background-color: $snow-blue
+
+.gr-snow
+  background: $snow-blue
+  background: -moz-linear-gradient(180deg, $snow-blue 0%, $light 100%)
+  background: -webkit-linear-gradient(180deg, $snow-blue 0%, $light 100%)
+  background: linear-gradient(180deg, $snow-blue 0%, $light 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$snow-blue,endColorstr=$light,GradientType=1)
+
+.bc-wind
+  background-color: $wind-blue
+
+.gr-wind
+  background: $wind-blue
+  background: -moz-linear-gradient(180deg, $wind-blue 0%, $light 100%)
+  background: -webkit-linear-gradient(180deg, $wind-blue 0%, $light 100%)
+  background: linear-gradient(180deg, $wind-blue 0%, $light 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$wind-blue,endColorstr=$light,GradientType=1)
 
 .c-secondary
   color: $text-secondary
 
 .c-pro-red
   color: $pro-red
+
+.bc-light
+  background-color: $light
 
 .bc-light-accent
   background-color: $light-accent
@@ -50,7 +161,6 @@ body *
   color: $text-primary
   font-weight: 300
   font-size: 16px
-  overflow: hidden
 
 // Font Scale
 // Font sizes are derived by dividing/multiplying

@@ -1,6 +1,9 @@
 <template lang="html">
   <div>
-    <navbar-item :metricUnits="metricUnits"></navbar-item>
+    <navbar-item
+    :metricUnits="metricUnits"
+    :currentIcon="weatherData.currently.icon"
+    ></navbar-item>
     <display-item :currentTemp="weatherData.currently.temperature"
     :currentSummary="weatherData.currently.summary"
     :currentCity="currentCity"
@@ -14,6 +17,7 @@
     :modeHourly="false"
     :metricUnits="metricUnits"
     ></details-pane-item>
+    <footer-item></footer-item>
   </div>
 </template>
 
@@ -22,16 +26,17 @@ import axios from 'axios';
 import NavbarItem from './NavbarItem.vue';
 import DisplayItem from './DisplayItem.vue';
 import DetailsPaneItem from './DetailsPaneItem.vue';
+import FooterItem from './FooterItem.vue';
 
 export default {
   name: 'IndexPage',
-  components: { NavbarItem, DisplayItem, DetailsPaneItem },
+  components: { NavbarItem, DisplayItem, DetailsPaneItem, FooterItem },
   data() {
     return {
       latitude: '',
       longitude: '',
       weatherData: {},
-      metricUnits: this.$parent._data.$metricUnits,
+      metricUnits: this.$root._data.$metricUnits,
       currentCity: '',
     };
   },
@@ -117,25 +122,43 @@ export default {
         // + this.latitude.toFixed(6)
         // + ','
         // + this.longitude.toFixed(6);
-
+        //
         // axios.get(requestUrl)
-        axios.get('/data.json')
-          .then(response => {
-            this.weatherData = response.data;
-            if (this.metricUnits) {
-              this.convertAllToMetric();
-            }
-            axios.get('/location.json')
-              .then(response => {
-                this.currentCity = response.data.address.city;
-              });
-            console.log(this.weatherData);
-          })
-          .catch(() => console.log('error'));
+        //   .then(response => {
+        //     this.weatherData = response.data;
+        //     if (this.metricUnits) {
+        //       this.convertAllToMetric();
+        //     }
+        //     axios.get('https://us1.locationiq.com/v1/reverse.php?key=834b5e16cebecd&lat='
+        //     + this.latitude
+        //     + '&lon='
+        //     + this.longitude
+        //     + '&format=json')
+        //       .then(response => {
+        //         this.currentCity = response.data.address.city;
+        //       });
+        //     console.log(this.weatherData);
+        //   })
+        //   .catch(() => console.log('error'));
+      } else {
+        alert('No location');
       }
     }
   },
   beforeCreate() {
+    axios.get('/data.json')
+      .then(response => {
+        this.weatherData = response.data;
+        if (this.metricUnits) {
+          this.convertAllToMetric();
+        }
+        axios.get('/location.json')
+          .then(response => {
+            this.currentCity = response.data.address.city;
+          });
+        console.log(this.weatherData);
+      })
+      .catch(() => console.log('error'));
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {

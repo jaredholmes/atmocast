@@ -78,7 +78,6 @@ export default {
     },
     highlightCard(index, isHourly) {
       let typeClass;
-      // let currentCard;
       if (this.modeHourly) {
         typeClass = 'inner-hourly';
       } else {
@@ -88,8 +87,13 @@ export default {
       for (var i = 0; i < highlightedCards.length; i++) {
         highlightedCards[i].classList.remove('bc-light-accent');
       }
-      const currentCard = document.getElementById(this.detailsId);
-      currentCard.classList.add('bc-light-accent');
+      // TODO: Doesnt work properly
+      // const currentCard = document.getElementById(this.detailsId);
+      // if (!currentCard.classList.contains('bc-light-accent')) {
+      //   currentCard.classList.add('bc-light-accent');
+      // } else {
+      //   currentCard.classList.remove('bc-light-accent');
+      // }
     },
     selectMoreDetails(index, isHourly) {
       this.closeCollapse(index, isHourly);

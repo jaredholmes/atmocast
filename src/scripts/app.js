@@ -8,7 +8,7 @@ import '../stylesheets/styles.sass';
 import IndexPage from '../components/IndexPage.vue';
 
 const routes = [
-  { path: '', component: IndexPage }
+  { path: '', component: IndexPage },
 ];
 
 const router = new VueRouter({
@@ -52,5 +52,8 @@ Vue.mixin ({
 
 new Vue({
   el: '#app',
+  data: {
+    metric: true
+  },
   router,
 }).$mount('#app');

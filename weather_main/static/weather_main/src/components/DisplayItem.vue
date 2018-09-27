@@ -1,11 +1,11 @@
 <template lang="html">
   <div class="row">
     <div class="col-12 display-main-section" id="display">
-      <h1 class="fw-semi fs-xl display-temp">{{ Math.round(currentTemp) }}&deg;</h1>
-      <h3 class="fs-moderate">{{ currentSummary }}</h3>
+      <h1 class="fw-bold fs-xl display-temp">{{ Math.round(currentTemp) }}&deg;</h1>
+      <h3 class="fs-moderate fw-reg">{{ currentSummary }}</h3>
       <br>
       <img :src="$store.state.iconLocationPrefix + currentIcon + '-large.png'" :alt="currentIcon">
-      <h2 class="fw-reg fs-large">{{ currentCity }}</h2>
+      <h2 class="fw-semi fs-large">{{ currentCity }}</h2>
     </div>
   </div>
 </template>
@@ -98,7 +98,7 @@ export default {
   .display-main-section
     text-align: center
     padding: 0
-    padding-bottom: $s
+    padding-bottom: $s-s-1
 
   .display-temp
     margin-bottom: $s-s-5

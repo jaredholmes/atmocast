@@ -1,7 +1,7 @@
 <template lang="html">
   <li class="nav-item fw-semi"
     @click="$store.commit('toggleMetric'); toggleUnitIndicator()">
-    Units: <span class="unitIndicator">{{ unitIndicator }}</span>
+    Units: <span class="unitIndicator fw-light">{{ unitIndicator }}</span>
   </li>
 </template>
 

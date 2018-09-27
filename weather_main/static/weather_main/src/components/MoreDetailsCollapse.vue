@@ -6,8 +6,8 @@
   }"
   :id="collapseId">
     <div class="card card-body row more-details-card bc-light-accent">
-      <h3 v-if="modeHourly" class="fs-large fw-semi more-details-header">{{ $momentUnixHour(weatherDatum.time, datumIndex) }}</h3>
-      <h3 v-else class="fs-large fw-semi more-details-header">{{ $momentAddDays(datumIndex) }}</h3>
+      <h3 v-if="modeHourly" class="fs-large fw-bold more-details-header">{{ $momentUnixHour(weatherDatum.time, datumIndex) }}</h3>
+      <h3 v-else class="fs-large fw-bold more-details-header">{{ $momentAddDays(datumIndex) }}</h3>
       <div v-if="modeHourly" class="col-12 col-md-6">
         <b>Feels like:</b> {{ Math.round(weatherDatum.apparentTemperature) }}&deg;
       </div>

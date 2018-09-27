@@ -112,7 +112,7 @@ export default {
     position: relative
 
     @include media-large
-      left: 3em
+      left: 4.5em
       padding: $s-s-6
       max-width: 75%
 
@@ -121,7 +121,7 @@ export default {
 
   .location-search-input::placeholder
     color: $text-primary
-    font-weight: 400
+    font-weight: 500
     text-align: left
     transition: left 0.25s
     -webkit-transition: left 0.25s

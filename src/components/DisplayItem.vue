@@ -13,7 +13,18 @@
 <script>
 export default {
   name: "DisplayItem",
-  props: ['currentTemp', 'currentSummary', 'currentCity', 'currentIcon'],
+  props: ['currentCity'],
+  computed: {
+    currentTemp() {
+      return this.$store.getters.currentWeather.temperature;
+    },
+    currentSummary() {
+      return this.$store.getters.currentWeather.summary;
+    },
+    currentIcon() {
+      return this.$store.getters.currentIcon;
+    }
+  },
   methods: {
     setGradientFromIcon(icon) {
       const display = document.getElementById('display');
@@ -52,7 +63,19 @@ export default {
         default:
           grClass = 'bc-light';
       }
+
+      for (var i = 0; i < display.classList.length; i++) {
+        if (display.classList[i].includes('gr')) {
+          display.classList.remove(display.classList[i]);
+        }
+      }
+
       display.classList.add(grClass);
+    },
+  },
+  watch: {
+    currentIcon() {
+      this.setGradientFromIcon(this.currentIcon);
     },
   },
   mounted() {

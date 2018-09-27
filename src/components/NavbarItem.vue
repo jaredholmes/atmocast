@@ -8,13 +8,7 @@
       <div id="nav-collapse" class="collapse navbar-collapse ml-auto">
         <ul class="navbar-nav ml-auto">
           <navbar-location-search-bar></navbar-location-search-bar>
-          <!-- <li class="nav-item"><a href="#" class="nav-link fw-semi"
-            @click="toggle">
-            Units:
-            <span id="metric-toggle">Metric</span>
-            <img class="toggle-units" id="toggle-units-icon" src="/icons/switch-off.png" alt="Metric units">
-            <span id="imperial-toggle">Imperial</span>
-          </a></li> -->
+          <navbar-units-toggle-item></navbar-units-toggle-item>
           <!-- <li class="nav-item"><a href="#" class="nav-link c-pro-red  fw-semi">Go Pro</a></li> -->
         </ul>
       </div>
@@ -24,17 +18,24 @@
 
 <script>
 import NavbarLocationSearchBar from './NavbarLocationSearchBar.vue';
+import NavbarUnitsToggleItem from './NavbarUnitsToggleItem.vue';
 
 export default {
   name: 'NavbarItem',
-  props: ['currentIcon'],
-  components: { NavbarLocationSearchBar },
+  // props: ['currentIcon'],
+  components: { NavbarLocationSearchBar, NavbarUnitsToggleItem },
+  computed: {
+    currentIcon() {
+      return this.$store.getters.currentIcon;
+    },
+  },
   methods: {
     setBCFromIcon(icon) {
       const navbar = document.getElementById('navbar-main');
       const navCollapse = document.getElementById('nav-collapse');
       const whiteClass = 'bc-light';
       let bcClass;
+
       switch (icon) {
         case 'clear-day':
           bcClass = 'bc-sunny';
@@ -69,34 +70,41 @@ export default {
         default:
           bcClass = 'bc-light';
       }
+
+      for (var i = 0; i < navbar.classList.length; i++) {
+        if (navbar.classList[i].includes('bc')) {
+          navbar.classList.remove(navbar.classList[i]);
+        }
+      }
+
       navbar.classList.add(bcClass);
+
+      for (var i = 0; i < navCollapse.classList.length; i++) {
+        if (navCollapse.classList[i].includes('bc')) {
+          navCollapse.classList.remove(navCollapse.classList[i]);
+        }
+      }
+
       if (window.innerWidth >= 992) {
         navCollapse.classList.add(bcClass);
         navCollapse.classList.remove(whiteClass);
       } else {
-        navCollapse.classList.add(whiteClass);;
+        navCollapse.classList.add(whiteClass);
+        navCollapse.classList.remove(bcClass);
       }
     },
-    toggle() {
-      // TODO: Figure out how to globally manipulate metrcUnits variable/prop
-      // Clean this code
-      if (this.$root._data.metricUnits) {
-        document.getElementById('toggle-units-icon').src = '/icons/switch-on.png';
-        document.getElementById('imperial-toggle').classList.add('toggle-active');
-        document.getElementById('metric-toggle').classList.remove('toggle-active');
-        // this.$root._data.metricUnits = false;
-        // console.log(this.$root._data.metricUnits);
-      } else {
-        document.getElementById('toggle-units-icon').src = '/icons/switch-off.png';
-        document.getElementById('imperial-toggle').classList.remove('toggle-active');
-        document.getElementById('metric-toggle').classList.add('toggle-active');
-        // this.$root._data.metricUnits = true;
-        // console.log(this.$root._data.metricUnits);
-      }
-    }
+  },
+  watch: {
+    currentIcon() {
+      this.setBCFromIcon(this.currentIcon);
+    },
   },
   mounted() {
     this.setBCFromIcon(this.currentIcon);
+    window.addEventListener(
+      'resize',
+      () => this.setBCFromIcon(this.currentIcon)
+    );
   }
 }
 </script>
@@ -115,6 +123,7 @@ export default {
 
   .navbar-brand
     min-width: 75%
+    margin: auto 0
 
     @include media-large
       min-width: 0
@@ -124,6 +133,12 @@ export default {
 
   .nav-item
     padding: $s-s-6
+    margin-right: $s-s-6
+    margin-top: auto
+    margin-bottom: auto
+
+  .nav-item:hover
+    cursor: pointer
 
   .toggle-active
     text-decoration: underline

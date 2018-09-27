@@ -1,8 +1,19 @@
 <template lang="html">
-  <div v-if="searchResults.length > 0" class="row">
+  <div v-if="this.searchResults.length > 0" class="row" id="search-results">
+    <button @click="hideSearchResults" class="btn close-search-results fw-semi"type="button" name="button">
+      <img src="/icons/close.png" alt="">
+    </button>
     <ul class="list-group">
-      <button @click="searchResults = []" class="btn close-search-results fw-semi"type="button" name="button">X</button>
-      <li v-for="result in searchResults" @click="getD(result)" class="list-group-item">
+      <li v-for="result in searchResults"
+      @click="$store.commit({
+          type: 'setCoords',
+          coords: {
+            lat: parseFloat(result.lat),
+            lon: parseFloat(result.lon)
+          }
+        });
+        hideSearchResults();"
+       class="list-group-item">
         {{ result.display_name }}
       </li>
     </ul>
@@ -13,11 +24,21 @@
 export default {
   name: 'NavbarLocationSearchResults',
   props: ['searchResults'],
+  // computed: {
+  //   navbarSearchResults() {
+  //     return this.$store.state.navbarSearchResults;
+  //   },
+  // },
   methods: {
-    getD(result) {
-      console.log(result);
+    hideSearchResults() {
+      document.getElementById('search-results').style.display = 'none';
+      document.getElementById('input-location-search').value = '';
+      this.$hideNavbarSearchButton();
     }
   },
+  created() {
+    console.log(this.searchResults)
+  }
 }
 </script>
 
@@ -27,6 +48,11 @@ export default {
   .row
     height: $s-l-6
     position: absolute
+    left: 0
+
+    @include media-large
+      right: 0
+      left: auto
 
   .row *
     z-index: 1
@@ -38,20 +64,30 @@ export default {
     position: relative
 
     @include media-large
-      max-width: $s-l-6
+      max-width: $s-l-7
 
   .list-group-item
     overflow: visible
 
   .list-group-item:hover
     cursor: pointer
+    background-color: $light-accent
+
+  .list-group-item:active
+    background-color: $light-accent-hover
 
   .close-search-results
     border: none
     background-color: rgba(0, 0, 0, 0)
-    position: sticky
-    top: 1em
-    text-align: right
+    position: absolute
+    top: 3px
+    right: 10px
+    padding: 0 0.5em
+    text-align: left
+    margin-left: auto
     z-index: 2
+
+    img
+      max-width: 1.5em
 
 </style>

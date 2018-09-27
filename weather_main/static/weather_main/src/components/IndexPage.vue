@@ -189,6 +189,8 @@ export default {
               this.commitWeatherToStore();
             }
 
+            document.getElementById('loading-section').style.display = 'none';
+
             axios.get(locationIQUrl, { params: locationIQParams })
               .then(response => {
                 this.currentCity = response.data.address.city
@@ -199,7 +201,6 @@ export default {
                 || response.data.address;
               });
             console.log(this.weatherData);
-            // document.getElementById('spinner').style.display = 'none';
           })
           .catch(() => console.log('error'));
       } else {

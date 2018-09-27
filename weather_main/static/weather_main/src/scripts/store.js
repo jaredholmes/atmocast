@@ -6,6 +6,8 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
+    // iconLocationPrefix: 'icons/',
+    iconLocationPrefix: 'static/weather_main/dist/icons/',
     metric: true,
     weather: {},
     coords: {

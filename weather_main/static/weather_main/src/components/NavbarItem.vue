@@ -3,7 +3,7 @@
     <div class="nav-wrapper row">
       <a href="/" class="navbar-brand col-4 fw-semi fs-large">Simple Weather</a>
       <button class="ml-auto navbar-toggler col-1 offset-5" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
-        <img class="icon icon-menu" src="/icons/menu.png" alt="">
+        <img class="icon icon-menu" :src="$store.state.iconLocationPrefix + 'menu.png'" alt="">
       </button>
       <div id="nav-collapse" class="collapse navbar-collapse ml-auto">
         <ul class="navbar-nav ml-auto">

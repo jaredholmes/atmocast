@@ -1,7 +1,7 @@
 <template lang="html">
   <div v-if="this.searchResults.length > 0" class="row" id="search-results">
     <button @click="hideSearchResults" class="btn close-search-results fw-semi"type="button" name="button">
-      <img src="/icons/close.png" alt="">
+      <img :src="$store.state.iconLocationPrefix + 'close.png'" alt="">
     </button>
     <ul class="list-group">
       <li v-for="result in searchResults"

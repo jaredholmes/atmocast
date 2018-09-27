@@ -2,9 +2,6 @@
   <li class="nav-item fw-semi"
     @click="$store.commit('toggleMetric'); toggleUnitIndicator()">
     Units: <span class="unitIndicator">{{ unitIndicator }}</span>
-    <!-- <span id="metric-toggle">Metric</span>
-    <img class="toggle-units" id="toggle-units-icon" src="/icons/switch-off.png" alt="Metric units">
-    <span id="imperial-toggle">Imperial</span> -->
   </li>
 </template>
 

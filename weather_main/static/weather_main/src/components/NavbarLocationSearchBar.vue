@@ -3,7 +3,7 @@
     <form @submit="preventDefaultSubmit" class="form-inline row" id="location-search-form">
       <input v-model="searchQuery" @focus="showSearchBtn" @blur="hideSearchBtn" class="col-6 col-md-3 col-lg-9 form-control location-search-input" id="input-location-search" type="search" placeholder="Change location" aria-label="Change location">
       <button @click="getSearchResults" class="col-2 col-lg-3 btn btn-location-search" id="btn-navbar-search" type="button" name="button">
-        <img src="icons/search.png" alt="">
+        <img :src="$store.state.iconLocationPrefix + 'search.png'" alt="">
       </button>
     </form>
     <navbar-location-search-results :searchResults="searchResults"></navbar-location-search-results>

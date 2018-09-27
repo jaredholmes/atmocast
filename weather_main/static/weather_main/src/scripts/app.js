@@ -28,7 +28,7 @@ Vue.mixin ({
       searchBtn.style.opacity = '0';
       searchBtn.style.visibility = 'hidden';
       if (window.innerWidth >= 992) {
-        searchInput.style.left = '3em';
+        searchInput.style.left = '4.5em';
       }
     },
     $momentUnixHour(unix, index) {

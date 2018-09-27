@@ -6,7 +6,9 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
+    // For dev server
     // iconLocationPrefix: 'icons/',
+    // For production in Django
     iconLocationPrefix: 'static/weather_main/dist/icons/',
     metric: true,
     weather: {},

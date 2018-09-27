@@ -9,13 +9,14 @@
   <title>Document</title>
 </head>
 <body>
-  <div id="app">
+  <div id="loading-section">
     <div id="spinner">
     </div>
     <div class="loading-caption">
       Getting your weather data
     </div>
   </div>
+  <div id="app">
     <router-view></router-view>
   </div>
   <script src="{% static 'weather_main/dist/bundles/app.bundle.js' %}" charset="utf-8"></script>

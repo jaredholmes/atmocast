@@ -7,7 +7,6 @@
         <details-card-item v-for="i, x in 10"
         :key="x"
         :datumIndex="x"
-        :weatherDatum="weatherDetails[x]"
         :modeHourly="modeHourly"
         ></details-card-item>
       </div>
@@ -15,10 +14,7 @@
     <more-details-collapse v-for="i, x in 10"
       :key="x"
       :datumIndex="x"
-      :weatherDatum="weatherDetails[x]"
-      :metricUnits="metricUnits"
       :modeHourly="modeHourly"
-
     ></more-details-collapse>
   </div>
 </template>
@@ -30,12 +26,18 @@ import MoreDetailsCollapse from './MoreDetailsCollapse.vue';
 export default {
   name: 'DetailsPaneItem',
   components : { DetailsCardItem, MoreDetailsCollapse },
-  props: ['weatherDetails', 'modeHourly', 'metricUnits'],
-  data() {
-    return {
-    }
-  },
+  props: ['modeHourly'],
   computed: {
+    metric() {
+      return this.$store.state.metric;
+    },
+    weatherDetails() {
+      if (this.modeHourly) {
+        return this.$store.getters.hourlyWeather;
+      } else {
+        return this.$store.getters.dailyWeather;
+      }
+    },
     cardTitle() {
       if (this.modeHourly) {
         return 'Hourly';

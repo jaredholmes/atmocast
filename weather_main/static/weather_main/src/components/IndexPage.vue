@@ -44,14 +44,6 @@ export default {
     lon() {
       return this.$store.state.coords.lon;
     }
-    // processedWeatherData() {
-    //   if (this.$store.state.metric) {
-    //     this.convertAllToMetric();
-    //     const output = this.weatherData;
-    //     console.log('changed to ' + this.$store.state.metric)
-    //     return output;
-    //   }
-    // },
   },
   watch: {
     metricUnits() {
@@ -59,15 +51,19 @@ export default {
     }
   },
   methods: {
+    getLocationFailed() {
+      alert('Unable to get location. Please type one in the search bar.');
+      // Default location to New York City
+      this.$store.commit({
+        type: 'setCoords',
+        coords: {
+          lat: 40.7900869,
+          lon: -73.959829,
+        }
+      });
+    },
     hideCollapse() {
       document.getElementById('nav-collapse').classList.remove('show');
-    },
-    getLocation() {
-      if (navigator.geolocation) {
-        console.log('Location: ' + navigator.geolocation.getCurrentPosition());
-      } else {
-        console.log('Unable to retrieve location.');
-      }
     },
     commitWeatherToStore() {
       this.$store.commit({
@@ -167,12 +163,15 @@ export default {
     },
     lat() {
       if (this.lat) {
-        const requestUrl = 'https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/c11e01133c18e01ad3d20c3aeb1a9218/'
+        const darkSkyUrl = 'https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/c11e01133c18e01ad3d20c3aeb1a9218/'
         + this.lat.toFixed(6)
         + ','
         + this.lon.toFixed(6);
+        const darkSkyParams = {
+          'exclude': 'minutely,alerts,flags',
+        };
 
-        axios.get(requestUrl)
+        axios.get(darkSkyUrl, { params: darkSkyParams })
           .then(response => {
             const locationIQUrl = 'https://us1.locationiq.com/v1/reverse.php';
             const locationIQParams = {
@@ -233,21 +232,15 @@ export default {
               lon: position.coords.longitude,
             }
           });
-        }
-      );
+        },
+        () => this.getLocationFailed()
+      )
     } else {
-      console.log('Unable to retrieve location.');
+      this.getLocationFailed();
     }
+    console.log(this.$store.state.coords);
   },
 }
-
-// Actual request instead of location.json request
-// axios.get('https://us1.locationiq.com/v1/reverse.php?key=834b5e16cebecd&lat='
-// + this.weatherData.latitude
-// + '&lon='
-// + this.weatherData.longitude
-// + '&format=json')
-
 </script>
 
 <style lang="css">

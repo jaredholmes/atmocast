@@ -15,7 +15,8 @@ module.exports = {
     publicPath: '/dist/bundles/',
   },
 
-  mode: 'development',
+  // mode: 'development',
+  mode: 'production',
 
   plugins: [
     new VueLoaderPlugin(),
@@ -47,20 +48,20 @@ module.exports = {
           },
         ]
       },
-      // {
-      //   test: /\.(svg|png|jpg|jpeg)$/,
-      //   use: [
-      //     {
-      //       loader: 'url-loader',
-      //       options: {
-      //         limit: 8192,
-      //         fallback: 'file-loader',
-      //         quality: 50,
-      //         name: 'images/[hash]-[name].[ext]',
-      //       },
-      //     },
-      //   ],
-      // },
+      {
+        test: /\.(svg|png|jpg|jpeg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              fallback: 'file-loader',
+              quality: 50,
+              name: 'images/[hash]-[name].[ext]',
+            },
+          },
+        ],
+      },
       {
         test: /\.vue$/,
         use: 'vue-loader',
@@ -77,8 +78,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      vue: 'vue/dist/vue.js', // for dev
-      // vue: 'vue/dist/vue.common', // for production
+      // vue: 'vue/dist/vue.js', // for dev
+      vue: 'vue/dist/vue.common', // for production
     },
   },
 };

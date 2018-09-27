@@ -1,23 +1,17 @@
 <template lang="html">
   <div>
-    <navbar-item
-    :metricUnits="metricUnits"
-    :currentIcon="weatherData.currently.icon"
-    ></navbar-item>
-    <display-item :currentTemp="weatherData.currently.temperature"
-    :currentSummary="weatherData.currently.summary"
-    :currentCity="currentCity"
-    :currentIcon="weatherData.currently.icon"
-    ></display-item>
-    <details-pane-item :weatherDetails="weatherData.hourly.data"
-    :modeHourly="true"
-    :metricUnits="metricUnits"
-    ></details-pane-item>
-    <details-pane-item :weatherDetails="weatherData.daily.data"
-    :modeHourly="false"
-    :metricUnits="metricUnits"
-    ></details-pane-item>
-    <footer-item></footer-item>
+    <navbar-item></navbar-item>
+    <div class="main-section"
+    @click="hideCollapse();
+    $hideNavbarSearchButton();"
+    >
+      <display-item :currentCity="currentCity"></display-item>
+      <details-pane-item :modeHourly="true"></details-pane-item>
+      <details-pane-item :modeHourly="false"></details-pane-item>
+      <!-- Fix this -->
+      <details-pane-item style="display: none;" :w="weatherData.daily.data"></details-pane-item>
+      <footer-item></footer-item>
+    </div>
   </div>
 </template>
 
@@ -40,18 +34,46 @@ export default {
       currentCity: '',
     };
   },
+  computed: {
+    metric() {
+      return this.$store.state.metric;
+    },
+    lat() {
+      return this.$store.state.coords.lat;
+    },
+    lon() {
+      return this.$store.state.coords.lon;
+    }
+    // processedWeatherData() {
+    //   if (this.$store.state.metric) {
+    //     this.convertAllToMetric();
+    //     const output = this.weatherData;
+    //     console.log('changed to ' + this.$store.state.metric)
+    //     return output;
+    //   }
+    // },
+  },
   watch: {
     metricUnits() {
       console.log('changed');
     }
   },
   methods: {
+    hideCollapse() {
+      document.getElementById('nav-collapse').classList.remove('show');
+    },
     getLocation() {
       if (navigator.geolocation) {
         console.log('Location: ' + navigator.geolocation.getCurrentPosition());
       } else {
         console.log('Unable to retrieve location.');
       }
+    },
+    commitWeatherToStore() {
+      this.$store.commit({
+        type: 'setWeather',
+        weatherData: this.weatherData
+      });
     },
 
     // Methods for manipulating weather data
@@ -90,86 +112,133 @@ export default {
       const keyArray = this.getKeysInObject(keyString, object, excludeString);
       this.convertValuesInObject(keyArray, object, conversionFunction);
     },
-    convertFToCInObject(object) {
+    convertAllTempsInObject(object, conversionFunction) {
       const keyString = ['emperature'];
       const excludeString = ['Time'];
-      const conversion = this.$fToC;
-      this.convertValuesByKey(keyString, object, conversion, excludeString);
+      this.convertValuesByKey(keyString, object, conversionFunction, excludeString);
     },
-    convertMtoKmInObject(object) {
+    convertAllDistanceInObject(object, conversionFunction) {
       const keyString = ['wind', 'visibility'];
       const excludeString = ['Bearing'];
-      const conversion = this.$mToKm;
-      this.convertValuesByKey(keyString, object, conversion, excludeString);
+      this.convertValuesByKey(keyString, object, conversionFunction, excludeString);
     },
-    convertAllToMetric() {
-      this.convertFToCInObject(this.weatherData.currently);
-      this.convertMtoKmInObject(this.weatherData.currently);
+    convertAll(tempConversion, distanceConversion) {
+      this.convertAllTempsInObject(
+        this.weatherData.currently,
+        tempConversion
+      );
+      this.convertAllDistanceInObject(
+        this.weatherData.currently,
+        distanceConversion
+      );
       for (var i = 0; i < this.weatherData.daily.data.length; i++) {
-        this.convertFToCInObject(this.weatherData.daily.data[i]);
-        this.convertMtoKmInObject(this.weatherData.daily.data[i]);
+        this.convertAllTempsInObject(
+          this.weatherData.daily.data[i],
+          tempConversion
+        );
+        this.convertAllDistanceInObject(
+          this.weatherData.daily.data[i],
+          distanceConversion
+        );
       }
       for (var i = 0; i < this.weatherData.hourly.data.length; i++) {
-        this.convertFToCInObject(this.weatherData.hourly.data[i]);
-        this.convertMtoKmInObject(this.weatherData.hourly.data[i]);
+        this.convertAllTempsInObject(
+          this.weatherData.hourly.data[i],
+          tempConversion
+        );
+        this.convertAllDistanceInObject(
+          this.weatherData.hourly.data[i],
+          distanceConversion
+        );
       }
+      this.commitWeatherToStore();
     }
   },
   watch: {
-    latitude() {
-      if (this.latitude) {
-        // const requestUrl = 'https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/c11e01133c18e01ad3d20c3aeb1a9218/'
-        // + this.latitude.toFixed(6)
-        // + ','
-        // + this.longitude.toFixed(6);
-        //
-        // axios.get(requestUrl)
-        //   .then(response => {
-        //     this.weatherData = response.data;
-        //     if (this.metricUnits) {
-        //       this.convertAllToMetric();
-        //     }
-        //     axios.get('https://us1.locationiq.com/v1/reverse.php?key=834b5e16cebecd&lat='
-        //     + this.latitude
-        //     + '&lon='
-        //     + this.longitude
-        //     + '&format=json')
-        //       .then(response => {
-        //         this.currentCity = response.data.address.city;
-        //       });
-        //     console.log(this.weatherData);
-        //   })
-        //   .catch(() => console.log('error'));
+    metric() {
+      if (this.metric) {
+        this.convertAll(this.$fToC, this.$mToKm);
+      } else {
+        this.convertAll(this.$cToF, this.$kmToM);
+      }
+    },
+    weatherData() {
+      this.commitWeatherToStore();
+    },
+    lat() {
+      if (this.lat) {
+        const requestUrl = 'https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/c11e01133c18e01ad3d20c3aeb1a9218/'
+        + this.lat.toFixed(6)
+        + ','
+        + this.lon.toFixed(6);
+
+        axios.get(requestUrl)
+          .then(response => {
+            const locationIQUrl = 'https://us1.locationiq.com/v1/reverse.php';
+            const locationIQParams = {
+              'key': '834b5e16cebecd',
+              'lat': this.lat,
+              'lon': this.lon,
+              'format': 'json',
+              'zoom': '10',
+            };
+
+            this.weatherData = response.data;
+            if (this.metric) {
+              this.convertAll(this.$fToC, this.$mToKm);
+            } else {
+              this.commitWeatherToStore();
+            }
+
+            axios.get(locationIQUrl, { params: locationIQParams })
+              .then(response => {
+                this.currentCity = response.data.address.city
+                || response.data.address.county
+                || response.data.address.state_district
+                || response.data.address.state
+                || response.data.address.country
+                || response.data.address;
+              });
+            console.log(this.weatherData);
+          })
+          .catch(() => console.log('error'));
       } else {
         alert('No location');
       }
     }
   },
   beforeCreate() {
-    axios.get('/data.json')
-      .then(response => {
-        this.weatherData = response.data;
-        if (this.metricUnits) {
-          this.convertAllToMetric();
-        }
-        axios.get('/location.json')
-          .then(response => {
-            this.currentCity = response.data.address.city;
-          });
-        console.log(this.weatherData);
-      })
-      .catch(() => console.log('error'));
+    // axios.get('/data.json')
+    //   .then(response => {
+    //     this.weatherData = response.data;
+    //     if (this.metric) {
+    //       this.convertAll(this.$fToC, this.$mToKm);
+    //     } else {
+    //       this.commitWeatherToStore();
+    //     }
+    //     axios.get('/location.json')
+    //       .then(response => {
+    //         this.currentCity = response.data.address.city;
+    //       });
+    //     console.log(this.weatherData);
+    //   })
+    //   .catch(() => console.log('error'));
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          this.latitude = position.coords.latitude;
-          this.longitude = position.coords.longitude;
+          this.$store.commit({
+            type: 'setCoords',
+            coords: {
+              lat: position.coords.latitude,
+              lon: position.coords.longitude,
+            }
+          });
         }
       );
     } else {
       console.log('Unable to retrieve location.');
     }
-  }
+  },
 }
 
 // Actual request instead of location.json request

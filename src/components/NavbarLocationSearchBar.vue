@@ -1,15 +1,13 @@
 <template lang="html">
-  <div class="">
+  <li class="nav-item">
     <form @submit="preventDefaultSubmit" class="form-inline row" id="location-search-form">
       <input v-model="searchQuery" @focus="showSearchBtn" @blur="hideSearchBtn" class="col-6 col-md-3 col-lg-9 form-control location-search-input" id="input-location-search" type="search" placeholder="Change location" aria-label="Change location">
       <button @click="getSearchResults" class="col-2 col-lg-3 btn btn-location-search" id="btn-navbar-search" type="button" name="button">
         <img src="icons/search.png" alt="">
       </button>
     </form>
-    <navbar-location-search-results
-    :searchResults="searchResults"
-    ></navbar-location-search-results>
-  </div>
+    <navbar-location-search-results :searchResults="searchResults"></navbar-location-search-results>
+  </li>
 </template>
 
 <script>
@@ -25,6 +23,16 @@ export default {
       searchResults: [],
     }
   },
+  // computed: {
+  //   navbarSearchResults() {
+  //     const storeResults = this.$store.state.navbarSearchResults
+  //     let output;
+  //     for (var i = 0; i < storeResults.length; i++) {
+  //       output.push(this.$store.state.navbarSearchResults[i])
+  //     }
+  //     return output;
+  //   },
+  // },
   watch: {
     searchLocation() {
       const searchBtn = document.getElementById('btn-navbar-search');
@@ -56,31 +64,29 @@ export default {
     hideSearchBtn() {
       this.searchResults = [];
       if (this.searchQuery === '') {
-        const searchBtn = document.getElementById('btn-navbar-search');
-        const searchInput = document.getElementById('input-location-search');
-        searchBtn.style.opacity = '0';
-        searchBtn.style.visibility = 'hidden';
-        if (window.innerWidth >= 992) {
-          searchInput.style.left = '3em';
-        }
+        this.$hideNavbarSearchButton();
       }
     },
     getSearchResults() {
-      axios.get('./locationSearch.json')
-          .then(response => {
-            this.searchResults = response.data;
-            console.log(this.searchResults);
-          });
-      // if (this.searchQuery) {
-      //   const requestUrl = 'https://us1.locationiq.com/v1/search.php?key='
-      //   + '834b5e16cebecd&q='
-      //   + this.searchQuery
-      //   + '&format=json'
-      //   axios.get(requestUrl)
+      // axios.get('./locationSearch.json')
       //     .then(response => {
       //       this.searchResults = response.data;
-      //     })
-      // }
+      //       console.log(this.searchResults);
+      //     });
+      if (this.searchQuery) {
+        const requestUrl = 'https://us1.locationiq.com/v1/search.php?key='
+        + '834b5e16cebecd&q='
+        + this.searchQuery
+        + '&format=json'
+        axios.get(requestUrl)
+          .then(response => {
+            this.searchResults = response.data;
+            // this.$store.commit({
+            //   type: 'setNavbarSearchResults',
+            //   results: response.data,
+            // })
+          })
+      }
     }
   },
   beforeMount() {
@@ -102,11 +108,12 @@ export default {
     -webkit-transition: background-color 300ms linear, left 250ms
     -ms-transition: background-color 300ms linear, left 250ms
     border: none
-    padding: $s-s-6
+    padding: 0
     position: relative
 
     @include media-large
       left: 3em
+      padding: $s-s-6
       max-width: 75%
 
   .location-search-input:hover

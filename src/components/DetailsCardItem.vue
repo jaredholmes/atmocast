@@ -38,8 +38,15 @@
 <script>
 export default {
   name: 'DetailsCardItem',
-  props: ['datumIndex', 'weatherDatum', 'modeHourly'],
+  props: ['datumIndex', 'modeHourly'],
   computed: {
+    weatherDatum() {
+      if (this.modeHourly) {
+        return this.$store.getters.hourlyWeather[this.datumIndex];
+      } else {
+        return this.$store.getters.dailyWeather[this.datumIndex];
+      }
+    },
     collapseTarget() {
       if (this.modeHourly) {
         return 'more-details-hourly-' + this.datumIndex;
@@ -56,6 +63,18 @@ export default {
     }
   },
   methods: {
+    unHighlightCards() {
+      let typeClass;
+      if (this.modeHourly) {
+        typeClass = 'inner-hourly';
+      } else {
+        typeClass = 'inner-daily';
+      }
+      const highlightedCards = document.getElementsByClassName('details-inner-card bc-light-accent ' + typeClass);
+      for (var i = 0; i < highlightedCards.length; i++) {
+        highlightedCards[i].classList.remove('bc-light-accent');
+      }
+    },
     // Prevents details collapses from piling up when multiple details items
     // are clicked. Does not occur if details item with an open corresponding
     // collapse is clicked, since this prevents the collapse from closing.
@@ -72,32 +91,20 @@ export default {
           const collapseId = show[i].id;
           if (collapseId.substr(collapseId.length - 1) != index) {
             show[i].classList.remove('show');
+          } else {
+            this.unHighlightCards();
           }
         }
       }
     },
     highlightCard(index, isHourly) {
-      let typeClass;
-      if (this.modeHourly) {
-        typeClass = 'inner-hourly';
-      } else {
-        typeClass = 'inner-daily';
-      }
-      const highlightedCards = document.getElementsByClassName('details-inner-card bc-light-accent ' + typeClass);
-      for (var i = 0; i < highlightedCards.length; i++) {
-        highlightedCards[i].classList.remove('bc-light-accent');
-      }
-      // TODO: Doesnt work properly
-      // const currentCard = document.getElementById(this.detailsId);
-      // if (!currentCard.classList.contains('bc-light-accent')) {
-      //   currentCard.classList.add('bc-light-accent');
-      // } else {
-      //   currentCard.classList.remove('bc-light-accent');
-      // }
+      const currentCard = document.getElementById(this.detailsId);
+      this.unHighlightCards();
+      currentCard.classList.add('bc-light-accent');
     },
     selectMoreDetails(index, isHourly) {
-      this.closeCollapse(index, isHourly);
       this.highlightCard(index, isHourly);
+      this.closeCollapse(index, isHourly);
     },
   },
 }

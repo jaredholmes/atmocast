@@ -27,10 +27,20 @@
 <script>
 export default {
   name: 'MoreDetailsCollapse',
-  props: ['datumIndex', 'weatherDatum', 'metricUnits', 'modeHourly'],
+  props: ['datumIndex', 'modeHourly'],
   computed: {
+    weatherDatum() {
+      if (this.modeHourly) {
+        return this.$store.getters.hourlyWeather[this.datumIndex];
+      } else {
+        return this.$store.getters.dailyWeather[this.datumIndex];
+      }
+    },
+    metric() {
+      return this.$store.state.metric;
+    },
     speedUnit() {
-      if (this.metricUnits) {
+      if (this.metric) {
         return 'km/h'
       } else {
         return 'mph'

@@ -199,6 +199,7 @@ export default {
                 || response.data.address;
               });
             console.log(this.weatherData);
+            // document.getElementById('spinner').style.display = 'none';
           })
           .catch(() => console.log('error'));
       } else {

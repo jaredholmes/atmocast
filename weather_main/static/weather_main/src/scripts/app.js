@@ -2,7 +2,11 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import moment from 'moment';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
+// import 'bootstrap/dist/js/bootstrap.min.js';
+import 'bootstrap/js/dist/button';
+import 'bootstrap/js/dist/collapse';
+import 'bootstrap/js/dist/dropdown';
+import 'bootstrap/js/dist/util';
 
 import { store } from './store';
 import '../stylesheets/styles.sass';

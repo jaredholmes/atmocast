@@ -30,5 +30,5 @@ export default {
       padding: $s-s-1
 
   .footer-link
-    padding-left: $s-s-4
+    padding-left: $s-s-6
 </style>

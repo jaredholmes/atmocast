@@ -202,7 +202,7 @@ export default {
               });
             console.log(this.weatherData);
           })
-          .catch(() => console.log('error'));
+          .catch((error) => console.log(error));
       } else {
         alert('No location');
       }

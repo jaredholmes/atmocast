@@ -36,9 +36,6 @@ export default {
       this.$hideNavbarSearchButton();
     }
   },
-  created() {
-    console.log(this.searchResults)
-  }
 }
 </script>
 

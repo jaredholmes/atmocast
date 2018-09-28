@@ -1,7 +1,8 @@
 <template lang="html">
   <div>
     <navbar-item></navbar-item>
-    <div class="main-section"
+    <div v-if="$store.state.weather"
+    class="main-section"
     @click="hideCollapse();
     $hideNavbarSearchButton();"
     >
@@ -32,6 +33,7 @@ export default {
       weatherData: {},
       metricUnits: this.$root._data.$metricUnits,
       currentCity: '',
+      loaded: false,
     };
   },
   computed: {
@@ -43,11 +45,6 @@ export default {
     },
     lon() {
       return this.$store.state.coords.lon;
-    }
-  },
-  watch: {
-    metricUnits() {
-      console.log('changed');
     }
   },
   methods: {
@@ -200,7 +197,8 @@ export default {
                 || response.data.address.country
                 || response.data.address;
               });
-            console.log(this.weatherData);
+            // console.log(this.weatherData);
+            this.loaded = true;
           })
           .catch((error) => console.log(error));
       } else {

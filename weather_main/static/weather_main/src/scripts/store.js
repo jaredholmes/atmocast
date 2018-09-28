@@ -37,11 +37,17 @@ export const store = new Vuex.Store({
     },
   },
   getters: {
+    // currentWeather: state => {
+    //   return state.weather.currently;
+    // },
+    // currentIcon: state => {
+    //   return state.weather.currently.icon;
+    // },
     currentWeather: state => {
-      return state.weather.currently;
+      return state.weather.hourly.data[0];
     },
     currentIcon: state => {
-      return state.weather.currently.icon;
+      return state.weather.hourly.data[0].icon;
     },
     hourlyWeather: state => {
       return state.weather.hourly.data;

@@ -119,14 +119,14 @@ export default {
       this.convertValuesByKey(keyString, object, conversionFunction, excludeString);
     },
     convertAll(tempConversion, distanceConversion) {
-      this.convertAllTempsInObject(
-        this.weatherData.currently,
-        tempConversion
-      );
-      this.convertAllDistanceInObject(
-        this.weatherData.currently,
-        distanceConversion
-      );
+      // this.convertAllTempsInObject(
+      //   this.weatherData.currently,
+      //   tempConversion
+      // );
+      // this.convertAllDistanceInObject(
+      //   this.weatherData.currently,
+      //   distanceConversion
+      // );
       for (var i = 0; i < this.weatherData.daily.data.length; i++) {
         this.convertAllTempsInObject(
           this.weatherData.daily.data[i],
@@ -168,7 +168,7 @@ export default {
         + ','
         + this.lon.toFixed(6);
         const darkSkyParams = {
-          'exclude': 'minutely,alerts,flags',
+          'exclude': 'currently,minutely,alerts,flags',
         };
 
         axios.get(darkSkyUrl, { params: darkSkyParams })
@@ -240,7 +240,6 @@ export default {
     } else {
       this.getLocationFailed();
     }
-    console.log(this.$store.state.coords);
   },
 }
 </script>

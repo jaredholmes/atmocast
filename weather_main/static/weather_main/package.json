@@ -16,6 +16,7 @@
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
+    "uglify-js-plugin": "0.0.6",
     "url-loader": "^1.1.1",
     "vue-loader": "^15.4.1",
     "vue-style-loader": "^4.1.2",

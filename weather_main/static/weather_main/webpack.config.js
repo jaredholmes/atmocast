@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const { VueLoaderPlugin } = require('vue-loader');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 
 module.exports = {
   context: __dirname,
@@ -17,6 +19,12 @@ module.exports = {
 
   // mode: 'development',
   mode: 'production',
+
+  optimization: {
+    minimizer: [new UglifyJsPlugin({
+      test: /\.js(\?.*)?$/i,
+    })],
+  },
 
   plugins: [
     new VueLoaderPlugin(),

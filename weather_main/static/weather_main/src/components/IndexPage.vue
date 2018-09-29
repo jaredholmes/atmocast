@@ -10,7 +10,7 @@
       <details-pane-item :modeHourly="true"></details-pane-item>
       <details-pane-item :modeHourly="false"></details-pane-item>
       <!-- Fix this -->
-      <details-pane-item style="display: none;" :w="weatherData.daily.data"></details-pane-item>
+      <details-pane-item style="display: none;" :w="weatherData.daily.data[0]"></details-pane-item>
       <footer-item></footer-item>
     </div>
   </div>

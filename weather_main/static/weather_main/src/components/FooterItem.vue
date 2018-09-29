@@ -28,7 +28,4 @@ export default {
 
     @include media-large
       padding: $s-s-1
-
-  .footer-link
-    padding-left: $s-s-6
 </style>

@@ -3,7 +3,7 @@
     <form @submit="preventDefaultSubmit" class="form-inline row" id="location-search-form">
       <input v-model="searchQuery" @focus="showSearchBtn" @blur="hideSearchBtn" class="col-6 col-md-3 col-lg-9 form-control location-search-input" id="input-location-search" type="search" placeholder="Change location" aria-label="Change location">
       <button @click="getSearchResults" class="col-2 col-lg-3 btn btn-location-search" id="btn-navbar-search" type="button" name="button">
-        <img :src="$store.state.iconLocationPrefix + 'search.png'" alt="">
+        <img :src="$store.state.iconLocationPrefix + 'search.png'" alt="Search for a location">
       </button>
     </form>
     <navbar-location-search-results :searchResults="searchResults"></navbar-location-search-results>
@@ -16,35 +16,16 @@ import NavbarLocationSearchResults from './NavbarLocationSearchResults.vue';
 
 export default {
   name: 'NavbarLocationSearchBar',
+
   components: { NavbarLocationSearchResults },
+
   data() {
     return {
       searchQuery: '',
       searchResults: [],
     }
   },
-  // computed: {
-  //   navbarSearchResults() {
-  //     const storeResults = this.$store.state.navbarSearchResults
-  //     let output;
-  //     for (var i = 0; i < storeResults.length; i++) {
-  //       output.push(this.$store.state.navbarSearchResults[i])
-  //     }
-  //     return output;
-  //   },
-  // },
-  watch: {
-    searchLocation() {
-      const searchBtn = document.getElementById('btn-navbar-search');
-      if (this.searchLocation) {
-        if (searchBtn.hasAttribute('disabled')) {
-          searchBtn.removeAttribute('disabled');
-        }
-      } else {
-        searchBtn.addAttribute('disabled');
-      }
-    }
-  },
+
   methods: {
     preventDefaultSubmit() {
       event.preventDefault();
@@ -68,11 +49,6 @@ export default {
       }
     },
     getSearchResults() {
-      // axios.get('./locationSearch.json')
-      //     .then(response => {
-      //       this.searchResults = response.data;
-      //       console.log(this.searchResults);
-      //     });
       if (this.searchQuery) {
         const requestUrl = 'https://us1.locationiq.com/v1/search.php?key='
         + '834b5e16cebecd&q='
@@ -81,22 +57,11 @@ export default {
         axios.get(requestUrl)
           .then(response => {
             this.searchResults = response.data;
-            // this.$store.commit({
-            //   type: 'setNavbarSearchResults',
-            //   results: response.data,
-            // })
           })
       }
     }
   },
-  beforeMount() {
-    if (this.searchLocation) {
-      if (searchBtn.hasAttribute('disabled')) {
-        searchBtn.removeAttribute('disabled');
-      }
-    }
-  },
-}
+};
 </script>
 
 <style scoped lang="sass">

@@ -25,8 +25,14 @@ import MoreDetailsCollapse from './MoreDetailsCollapse.vue';
 
 export default {
   name: 'DetailsPaneItem',
-  components : { DetailsCardItem, MoreDetailsCollapse },
+
+  components : {
+    DetailsCardItem,
+    MoreDetailsCollapse
+  },
+
   props: ['modeHourly'],
+
   computed: {
     metric() {
       return this.$store.state.metric;
@@ -61,8 +67,6 @@ export default {
     border-radius: 0
     height: auto
     max-width: 90%
-    // border-left: none
-    // border-right: none
     ::-webkit-scrollbar
       height: 7px
       width: 9px
@@ -71,7 +75,6 @@ export default {
     ::-webkit-scrollbar-thumb
       background: $sunny-blue
       -webkit-border-radius: 1ex
-      // -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75)
 
     ::-webkit-scrollbar-corner
         background: #000

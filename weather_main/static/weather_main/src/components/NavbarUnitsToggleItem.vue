@@ -8,11 +8,13 @@
 <script>
 export default {
   name: 'NavbarUnitsToggleItem',
+
   data() {
     return {
       unitIndicator: '',
     }
   },
+
   methods: {
     toggleUnitIndicator() {
       if (this.$store.state.metric) {
@@ -22,11 +24,9 @@ export default {
       }
     },
   },
+
   beforeMount() {
     this.toggleUnitIndicator();
   }
-}
+};
 </script>
-
-<style lang="sass">
-</style>

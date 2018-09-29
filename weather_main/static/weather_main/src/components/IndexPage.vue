@@ -25,17 +25,21 @@ import FooterItem from './FooterItem.vue';
 
 export default {
   name: 'IndexPage',
-  components: { NavbarItem, DisplayItem, DetailsPaneItem, FooterItem },
+
+  components: {
+    NavbarItem,
+    DisplayItem,
+    DetailsPaneItem,
+    FooterItem
+  },
+
   data() {
     return {
-      latitude: '',
-      longitude: '',
       weatherData: {},
-      metricUnits: this.$root._data.$metricUnits,
       currentCity: '',
-      loaded: false,
     };
   },
+
   computed: {
     metric() {
       return this.$store.state.metric;
@@ -47,8 +51,9 @@ export default {
       return this.$store.state.coords.lon;
     }
   },
+
   methods: {
-    getLocationFailed() {
+    setDetaultLocation() {
       alert('Unable to get location. Please type one in the search bar.');
       // Default location to New York City
       this.$store.commit({
@@ -68,7 +73,6 @@ export default {
         weatherData: this.weatherData
       });
     },
-
     // Methods for manipulating weather data
     getKeysInObject(keyString, object, excludeString) {
       const keys = Object.keys(object);
@@ -106,7 +110,7 @@ export default {
       this.convertValuesInObject(keyArray, object, conversionFunction);
     },
     convertAllTempsInObject(object, conversionFunction) {
-      const keyString = ['emperature'];
+      const keyString = ['temperature', 'Temperature',];
       const excludeString = ['Time'];
       this.convertValuesByKey(keyString, object, conversionFunction, excludeString);
     },
@@ -116,14 +120,6 @@ export default {
       this.convertValuesByKey(keyString, object, conversionFunction, excludeString);
     },
     convertAll(tempConversion, distanceConversion) {
-      // this.convertAllTempsInObject(
-      //   this.weatherData.currently,
-      //   tempConversion
-      // );
-      // this.convertAllDistanceInObject(
-      //   this.weatherData.currently,
-      //   distanceConversion
-      // );
       for (var i = 0; i < this.weatherData.daily.data.length; i++) {
         this.convertAllTempsInObject(
           this.weatherData.daily.data[i],
@@ -134,6 +130,7 @@ export default {
           distanceConversion
         );
       }
+
       for (var i = 0; i < this.weatherData.hourly.data.length; i++) {
         this.convertAllTempsInObject(
           this.weatherData.hourly.data[i],
@@ -144,10 +141,15 @@ export default {
           distanceConversion
         );
       }
+
       this.commitWeatherToStore();
     }
   },
+
   watch: {
+    currentCity() {
+      document.title = 'Weather in ' + this.currentCity + ' – Atmocast';
+    },
     metric() {
       if (this.metric) {
         this.convertAll(this.$fToC, this.$mToKm);
@@ -198,7 +200,6 @@ export default {
                 || response.data.address;
               });
             // console.log(this.weatherData);
-            this.loaded = true;
           })
           .catch((error) => console.log(error));
       } else {
@@ -207,21 +208,6 @@ export default {
     }
   },
   beforeCreate() {
-    // axios.get('/data.json')
-    //   .then(response => {
-    //     this.weatherData = response.data;
-    //     if (this.metric) {
-    //       this.convertAll(this.$fToC, this.$mToKm);
-    //     } else {
-    //       this.commitWeatherToStore();
-    //     }
-    //     axios.get('/location.json')
-    //       .then(response => {
-    //         this.currentCity = response.data.address.city;
-    //       });
-    //     console.log(this.weatherData);
-    //   })
-    //   .catch(() => console.log('error'));
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -233,14 +219,11 @@ export default {
             }
           });
         },
-        () => this.getLocationFailed()
+        () => this.setDefaultLocation()
       )
     } else {
-      this.getLocationFailed();
+      this.setDefaultLocation();
     }
   },
-}
+};
 </script>
-
-<style lang="css">
-</style>

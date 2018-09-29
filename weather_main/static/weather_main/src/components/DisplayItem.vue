@@ -13,7 +13,9 @@
 <script>
 export default {
   name: "DisplayItem",
+
   props: ['currentCity'],
+
   computed: {
     currentTemp() {
       return this.$store.getters.currentWeather.temperature;
@@ -25,6 +27,7 @@ export default {
       return this.$store.getters.currentIcon;
     }
   },
+
   methods: {
     setGradientFromIcon(icon) {
       const display = document.getElementById('display');
@@ -73,15 +76,17 @@ export default {
       display.classList.add(grClass);
     },
   },
+
   watch: {
     currentIcon() {
       this.setGradientFromIcon(this.currentIcon);
     },
   },
+
   mounted() {
     this.setGradientFromIcon(this.currentIcon);
   },
-}
+};
 </script>
 
 <style scoped lang="sass">

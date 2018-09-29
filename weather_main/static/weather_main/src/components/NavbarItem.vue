@@ -5,7 +5,7 @@
         <!-- <img class="nav-logo" :src="$store.state.iconLocationPrefix + 'logo.png'" alt=""> -->
       </a>
       <button class="ml-auto navbar-toggler col-1 offset-5" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
-        <img class="icon icon-menu" :src="$store.state.iconLocationPrefix + 'menu.png'" alt="">
+        <img class="icon icon-menu" :src="$store.state.iconLocationPrefix + 'menu.png'" alt="menu">
       </button>
       <div id="nav-collapse" class="collapse navbar-collapse ml-auto">
         <ul class="navbar-nav ml-auto">
@@ -24,13 +24,15 @@ import NavbarUnitsToggleItem from './NavbarUnitsToggleItem.vue';
 
 export default {
   name: 'NavbarItem',
-  // props: ['currentIcon'],
+
   components: { NavbarLocationSearchBar, NavbarUnitsToggleItem },
+
   computed: {
     currentIcon() {
       return this.$store.getters.currentIcon;
     },
   },
+
   methods: {
     setBCFromIcon(icon) {
       const navbar = document.getElementById('navbar-main');
@@ -96,11 +98,13 @@ export default {
       }
     },
   },
+
   watch: {
     currentIcon() {
       this.setBCFromIcon(this.currentIcon);
     },
   },
+
   mounted() {
     this.setBCFromIcon(this.currentIcon);
     window.addEventListener(
@@ -108,7 +112,7 @@ export default {
       () => this.setBCFromIcon(this.currentIcon)
     );
   }
-}
+};
 </script>
 
 <style scoped lang="sass">

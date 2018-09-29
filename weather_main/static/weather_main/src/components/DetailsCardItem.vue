@@ -9,7 +9,8 @@
   data-toggle="collapse"
   :data-target="'#' + collapseTarget"
   aria-expanded="false"
-  :aria-controls="collapseTarget">
+  :aria-controls="collapseTarget"
+  >
     <div class="card-body">
       <span v-if="modeHourly" class="inner-temp inner-temp-hourly">
         {{ Math.round(weatherDatum.temperature) }}&deg;
@@ -38,7 +39,9 @@
 <script>
 export default {
   name: 'DetailsCardItem',
+
   props: ['datumIndex', 'modeHourly'],
+
   computed: {
     weatherDatum() {
       if (this.modeHourly) {
@@ -62,6 +65,7 @@ export default {
       }
     }
   },
+
   methods: {
     unHighlightCards() {
       let typeClass;
@@ -79,18 +83,18 @@ export default {
     // are clicked. Does not occur if details item with an open corresponding
     // collapse is clicked, since this prevents the collapse from closing.
     closeCollapse(index, isHourly) {
-      let show;
+      let shownCollapse;
       if (this.modeHourly) {
-        show = document.getElementsByClassName('show hourly-collapse');
+        shownCollapse = document.getElementsByClassName('show hourly-collapse');
       } else {
-        show = document.getElementsByClassName('show daily-collapse');
+        shownCollapse = document.getElementsByClassName('show daily-collapse');
       }
 
-      if (show) {
-        for (var i = 0; i < show.length; i++) {
-          const collapseId = show[i].id;
+      if (shownCollapse) {
+        for (var i = 0; i < shownCollapse.length; i++) {
+          const collapseId = shownCollapse[i].id;
           if (collapseId.substr(collapseId.length - 1) != index) {
-            show[i].classList.remove('show');
+            shownCollapse[i].classList.remove('show');
           } else {
             this.unHighlightCards();
           }
@@ -107,7 +111,7 @@ export default {
       this.closeCollapse(index, isHourly);
     },
   },
-}
+};
 </script>
 
 <style scoped lang="sass">

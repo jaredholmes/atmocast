@@ -23,12 +23,9 @@
 <script>
 export default {
   name: 'NavbarLocationSearchResults',
+
   props: ['searchResults'],
-  // computed: {
-  //   navbarSearchResults() {
-  //     return this.$store.state.navbarSearchResults;
-  //   },
-  // },
+
   methods: {
     hideSearchResults() {
       document.getElementById('search-results').style.display = 'none';
@@ -36,7 +33,7 @@ export default {
       this.$hideNavbarSearchButton();
     }
   },
-}
+};
 </script>
 
 <style scoped lang="sass">

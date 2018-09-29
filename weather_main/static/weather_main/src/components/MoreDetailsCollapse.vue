@@ -27,7 +27,9 @@
 <script>
 export default {
   name: 'MoreDetailsCollapse',
+
   props: ['datumIndex', 'modeHourly'],
+
   computed: {
     weatherDatum() {
       if (this.modeHourly) {
@@ -54,7 +56,7 @@ export default {
       }
     },
   },
-}
+};
 </script>
 
 <style scoped lang="sass">

@@ -8,3 +8,4 @@ locationSearch.json
 weather_main/static/weather_main/dist/index.html
 .sqlite3
 local_settings.py
+staticfiles

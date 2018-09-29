@@ -75,6 +75,7 @@ export default {
           bcClass = 'bc-light';
       }
 
+      // Remove other background color classes first
       for (var i = 0; i < navbar.classList.length; i++) {
         if (navbar.classList[i].includes('bc')) {
           navbar.classList.remove(navbar.classList[i]);

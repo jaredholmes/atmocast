@@ -27,6 +27,7 @@ export default {
   },
 
   methods: {
+    // Prevent page from reloading when enter key is pressed, and instead search for locations
     preventDefaultSubmit() {
       event.preventDefault();
       if (this.searchQuery === '') {

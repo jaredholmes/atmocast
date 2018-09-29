@@ -29,6 +29,7 @@ export default {
   },
 
   methods: {
+    // Adds class to the element to give it the background color corresponsing with the currentIcon property
     setGradientFromIcon(icon) {
       const display = document.getElementById('display');
       let grClass;

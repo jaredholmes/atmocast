@@ -74,6 +74,7 @@ export default {
       });
     },
     // Methods for manipulating weather data
+    // Gets the keys from an object which contain substrings matching any of the items in the keyString argument, and excludes any of the strings matching the excludeString argument
     getKeysInObject(keyString, object, excludeString) {
       const keys = Object.keys(object);
       let matchingKeys = [];
@@ -199,11 +200,11 @@ export default {
                 || response.data.address.country
                 || response.data.address;
               });
-            // console.log(this.weatherData);
+            // console.log(this.weatherData); // For debugging
           })
-          .catch((error) => console.log(error));
+          // .catch((error) => console.log(error));
       } else {
-        alert('No location');
+        this.setDefaultLocation();
       }
     }
   },

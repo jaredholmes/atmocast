@@ -58,6 +58,7 @@ export default {
       }
     },
     detailsId() {
+      // Used in the template
       if (this.modeHourly) {
         return 'details-hourly-' + this.datumIndex;
       } else {

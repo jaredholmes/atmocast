@@ -11,6 +11,11 @@ import { store } from './store';
 import '../stylesheets/styles.sass';
 import IndexPage from '../components/IndexPage.vue';
 
+// Service worker registration
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+
 // Router config
 Vue.use(VueRouter);
 

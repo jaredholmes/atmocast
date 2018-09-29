@@ -193,7 +193,14 @@ export default {
 
             axios.get(locationIQUrl, { params: locationIQParams })
               .then(response => {
-                this.currentCity = response.data.address.city
+                this.currentCity = response.data.address.neighbourhood
+                || response.data.address.hamlet
+                || response.data.address.suburb
+                || response.data.address.village
+                || response.data.address.town
+                || response.data.address.city_district
+                || response.data.address.city
+                || response.data.address.region
                 || response.data.address.county
                 || response.data.address.state_district
                 || response.data.address.state

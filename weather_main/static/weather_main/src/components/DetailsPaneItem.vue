@@ -4,14 +4,14 @@
     <div class="card-body details-card-body">
       <div class="inner-card-container"
       :class="{'hourly-inner': modeHourly}">
-        <details-card-item v-for="i, x in 10"
+        <details-card-item v-for="i, x in 24"
         :key="x"
         :datumIndex="x"
         :modeHourly="modeHourly"
         ></details-card-item>
       </div>
     </div>
-    <more-details-collapse v-for="i, x in 10"
+    <more-details-collapse v-for="i, x in 8"
       :key="x"
       :datumIndex="x"
       :modeHourly="modeHourly"
@@ -93,5 +93,5 @@ export default {
         align-items: stretch
 
       .hourly-inner
-        width: $s-l-4 * 10
+        width: $s-l-4 * 24
 </style>

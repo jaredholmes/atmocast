@@ -11,6 +11,16 @@ self.addEventListener('install', function(event) {
         return cache.put(offlinePage, response);
       });
   }));
+
+  event.waitUntil(
+    caches.open('atmocache')
+      .then(cache => {
+        return cache.addAll([
+          'https://atmocast.herokuapp.com/static/weather_main/dist/bundles/app.bundle.js',
+          'https://atmocast.herokuapp.com/static/weather_main/dist/bundles/spinnerStyles.bundle.js',
+        ])
+      })
+  );
 });
 
 //If any fetch fails, it will show the offline page.

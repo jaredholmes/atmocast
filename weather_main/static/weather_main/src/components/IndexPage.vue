@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     <navbar-item></navbar-item>
-    <div v-if="$store.state.weather"
+    <div v-if="weatherData"
     class="main-section"
     @click="hideCollapse();
     $hideNavbarSearchButton();"
@@ -179,7 +179,7 @@ export default {
               'lat': this.lat,
               'lon': this.lon,
               'format': 'json',
-              'zoom': '10',
+              'zoom': '14',
             };
 
             this.weatherData = response.data;
@@ -193,10 +193,7 @@ export default {
 
             axios.get(locationIQUrl, { params: locationIQParams })
               .then(response => {
-                this.currentCity = response.data.address.neighbourhood
-                || response.data.address.hamlet
-                || response.data.address.suburb
-                || response.data.address.village
+                this.currentCity = response.data.address.village
                 || response.data.address.town
                 || response.data.address.city_district
                 || response.data.address.city

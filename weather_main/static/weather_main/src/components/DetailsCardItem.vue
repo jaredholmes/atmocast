@@ -94,7 +94,9 @@ export default {
       if (shownCollapse) {
         for (var i = 0; i < shownCollapse.length; i++) {
           const collapseId = shownCollapse[i].id;
-          if (collapseId.substr(collapseId.length - 1) != index) {
+          const singleDigitId = collapseId.substr(collapseId.length - 1);
+          const doubleDigitId = collapseId.substr(collapseId.length - 2);
+          if (singleDigitId != index && doubleDigitId != index) {
             shownCollapse[i].classList.remove('show');
           } else {
             this.unHighlightCards();

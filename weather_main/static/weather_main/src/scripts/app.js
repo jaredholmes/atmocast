@@ -40,11 +40,7 @@ Vue.mixin ({
       }
     },
     $momentUnixHour(unix, index) {
-      if (index === 0) {
-        return 'Now';
-      } else {
         return moment(moment.unix(unix)._d).format('HH:mm');
-      }
     },
     $momentAddDays(days) {
       if (days <= 0) {

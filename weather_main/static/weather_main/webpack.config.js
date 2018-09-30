@@ -9,7 +9,6 @@ module.exports = {
 
   entry: {
     app: './src/scripts/app',
-    spinnerStyles: './src/scripts/spinnerStyles',
   },
 
   output: {

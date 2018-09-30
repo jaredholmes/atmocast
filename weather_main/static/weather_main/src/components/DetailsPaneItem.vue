@@ -11,7 +11,7 @@
         ></details-card-item>
       </div>
     </div>
-    <more-details-collapse v-for="i, x in 8"
+    <more-details-collapse v-for="i, x in 24"
       :key="x"
       :datumIndex="x"
       :modeHourly="modeHourly"

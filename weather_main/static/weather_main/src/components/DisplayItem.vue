@@ -104,6 +104,7 @@ export default {
   .display-main-section
     text-align: center
     padding: 0
+    padding-top: $s-s-3
     padding-bottom: $s-s-1
 
   .display-temp

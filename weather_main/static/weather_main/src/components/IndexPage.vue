@@ -196,6 +196,8 @@ export default {
             } else {
               this.commitWeatherToStore();
             }
+            
+            this.$adjustCurrentWeather(this.$store.state.weather.hourly.data);
 
             if (mainSection) {
               mainSection.style.opacity = 1;

@@ -91,14 +91,6 @@ export default {
     this.setGradientFromIcon(this.currentIcon);
 
     this.$adjustCurrentWeather(this.hourlyWeather);
-    // for (var i = 0; i < this.hourlyWeather.length; i++) {
-    //   if (this.$weatherHourMatchesCurrent(this.hourlyWeather[i].time)) {
-    //     this.$store.commit({
-    //       type: 'setCurrentWeather',
-    //       index: i,
-    //     })
-    //   } // else 'please refresh the page'
-    // }
   },
 };
 </script>

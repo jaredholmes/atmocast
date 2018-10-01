@@ -1,22 +1,24 @@
 <template lang="html">
-  <div v-if="this.searchResults.length > 0" class="row" id="search-results">
-    <button @click="hideSearchResults" class="btn close-search-results fw-semi"type="button" name="button">
-      <img :src="$store.state.iconLocationPrefix + 'close.png'" alt="">
-    </button>
-    <ul class="list-group">
-      <li v-for="result in searchResults"
-      @click="$store.commit({
-          type: 'setCoords',
-          coords: {
-            lat: parseFloat(result.lat),
-            lon: parseFloat(result.lon)
-          }
-        });
-        hideSearchResults();"
-       class="list-group-item">
-        {{ result.display_name }}
-      </li>
-    </ul>
+  <div class="">
+    <div v-if="this.searchResults.length > 0" class="row" id="search-results">
+      <button @click="hideSearchResults" class="btn close-search-results fw-semi"type="button" name="button">
+        <img :src="$store.state.iconLocationPrefix + 'close.png'" alt="">
+      </button>
+      <ul class="list-group">
+        <li v-for="result in searchResults"
+        @click="$store.commit({
+            type: 'setCoords',
+            coords: {
+              lat: parseFloat(result.lat),
+              lon: parseFloat(result.lon)
+            }
+          });
+          hideSearchResults();"
+         class="list-group-item">
+          {{ result.display_name }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 

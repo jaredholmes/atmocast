@@ -2,7 +2,7 @@
   <div>
     <navbar-item></navbar-item>
     <div v-if="weatherData"
-    class="main-section"
+    id="main-section"
     @click="hideCollapse();
     $hideNavbarSearchButton();"
     >
@@ -162,6 +162,14 @@ export default {
       this.commitWeatherToStore();
     },
     lat() {
+      // Show that content is loading
+      const mainSection = document.getElementById('main-section');
+      const loadingSection = document.getElementById('loading-section')
+      if (mainSection) {
+          mainSection.style.opacity = 0.3;
+      }
+      loadingSection.style.display = 'block';
+
       if (this.lat) {
         const darkSkyUrl = 'https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/c11e01133c18e01ad3d20c3aeb1a9218/'
         + this.lat.toFixed(6)
@@ -189,7 +197,10 @@ export default {
               this.commitWeatherToStore();
             }
 
-            document.getElementById('loading-section').style.display = 'none';
+            if (mainSection) {
+              mainSection.style.opacity = 1;
+            }
+            loadingSection.style.display = 'none';
 
             axios.get(locationIQUrl, { params: locationIQParams })
               .then(response => {

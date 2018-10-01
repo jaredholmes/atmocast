@@ -3,7 +3,10 @@
     <form @submit="preventDefaultSubmit" class="form-inline row" id="location-search-form">
       <input v-model="searchQuery" @focus="showSearchBtn" @blur="hideSearchBtn" class="col-6 col-md-3 col-lg-9 form-control location-search-input" id="input-location-search" type="search" placeholder="Change location" aria-label="Change location">
       <button @click="getSearchResults" class="col-2 col-lg-3 btn btn-location-search" id="btn-navbar-search" type="button" name="button">
-        <img :src="$store.state.iconLocationPrefix + 'search.png'" alt="Search for a location">
+        <img id="btn-search-icon" :src="$store.state.iconLocationPrefix + 'search.png'" alt="Search for a location">
+        <div class="spinner" id="search-loading-spinner">
+
+        </div>
       </button>
     </form>
     <navbar-location-search-results :searchResults="searchResults"></navbar-location-search-results>
@@ -51,6 +54,10 @@ export default {
     },
     getSearchResults() {
       if (this.searchQuery) {
+        const searchIcon = document.getElementById('btn-search-icon');
+        const searchSpinner = document.getElementById('search-loading-spinner');
+        searchIcon.style.visibility = 'hidden';
+        searchSpinner.style.display = 'block';
         const requestUrl = 'https://us1.locationiq.com/v1/search.php?key='
         + '834b5e16cebecd&q='
         + this.searchQuery
@@ -58,6 +65,8 @@ export default {
         axios.get(requestUrl)
           .then(response => {
             this.searchResults = response.data;
+            searchSpinner.style.display = 'none';
+            searchIcon.style.visibility = 'visible';
           })
       }
     }
@@ -116,13 +125,24 @@ export default {
     -webkit-transition: opacity 800ms
     -ms-transition: opacity 800ms
     padding: 0
+    position: relative
     border: none
     background-color: rgba(0, 0, 0, 0)
 
-    @include media-large
     img
       max-width: 1.5em
 
     img:hover
       opacity: 0.6
+
+    #search-loading-spinner
+      display: none
+
+    #search-loading-spinner:before
+      right: 5px
+      top: 0
+      z-index: 50000
+      width: $s-s-2
+      height: $s-s-2
+      margin: 0
 </style>

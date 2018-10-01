@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import moment from 'moment';
+import moment from 'moment/min/moment.min';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/dist/button';
 import 'bootstrap/js/dist/collapse';
@@ -39,8 +39,27 @@ Vue.mixin ({
         searchInput.style.left = '4.5em';
       }
     },
-    $momentUnixHour(unix, index) {
-        return moment(moment.unix(unix)._d).format('HH:mm');
+    $weatherHourMatchesCurrent(unixTime) {
+      const currentHourDay = moment().format('H, D');
+      moment.unix(unixTime);
+      if (moment.unix(unixTime).format('H, D') === currentHourDay) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    $adjustCurrentWeather(hourlyData) {
+      for (var i = 0; i < hourlyData.length; i++) {
+        if (this.$weatherHourMatchesCurrent(hourlyData[i].time)) {
+          this.$store.commit({
+            type: 'setCurrentWeather',
+            index: i,
+          })
+        } // else 'please refresh the page'
+      }
+    },
+    $momentUnixHour(unixTime, index) {
+        return moment(moment.unix(unixTime)).format('HH:mm');
     },
     $momentAddDays(days) {
       if (days <= 0) {

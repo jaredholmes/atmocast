@@ -12,6 +12,8 @@ export const store = new Vuex.Store({
     iconLocationPrefix: 'static/weather_main/dist/icons/',
     metric: true,
     weather: {},
+    currentWeather: '',
+    currentIcon: '',
     coords: {
       lat: '',
       lon: '',
@@ -29,6 +31,9 @@ export const store = new Vuex.Store({
     setWeather(state, weatherData) {
       state.weather = weatherData.weatherData;
     },
+    setCurrentWeather(state, index) {
+      state.currentWeather = state.weather.hourly.data[index.index];
+    },
     setCoords(state, coords) {
       state.coords = coords.coords;
     },
@@ -43,12 +48,6 @@ export const store = new Vuex.Store({
     // currentIcon: state => {
     //   return state.weather.currently.icon;
     // },
-    currentWeather: state => {
-      return state.weather.hourly.data[0];
-    },
-    currentIcon: state => {
-      return state.weather.hourly.data[0].icon;
-    },
     hourlyWeather: state => {
       return state.weather.hourly.data;
     },

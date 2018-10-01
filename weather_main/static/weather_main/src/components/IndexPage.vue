@@ -49,7 +49,7 @@ export default {
     },
     lon() {
       return this.$store.state.coords.lon;
-    }
+    },
   },
 
   methods: {

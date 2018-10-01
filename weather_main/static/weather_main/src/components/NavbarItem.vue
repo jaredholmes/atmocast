@@ -29,7 +29,7 @@ export default {
 
   computed: {
     currentIcon() {
-      return this.$store.getters.currentIcon;
+      return this.$store.state.currentWeather.icon;
     },
   },
 

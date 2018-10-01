@@ -17,14 +17,17 @@ export default {
   props: ['currentCity'],
 
   computed: {
+    hourlyWeather() {
+      return this.$store.getters.hourlyWeather;
+    },
     currentTemp() {
-      return this.$store.getters.currentWeather.temperature;
+      return this.$store.state.currentWeather.temperature;
     },
     currentSummary() {
-      return this.$store.getters.currentWeather.summary;
+      return this.$store.state.currentWeather.summary;
     },
     currentIcon() {
-      return this.$store.getters.currentIcon;
+      return this.$store.state.currentWeather.icon;
     }
   },
 
@@ -86,6 +89,16 @@ export default {
 
   mounted() {
     this.setGradientFromIcon(this.currentIcon);
+
+    this.$adjustCurrentWeather(this.hourlyWeather);
+    // for (var i = 0; i < this.hourlyWeather.length; i++) {
+    //   if (this.$weatherHourMatchesCurrent(this.hourlyWeather[i].time)) {
+    //     this.$store.commit({
+    //       type: 'setCurrentWeather',
+    //       index: i,
+    //     })
+    //   } // else 'please refresh the page'
+    // }
   },
 };
 </script>

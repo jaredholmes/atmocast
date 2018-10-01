@@ -39,6 +39,7 @@ export default {
       const navCollapse = document.getElementById('nav-collapse');
       const whiteClass = 'bc-light';
       let bcClass;
+      let bcClassColor;
 
       switch (icon) {
         case 'clear-day':
@@ -97,6 +98,10 @@ export default {
         navCollapse.classList.add(whiteClass);
         navCollapse.classList.remove(bcClass);
       }
+
+      // Change theme color to match navbar
+      bcClassColor = window.getComputedStyle(navbar).getPropertyValue('background-color');
+      document.getElementsByName('theme-color')[0].content = bcClassColor;
     },
   },
 

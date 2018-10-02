@@ -127,12 +127,12 @@ export default {
 
   nav
     padding: $s-s-6 0
-    padding-top: $s-s-6
     // Prevents thin white line between nav and main section
     padding-bottom: $s-l-1 + 1px
 
     @include media-large
-      padding: $s-s-6
+      padding-left: $s-s-6
+      padding-right: $s-s-6
 
   .nav-wrapper
     width: 100%

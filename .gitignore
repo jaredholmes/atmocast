@@ -7,6 +7,7 @@ location.json
 data.json
 locationSearch.json
 weather_main/static/weather_main/dist/index.html
+weather_main/static/weather_main/atmocast
 .sqlite3
 local_settings.py
 staticfiles

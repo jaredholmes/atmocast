@@ -54,7 +54,6 @@ export default {
 
   methods: {
     setDefaultLocation() {
-      alert('Unable to get location. Please type one in the search bar.');
       // Default location to New York City
       this.$store.commit({
         type: 'setCoords',
@@ -196,7 +195,7 @@ export default {
             } else {
               this.commitWeatherToStore();
             }
-            
+
             this.$adjustCurrentWeather(this.$store.state.weather.hourly.data);
 
             if (mainSection) {

@@ -16,9 +16,9 @@ self.addEventListener('install', function(event) {
     caches.open('atmocache')
       .then(cache => {
         return cache.addAll([
-          'https://atmocast.herokuapp.com/static/weather_main/dist/bundles/app.bundle.js',
-          'https://atmocast.herokuapp.com/static/weather_main/dist/bundles/spinnerStyles.bundle.js',
-          'https://atmocast.herokuapp.com/static/weather_main/dist/icons/logo-small.png',
+          'https://www.atmocast.com/static/weather_main/dist/bundles/app.bundle.js',
+          'https://www.atmocast.com/static/weather_main/dist/bundles/spinnerStyles.bundle.js',
+          'https://www.atmocast.com/static/weather_main/dist/icons/logo-small.png',
         ])
       })
   );

@@ -11,6 +11,17 @@
   <link rel="stylesheet" href="{% static 'weather_main/dist/spinner.min.css' %}">
   <link rel="manifest" href="{% static 'weather_main/dist/manifest/manifest.json' %}">
   <title>Atmocast – Simple weather forecasting</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-126836360-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-126836360-1');
+</script>
+
 </head>
 <body>
   <div id="loading-section">

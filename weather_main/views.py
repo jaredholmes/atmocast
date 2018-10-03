@@ -1,8 +1,8 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, HttpResponse
-from django.views.decorators.gzip import gzip_page
+# from django.views.decorators.gzip import gzip_page
 
 # Create your views here.
-@gzip_page
+# @gzip_page
 def index(request):
     # return HttpResponse(request.build_absolute_uri());
     if request.is_secure() or 'http://localhost' in request.build_absolute_uri():

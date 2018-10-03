@@ -167,7 +167,7 @@ export default {
 
   .nav-item
     padding: $s-s-6
-    margin-right: $s-s-6
+    margin-left: $s-s-4
     margin-top: auto
     margin-bottom: auto
 

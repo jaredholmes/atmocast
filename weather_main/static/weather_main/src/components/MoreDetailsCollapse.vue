@@ -11,6 +11,9 @@
       <div v-if="modeHourly" class="col-12 col-md-6">
         <b>Feels like:</b> {{ Math.round(weatherDatum.apparentTemperature) }}&deg;
       </div>
+      <div v-else class="col-12 daily-summary fw-semi">
+        {{ weatherDatum.summary }}
+      </div>
       <div class="col-12 col-md-6">
         <b>Chance of rain:</b> {{ weatherDatum.precipProbability * 100 }}%
       </div>
@@ -70,4 +73,10 @@ export default {
 
     .col-12, .col-12 *
       color: $text-secondary
+
+    .daily-summary
+      padding-top: $s-s-6
+      padding-bottom: $s-s-5
+      font-style: italic
+
 </style>

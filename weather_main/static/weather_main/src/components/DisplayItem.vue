@@ -110,10 +110,13 @@ export default {
     text-align: center
     padding: 0
     padding-top: $s-s-2
-    padding-bottom: $s-s-1
+    padding-bottom: $s-l-1
 
     @include media-tablet
       padding-top: $s
+
+    @include media-large
+      padding-top: $s-s-3
 
   .display-temp
     margin-bottom: $s-s-5

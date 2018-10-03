@@ -2,7 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const { VueLoaderPlugin } = require('vue-loader');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   context: __dirname,
@@ -28,6 +29,8 @@ module.exports = {
 
   plugins: [
     new VueLoaderPlugin(),
+    new BundleAnalyzerPlugin(),
+    new CompressionPlugin(),
   ],
 
   devServer: {

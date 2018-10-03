@@ -1,9 +1,9 @@
 <template lang="html">
   <nav class="navbar navbar-expand-lg" id="navbar-main">
     <div class="nav-wrapper row">
-      <a href="/" class="navbar-brand col-4 fw-semi fs-large">
+      <a href="/" class="navbar-brand col-4">
         <img class="nav-logo" :src="$store.state.iconLocationPrefix + 'logo-small.png'" alt="">
-        Atmocast
+        <h1 class="fw-semi fs-moderate">Atmocast</h1>
       </a>
       <button class="ml-auto navbar-toggler col-1 offset-5" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
         <img class="icon icon-menu" :src="$store.state.iconLocationPrefix + 'menu.png'" alt="menu">
@@ -145,14 +145,22 @@ export default {
     @include media-large
       min-width: 0
 
+    h1
+      display: inline-block
+
     .nav-logo
-      max-width: $s-s-1
+      max-width: $s-s-3
       position: relative
-      bottom: 3px
-      margin-right: 5px
+      bottom: 5px
+      margin-right: 2px
 
       @include media-tablet
+        bottom: 3px
         margin: 0 $s-s-6
+
+      @include media-large
+        max-width: $s-s-2
+        bottom: 5px
 
   .navbar-collapse
     float: right

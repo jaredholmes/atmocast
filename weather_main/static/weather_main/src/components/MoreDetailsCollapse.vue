@@ -8,6 +8,15 @@
     <div class="card card-body row more-details-card bc-light-accent">
       <h3 v-if="modeHourly" class="fs-large fw-bold more-details-header">{{ $momentUnixHour(weatherDatum.time, datumIndex) }}</h3>
       <h3 v-else class="fs-large fw-bold more-details-header">{{ $momentAddDays(datumIndex) }}</h3>
+      <button type="button"
+      class="btn btn-close close-more-details"
+      data-toggle="collapse"
+      :data-target="'#' + collapseId"
+      aria-expanded="false"
+      :aria-controls="collapseId"
+      >
+        <img :src="$store.state.iconLocationPrefix + 'close-light.png'" alt="Close more details">
+      </button>
       <div v-if="modeHourly" class="col-12 col-md-6">
         <b>Feels like:</b> {{ Math.round(weatherDatum.apparentTemperature) }}&deg;
       </div>
@@ -65,11 +74,15 @@ export default {
 <style scoped lang="sass">
   @import "../stylesheets/styles"
 
+  .more-details-collapse
+    position: relative
+
   .more-details-header
     margin-bottom: $s-s-5
 
   .more-details-card
     border: none
+    padding: $s-s-4
 
     .col-12, .col-12 *
       color: $text-secondary
@@ -78,5 +91,10 @@ export default {
       padding-top: $s-s-6
       padding-bottom: $s-s-5
       font-style: italic
+
+  .close-more-details
+    right: 8px
+    top: 3px
+    padding: 0
 
 </style>

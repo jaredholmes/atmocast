@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="">
     <div v-if="this.searchResults.length > 0" class="row" id="search-results">
-      <button @click="hideSearchResults" class="btn close-search-results fw-semi"type="button" name="button">
-        <img :src="$store.state.iconLocationPrefix + 'close.png'" alt="">
+      <button @click="hideSearchResults" class="btn btn-close close-search-results fw-semi" type="button">
+        <img :src="$store.state.iconLocationPrefix + 'close-dark.png'" alt="">
       </button>
       <ul class="list-group">
         <li v-for="result in searchResults"
@@ -73,17 +73,12 @@ export default {
     background-color: $light-accent-hover
 
   .close-search-results
-    border: none
-    background-color: rgba(0, 0, 0, 0)
-    position: absolute
+
     top: 3px
     right: 10px
     padding: 0 0.5em
     text-align: left
     margin-left: auto
     z-index: 2
-
-    img
-      max-width: 1.5em
 
 </style>

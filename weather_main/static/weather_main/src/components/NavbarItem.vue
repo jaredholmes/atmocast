@@ -131,6 +131,7 @@ export default {
     padding-bottom: $s-l-1 + 1px
 
     @include media-large
+      padding-top: 0
       padding-left: $s-s-6
       padding-right: $s-s-6
 

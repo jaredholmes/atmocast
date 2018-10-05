@@ -8,7 +8,8 @@
     <div class="card card-body row more-details-card bc-light-accent">
       <h3 v-if="modeHourly" class="fs-large fw-bold more-details-header">{{ $momentUnixHour(weatherDatum.time, datumIndex) }}</h3>
       <h3 v-else class="fs-large fw-bold more-details-header">{{ $momentAddDays(datumIndex) }}</h3>
-      <button type="button"
+      <button @click="removeCardsColor(modeHourly)"
+      type="button"
       class="btn btn-close close-more-details"
       data-toggle="collapse"
       :data-target="'#' + collapseId"
@@ -68,6 +69,22 @@ export default {
       }
     },
   },
+
+  methods: {
+    removeCardsColor(isModeHourly) {
+      let cardClass;
+
+      if (isModeHourly) {
+        cardClass = document.getElementsByClassName('inner-hourly');
+      } else {
+        cardClass = document.getElementsByClassName('inner-daily');
+      }
+
+      for (var i = 0; i < cardClass.length; i++) {
+        cardClass[i].classList.remove('bc-light-accent');
+      }
+    }
+  }
 };
 </script>
 

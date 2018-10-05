@@ -39,6 +39,20 @@ Vue.mixin ({
         searchInput.style.left = '4.5em';
       }
     },
+    $removeCardsColor(isModeHourly) {
+      let cardClass;
+      const colorClass = 'bc-light-accent';
+
+      if (isModeHourly) {
+        cardClass = document.getElementsByClassName('inner-hourly ' + colorClass);
+      } else {
+        cardClass = document.getElementsByClassName('inner-daily ' + colorClass);
+      }
+
+      for (var i = 0; i < cardClass.length; i++) {
+        cardClass[i].classList.remove(colorClass);
+      }
+    },
     $weatherHourMatchesCurrent(unixTime) {
       const currentHourDay = moment().format('H, D');
       moment.unix(unixTime);

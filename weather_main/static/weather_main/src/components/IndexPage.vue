@@ -170,24 +170,11 @@ export default {
       loadingSection.style.display = 'block';
 
       if (this.lat) {
-        const darkSkyUrl = 'https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/c11e01133c18e01ad3d20c3aeb1a9218/'
-        + this.lat.toFixed(6)
-        + ','
-        + this.lon.toFixed(6);
-        const darkSkyParams = {
-          'exclude': 'currently,minutely,alerts,flags',
-        };
+        const darkSkyUrl = '/weather_data/' + this.lat.toFixed(8) + '/' + this.lon.toFixed(8) + '/';
 
-        axios.get(darkSkyUrl, { params: darkSkyParams })
+        axios.get(darkSkyUrl)
           .then(response => {
-            const locationIQUrl = 'https://us1.locationiq.com/v1/reverse.php';
-            const locationIQParams = {
-              'key': '834b5e16cebecd',
-              'lat': this.lat,
-              'lon': this.lon,
-              'format': 'json',
-              'zoom': '14',
-            };
+            const locationIQUrl = '/reverse_geocode/' + this.lat.toFixed(8) + '/' + this.lon.toFixed(8) + '/'
 
             this.weatherData = response.data;
             if (this.metric) {
@@ -203,7 +190,7 @@ export default {
             }
             loadingSection.style.display = 'none';
 
-            axios.get(locationIQUrl, { params: locationIQParams })
+            axios.get(locationIQUrl)
               .then(response => {
                 this.currentCity = response.data.address.village
                 || response.data.address.town

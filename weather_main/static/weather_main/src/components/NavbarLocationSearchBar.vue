@@ -58,10 +58,7 @@ export default {
         const searchSpinner = document.getElementById('search-loading-spinner');
         searchIcon.style.visibility = 'hidden';
         searchSpinner.style.display = 'block';
-        const requestUrl = 'https://us1.locationiq.com/v1/search.php?key='
-        + '834b5e16cebecd&q='
-        + this.searchQuery
-        + '&format=json'
+        const requestUrl = '/geocode/' + this.searchQuery + '/';
         axios.get(requestUrl)
           .then(response => {
             this.searchResults = response.data;

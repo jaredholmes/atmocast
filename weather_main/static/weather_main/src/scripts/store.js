@@ -19,6 +19,8 @@ export const store = new Vuex.Store({
       lon: '',
     },
     navbarSearchResults: [],
+    displayedCollapseHourly: 0,
+    displayedCollapseDaily: 0,
   },
   mutations: {
     toggleMetric(state) {
@@ -40,6 +42,12 @@ export const store = new Vuex.Store({
     setNavbarSearchResults(state, results) {
       state.navbarSearchResults = results.results;
     },
+    setDisplayedCollapseHourly(state, index) {
+      state.displayedCollapseHourly = index.index;
+    },
+    setDisplayedCollapseDaily(state, index) {
+      state.displayedCollapseDaily = index.index;
+    },
   },
   getters: {
     // currentWeather: state => {
@@ -59,6 +67,12 @@ export const store = new Vuex.Store({
     },
     longitude: state => {
       return state.coords.lon;
+    },
+    displayedCollapseHourly: state => {
+      return state.displayedCollapseHourly;
+    },
+    displayedCollapseDaily: state => {
+      return state.displayedCollapseDaily;
     },
   },
 });

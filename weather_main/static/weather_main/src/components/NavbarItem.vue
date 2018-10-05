@@ -152,16 +152,14 @@ export default {
     .nav-logo
       max-width: $s-s-3
       position: relative
-      bottom: 5px
+      bottom: 4px
       margin-right: 2px
 
       @include media-tablet
-        bottom: 3px
         margin: 0 $s-s-6
 
       @include media-large
         max-width: $s-s-2
-        bottom: 5px
 
   .navbar-collapse
     float: right

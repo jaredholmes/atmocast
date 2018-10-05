@@ -6,10 +6,6 @@
     'inner-daily': !modeHourly,
   }"
   :id="detailsId"
-  data-toggle="collapse"
-  :data-target="'#' + collapseTarget"
-  aria-expanded="false"
-  :aria-controls="collapseTarget"
   >
     <div class="card-body">
       <span v-if="modeHourly" class="inner-temp inner-temp-hourly">
@@ -43,18 +39,18 @@ export default {
   props: ['datumIndex', 'modeHourly'],
 
   computed: {
+    displayedCollapse() {
+      if (this.modeHourly) {
+        return this.$store.getters.displayedCollapseHourly;
+      } else {
+        return this.$store.getters.displayedCollapseDaily;
+      }
+    },
     weatherDatum() {
       if (this.modeHourly) {
         return this.$store.getters.hourlyWeather[this.datumIndex];
       } else {
         return this.$store.getters.dailyWeather[this.datumIndex];
-      }
-    },
-    collapseTarget() {
-      if (this.modeHourly) {
-        return 'more-details-hourly-' + this.datumIndex;
-      } else {
-        return 'more-details-daily-' + this.datumIndex;
       }
     },
     detailsId() {
@@ -68,50 +64,43 @@ export default {
   },
 
   methods: {
-    unHighlightCards() {
-      let typeClass;
-      if (this.modeHourly) {
-        typeClass = 'inner-hourly';
-      } else {
-        typeClass = 'inner-daily';
-      }
-      const highlightedCards = document.getElementsByClassName('details-inner-card bc-light-accent ' + typeClass);
-      for (var i = 0; i < highlightedCards.length; i++) {
-        highlightedCards[i].classList.remove('bc-light-accent');
-      }
-    },
-    // Prevents details collapses from piling up when multiple details items
-    // are clicked. Does not occur if details item with an open corresponding
-    // collapse is clicked, since this prevents the collapse from closing.
-    closeCollapse(index, isHourly) {
-      let shownCollapse;
-      if (this.modeHourly) {
-        shownCollapse = document.getElementsByClassName('show hourly-collapse');
-      } else {
-        shownCollapse = document.getElementsByClassName('show daily-collapse');
-      }
-
-      if (shownCollapse) {
-        for (var i = 0; i < shownCollapse.length; i++) {
-          const collapseId = shownCollapse[i].id;
-          const singleDigitId = collapseId.substr(collapseId.length - 1);
-          const doubleDigitId = collapseId.substr(collapseId.length - 2);
-          if (singleDigitId != index && doubleDigitId != index) {
-            shownCollapse[i].classList.remove('show');
-          } else {
-            this.unHighlightCards();
-          }
-        }
-      }
-    },
-    highlightCard(index, isHourly) {
+    highlightCard() {
       const currentCard = document.getElementById(this.detailsId);
-      this.unHighlightCards();
       currentCard.classList.add('bc-light-accent');
     },
     selectMoreDetails(index, isHourly) {
-      this.highlightCard(index, isHourly);
-      this.closeCollapse(index, isHourly);
+      let collapse;
+      if (this.modeHourly) {
+        collapse = document.getElementById('more-details-hourly');
+      } else {
+        collapse = document.getElementById('more-details-daily');
+      }
+
+      // Overrides Bootstrap's collapse animations, which cause a 'jumping' effect of the collapse when cards are sequentially selected
+      if (collapse.classList.contains('show')) {
+        if (this.displayedCollapse == this.datumIndex) {
+          collapse.classList.remove('show');
+          this.$removeCardsColor(this.modeHourly);
+        }
+      } else {
+        collapse.classList.add('show');
+      }
+
+      // The indexes in the store are required for synchronisation between the collapse and the details cards
+      if (this.modeHourly) {
+        this.$store.commit({
+          type: 'setDisplayedCollapseHourly',
+          index: this.datumIndex
+        });
+      } else {
+        this.$store.commit({
+          type: 'setDisplayedCollapseDaily',
+          index: this.datumIndex
+        });
+      }
+
+      this.$removeCardsColor(this.modeHourly);
+      this.highlightCard();
     },
   },
 };

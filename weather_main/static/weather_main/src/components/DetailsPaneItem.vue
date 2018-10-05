@@ -3,7 +3,8 @@
     <h5 class="card-title fw-semi">{{ cardTitle }}</h5>
     <div class="card-body details-card-body">
       <div class="inner-card-container"
-      :class="{'hourly-inner': modeHourly}">
+      :class="{'hourly-inner': modeHourly}"
+      >
         <details-card-item v-for="i, x in 24"
         :key="x"
         :datumIndex="x"
@@ -11,9 +12,7 @@
         ></details-card-item>
       </div>
     </div>
-    <more-details-collapse v-for="i, x in 24"
-      :key="x"
-      :datumIndex="x"
+    <more-details-collapse
       :modeHourly="modeHourly"
     ></more-details-collapse>
   </div>

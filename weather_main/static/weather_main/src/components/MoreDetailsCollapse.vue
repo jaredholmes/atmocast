@@ -8,7 +8,7 @@
     <div class="card card-body row more-details-card bc-light-accent">
       <h3 v-if="modeHourly" class="fs-large fw-bold more-details-header">{{ $momentUnixHour(weatherDatum.time, datumIndex) }}</h3>
       <h3 v-else class="fs-large fw-bold more-details-header">{{ $momentAddDays(datumIndex) }}</h3>
-      <button @click="removeCardsColor(modeHourly)"
+      <button @click="$removeCardsColor(modeHourly)"
       type="button"
       class="btn btn-close close-more-details"
       data-toggle="collapse"
@@ -41,9 +41,16 @@
 export default {
   name: 'MoreDetailsCollapse',
 
-  props: ['datumIndex', 'modeHourly'],
+  props: ['modeHourly'],
 
   computed: {
+    datumIndex() {
+      if (this.modeHourly) {
+        return this.$store.getters.displayedCollapseHourly;
+      } else {
+        return this.$store.getters.displayedCollapseDaily;
+      }
+    },
     weatherDatum() {
       if (this.modeHourly) {
         return this.$store.getters.hourlyWeather[this.datumIndex];
@@ -63,28 +70,12 @@ export default {
     },
     collapseId() {
       if (this.modeHourly) {
-        return 'more-details-hourly-' + this.datumIndex;
+        return 'more-details-hourly';
       } else {
-        return 'more-details-daily-' + this.datumIndex;
+        return 'more-details-daily';
       }
     },
   },
-
-  methods: {
-    removeCardsColor(isModeHourly) {
-      let cardClass;
-
-      if (isModeHourly) {
-        cardClass = document.getElementsByClassName('inner-hourly');
-      } else {
-        cardClass = document.getElementsByClassName('inner-daily');
-      }
-
-      for (var i = 0; i < cardClass.length; i++) {
-        cardClass[i].classList.remove('bc-light-accent');
-      }
-    }
-  }
 };
 </script>
 

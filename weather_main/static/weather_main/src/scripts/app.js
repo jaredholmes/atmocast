@@ -63,13 +63,11 @@ Vue.mixin ({
       }
     },
     $adjustCurrentWeather(hourlyData) {
-      for (var i = 0; i < hourlyData.length; i++) {
-        if (this.$weatherHourMatchesCurrent(hourlyData[i].time)) {
-          this.$store.commit({
-            type: 'setCurrentWeather',
-            index: i,
-          })
-        } // else 'please refresh the page'
+      if (this.$weatherHourMatchesCurrent(hourlyData[0].time)) {
+        this.$store.commit({
+          type: 'setCurrentWeather',
+          index: 0,
+        })
       }
     },
     $momentUnixHour(unixTime, index) {

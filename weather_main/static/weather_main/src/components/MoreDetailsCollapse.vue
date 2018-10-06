@@ -8,13 +8,11 @@
     <div class="card card-body row more-details-card bc-light-accent">
       <h3 v-if="modeHourly" class="fs-large fw-bold more-details-header">{{ $momentUnixHour(weatherDatum.time, datumIndex) }}</h3>
       <h3 v-else class="fs-large fw-bold more-details-header">{{ $momentAddDays(datumIndex) }}</h3>
-      <button @click="$removeCardsColor(modeHourly)"
+      <button @click="$removeCardsColor(modeHourly);
+        closeCollapse();"
       type="button"
       class="btn btn-close close-more-details"
-      data-toggle="collapse"
-      :data-target="'#' + collapseId"
-      aria-expanded="false"
-      :aria-controls="collapseId"
+
       >
         <img :src="$store.state.iconLocationPrefix + 'close-light.png'" alt="Close more details">
       </button>
@@ -76,6 +74,12 @@ export default {
       }
     },
   },
+
+  methods: {
+    closeCollapse() {
+      document.getElementById(this.collapseId).classList.remove('shown');
+    }
+  }
 };
 </script>
 
@@ -84,6 +88,19 @@ export default {
 
   .more-details-collapse
     position: relative
+    display: block
+    max-height: 0
+    -webkit-transition: max-height 200ms ease-in
+
+  .more-details-collapse *
+    display: none
+
+  // 'shown' overrides Bootstrap's 'show', allowing for custom animations, etc.
+  .more-details-collapse.shown
+    max-height: 200px
+
+  .more-details-collapse.shown *
+    display: inline-block
 
   .more-details-header
     margin-bottom: $s-s-5

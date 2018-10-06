@@ -76,9 +76,9 @@ export default {
 
   .location-search-input
     background-color: rgba(0, 0, 0, 0)
-    transition: background-color 300ms linear, left 250ms
-    -webkit-transition: background-color 300ms linear, left 250ms
-    -ms-transition: background-color 300ms linear, left 250ms
+    transition: background-color 300ms ease-in, left 250ms ease-in
+    -webkit-transition: background-color 300ms ease-in, left 250ms ease-in
+    -ms-transition: background-color 300ms ease-in, left 250ms ease-in
     border: none
     padding: 0
     position: relative

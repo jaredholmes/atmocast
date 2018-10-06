@@ -185,6 +185,12 @@ export default {
 
             this.$adjustCurrentWeather(this.$store.state.weather.hourly.data);
 
+            // For PWA offline. If the weather data becomes outdated, reload the page
+            while(!this.$weatherHourMatchesCurrent(this.$store.state.weather.hourly.data[0].time)) {
+              alert();
+              location.reload();
+            }
+
             if (mainSection) {
               mainSection.style.opacity = 1;
             }

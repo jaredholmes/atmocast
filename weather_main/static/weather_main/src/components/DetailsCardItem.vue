@@ -77,13 +77,12 @@ export default {
       }
 
       // Overrides Bootstrap's collapse animations, which cause a 'jumping' effect of the collapse when cards are sequentially selected
-      if (collapse.classList.contains('show')) {
-        if (this.displayedCollapse == this.datumIndex) {
-          collapse.classList.remove('show');
-          this.$removeCardsColor(this.modeHourly);
-        }
+      if (collapse.classList.contains('shown')) {
+        // if (this.displayedCollapse == this.datumIndex) {
+        //   collapse.classList.remove('shown');
+        // }
       } else {
-        collapse.classList.add('show');
+        collapse.classList.add('shown');
       }
 
       // The indexes in the store are required for synchronisation between the collapse and the details cards

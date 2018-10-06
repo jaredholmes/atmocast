@@ -88,19 +88,20 @@ export default {
 
   .more-details-collapse
     position: relative
-    display: block
-    max-height: 0
-    -webkit-transition: max-height 200ms ease-in
-
-  .more-details-collapse *
     display: none
+    // max-height: 0
+    // -webkit-transition: max-height 200ms ease-in
+
+  // .more-details-collapse *
+  //   display: none
 
   // 'shown' overrides Bootstrap's 'show', allowing for custom animations, etc.
   .more-details-collapse.shown
-    max-height: 200px
+    // max-height: 200px
+    display: block
 
-  .more-details-collapse.shown *
-    display: inline-block
+  // .more-details-collapse.shown *
+  //   display: inline-block
 
   .more-details-header
     margin-bottom: $s-s-5

@@ -53,6 +53,95 @@ export default {
   },
 
   methods: {
+    // This method gets all the necessary weather and location data and interacts with the store where necessary
+    getMainData() {
+      // Show that content is loading
+      const mainSection = document.getElementById('main-section');
+      const loadingSection = document.getElementById('loading-section')
+      if (mainSection) {
+          mainSection.style.opacity = 0.3;
+      }
+      loadingSection.style.display = 'block';
+
+      if (this.lat) {
+        const darkSkyUrl = '/weather_data/' + this.lat.toFixed(8) + '/' + this.lon.toFixed(8) + '/';
+
+        axios.get(darkSkyUrl)
+          .then(response => {
+            const locationIQUrl = '/reverse_geocode/' + this.lat.toFixed(8) + '/' + this.lon.toFixed(8) + '/'
+
+            this.weatherData = response.data;
+            if (this.metric) {
+              this.convertAll(this.$fToC, this.$mToKm);
+            } else {
+              this.commitWeatherToStore();
+            }
+
+            this.$adjustCurrentWeather(this.$store.state.weather.hourly.data);
+
+            if (mainSection) {
+              mainSection.style.opacity = 1;
+            }
+            loadingSection.style.display = 'none';
+
+            axios.get(locationIQUrl)
+              .then(response => {
+                // LocationIQ displays strange and inaccurate suburb names for South Africa.
+                // This checks if the location is within South Africa. If true, the suburb is omitted.
+                // Hopefully this is a temporary fix.
+                if (
+                  -22.1250301 > this.lat
+                  && this.lat > -47.1788335
+                  && 38.2898954 > this.lon
+                  && this.lon > 16.3335213
+                ) {
+                  this.currentCity = response.data.address.city
+                  || response.data.address.region
+                  || response.data.address.county
+                  || response.data.address.state_district
+                  || response.data.address.state
+                  || response.data.address.country
+                  || response.data.address;
+                } else {
+                  this.currentCity = response.data.address.neighbourhood
+                  || response.data.address.suburb
+                  || response.data.address.village
+                  || response.data.address.town
+                  || response.data.address.city_district
+                  || response.data.address.city
+                  || response.data.address.region
+                  || response.data.address.county
+                  || response.data.address.state_district
+                  || response.data.address.state
+                  || response.data.address.country
+                  || response.data.address;
+                }
+              });
+            // console.log(this.weatherData); // For debugging
+          })
+          // .catch((error) => console.log(error));
+      } else {
+        this.setDefaultLocation();
+      }
+    },
+    getCurrentLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.$store.commit({
+              type: 'setCoords',
+              coords: {
+                lat: position.coords.latitude,
+                lon: position.coords.longitude,
+              }
+            });
+          },
+          () => this.setDefaultLocation()
+        )
+      } else {
+        this.setDefaultLocation();
+      }
+    },
     setDefaultLocation() {
       // Default location to New York City
       this.$store.commit({
@@ -161,78 +250,23 @@ export default {
       this.commitWeatherToStore();
     },
     lat() {
-      // Show that content is loading
-      const mainSection = document.getElementById('main-section');
-      const loadingSection = document.getElementById('loading-section')
-      if (mainSection) {
-          mainSection.style.opacity = 0.3;
-      }
-      loadingSection.style.display = 'block';
-
-      if (this.lat) {
-        const darkSkyUrl = '/weather_data/' + this.lat.toFixed(8) + '/' + this.lon.toFixed(8) + '/';
-
-        axios.get(darkSkyUrl)
-          .then(response => {
-            const locationIQUrl = '/reverse_geocode/' + this.lat.toFixed(8) + '/' + this.lon.toFixed(8) + '/'
-
-            this.weatherData = response.data;
-            if (this.metric) {
-              this.convertAll(this.$fToC, this.$mToKm);
-            } else {
-              this.commitWeatherToStore();
-            }
-
-            this.$adjustCurrentWeather(this.$store.state.weather.hourly.data);
-
-            // For PWA offline. If the weather data becomes outdated, reload the page
-            // while(!this.$weatherHourMatchesCurrent(this.$store.state.weather.hourly.data[0].time)) {
-            //   location.reload();
-            // }
-
-            if (mainSection) {
-              mainSection.style.opacity = 1;
-            }
-            loadingSection.style.display = 'none';
-
-            axios.get(locationIQUrl)
-              .then(response => {
-                this.currentCity = response.data.address.village
-                || response.data.address.town
-                || response.data.address.city_district
-                || response.data.address.city
-                || response.data.address.region
-                || response.data.address.county
-                || response.data.address.state_district
-                || response.data.address.state
-                || response.data.address.country
-                || response.data.address;
-              });
-            // console.log(this.weatherData); // For debugging
-          })
-          // .catch((error) => console.log(error));
-      } else {
-        this.setDefaultLocation();
-      }
+      // lat changes when the location is set, which makes it a good time to fetch the main data
+      this.getMainData();
     }
   },
   beforeCreate() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.$store.commit({
-            type: 'setCoords',
-            coords: {
-              lat: position.coords.latitude,
-              lon: position.coords.longitude,
-            }
-          });
-        },
-        () => this.setDefaultLocation()
-      )
-    } else {
-      this.setDefaultLocation();
-    }
+    // Reload the page every 30 minutes
+    // For PWA, to ensure that data does not become too outdated
+    window.setInterval(
+      () => {
+        this.getCurrentLocation();
+        this.getMainData();
+      },
+      30 * 60000
+    );
   },
+  created() {
+    this.getCurrentLocation();
+  }
 };
 </script>

@@ -180,5 +180,5 @@ export default {
     padding-right: $s-s-2
 
   .icon-menu
-    max-width: $s-s-2
+    max-width: $s-s-3
 </style>

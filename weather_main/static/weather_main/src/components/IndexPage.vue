@@ -255,14 +255,16 @@ export default {
     }
   },
   beforeCreate() {
-    // Reload the page every 30 minutes
+    // Check every 5 minutes if the weather data may be outdated. If so, refresh the page.
     // For PWA, to ensure that data does not become too outdated
     window.setInterval(
       () => {
-        this.getCurrentLocation();
-        this.getMainData();
+        const weatherHour = this.$store.state.weather.hourly.data[0].time
+        if (!this.$weatherHourMatchesCurrent(weatherHour)) {
+          location.reload();
+        }
       },
-      30 * 60000
+      1000
     );
   },
   created() {

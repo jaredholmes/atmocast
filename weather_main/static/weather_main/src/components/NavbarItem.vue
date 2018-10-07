@@ -177,7 +177,7 @@ export default {
     text-decoration: underline
 
   .navbar-toggler
-    padding-right: $s-s-1
+    padding-right: $s-s-2
 
   .icon-menu
     max-width: $s-s-2

@@ -1,5 +1,5 @@
 <template lang="html">
-  <div @click="selectMoreDetails(datumIndex)"
+  <div v-if="weatherDatum" @click="selectMoreDetails(datumIndex)"
   class="card details-inner-card"
   :class="{
     'inner-hourly': modeHourly,
@@ -23,7 +23,7 @@
         <img :src="$store.state.iconLocationPrefix + weatherDatum.icon + '-small.png'">
       </span>
       <span v-if="modeHourly" class="inner-time">
-        {{ $momentUnixHour(weatherDatum.time, datumIndex) }}
+        {{ $momentConvertByTimeZone(weatherDatum.time, timeZone) }}
       </span>
       <span v-else class="inner-date">
         {{ $momentAddDays(datumIndex) }}
@@ -52,6 +52,9 @@ export default {
       } else {
         return this.$store.getters.dailyWeather[this.datumIndex];
       }
+    },
+    timeZone() {
+      return this.$store.getters.currentTimeZone;
     },
     detailsId() {
       // Used in the template

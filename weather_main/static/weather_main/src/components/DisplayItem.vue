@@ -89,7 +89,6 @@ export default {
 
   mounted() {
     this.setGradientFromIcon(this.currentIcon);
-
     this.$adjustCurrentWeather(this.hourlyWeather);
   },
 };

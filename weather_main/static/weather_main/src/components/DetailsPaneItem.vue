@@ -36,13 +36,6 @@ export default {
     metric() {
       return this.$store.state.metric;
     },
-    weatherDetails() {
-      if (this.modeHourly) {
-        return this.$store.getters.hourlyWeather;
-      } else {
-        return this.$store.getters.dailyWeather;
-      }
-    },
     cardTitle() {
       if (this.modeHourly) {
         return 'Hourly';

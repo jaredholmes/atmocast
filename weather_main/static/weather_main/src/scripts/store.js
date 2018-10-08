@@ -14,6 +14,7 @@ export const store = new Vuex.Store({
     weather: {},
     currentWeather: '',
     currentIcon: '',
+    currentTimeZone: '',
     coords: {
       lat: '',
       lon: '',
@@ -36,6 +37,9 @@ export const store = new Vuex.Store({
     setCurrentWeather(state, index) {
       state.currentWeather = state.weather.hourly.data[index.index];
     },
+    setCurrentTimeZone(state) {
+      state.currentTimeZone = state.weather.timezone;
+    },
     setCoords(state, coords) {
       state.coords = coords.coords;
     },
@@ -50,17 +54,14 @@ export const store = new Vuex.Store({
     },
   },
   getters: {
-    // currentWeather: state => {
-    //   return state.weather.currently;
-    // },
-    // currentIcon: state => {
-    //   return state.weather.currently.icon;
-    // },
     hourlyWeather: state => {
       return state.weather.hourly.data;
     },
     dailyWeather: state => {
       return state.weather.daily.data;
+    },
+    currentTimeZone: state => {
+      return state.currentTimeZone;
     },
     latitude: state => {
       return state.coords.lat;

@@ -78,6 +78,7 @@ export default {
             }
 
             this.$adjustCurrentWeather(this.$store.state.weather.hourly.data);
+            this.$store.commit('setCurrentTimeZone');
 
             if (mainSection) {
               mainSection.style.opacity = 1;
@@ -257,15 +258,17 @@ export default {
   beforeCreate() {
     // Check every 5 minutes if the weather data may be outdated. If so, refresh the page.
     // For PWA, to ensure that data does not become too outdated
-    window.setInterval(
-      () => {
-        const weatherHour = this.$store.state.weather.hourly.data[0].time
-        if (!this.$weatherHourMatchesCurrent(weatherHour)) {
-          location.reload();
-        }
-      },
-      1000
-    );
+    if (this.weatherData) {
+      window.setInterval(
+        () => {
+          const weatherHour = this.$store.hourlyWeather[0].time
+          if (!this.$weatherHourMatchesCurrent(weatherHour)) {
+            location.reload();
+          }
+        },
+        1000
+      );
+    }
   },
   created() {
     this.getCurrentLocation();

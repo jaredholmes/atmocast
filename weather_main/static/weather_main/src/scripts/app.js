@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import moment from 'moment/min/moment.min';
+import moment from 'moment-timezone/builds/moment-timezone-with-data.min';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/dist/button';
 import 'bootstrap/js/dist/collapse';
@@ -70,9 +70,6 @@ Vue.mixin ({
         })
       }
     },
-    $momentUnixHour(unixTime, index) {
-        return moment(moment.unix(unixTime)).format('HH:mm');
-    },
     $momentAddDays(days) {
       if (days <= 0) {
         return 'Today';
@@ -81,6 +78,10 @@ Vue.mixin ({
       } else {
         return moment().add(days, 'days').format('dddd');
       }
+    },
+    $momentConvertByTimeZone(time ,timeZone) {
+      const parsedTime = moment(moment.unix(time));
+      return moment(parsedTime).tz(timeZone).format('HH:mm');
     },
     // Imperial to metric conversions
     $fToC(f) {

@@ -11,7 +11,7 @@
       <div id="nav-collapse" class="collapse navbar-collapse ml-auto">
         <ul class="navbar-nav ml-auto">
           <navbar-location-search-bar></navbar-location-search-bar>
-          <a class="btn-refresh" @click="reload" type="button" >
+          <a class="btn-refresh" @click="reload">
             <img :src="$store.state.iconLocationPrefix + 'refresh.png'" alt="Refresh">
           </a>
           <navbar-units-toggle-item></navbar-units-toggle-item>

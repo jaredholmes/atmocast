@@ -5,7 +5,13 @@
         <img class="nav-logo" :src="$store.state.iconLocationPrefix + 'logo-small.png'" alt="">
         <h1 class="fw-semi fs-moderate">Atmocast</h1>
       </a>
-      <a class="ml-auto navbar-toggler col-1 offset-5" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <a @click="toggleMenu"
+      class="ml-auto navbar-toggler col-1 offset-5"
+      data-toggle="collapse"
+      data-target="#nav-collapse"
+      aria-controls="nav-collapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
         <img class="icon icon-menu" :src="$store.state.iconLocationPrefix + 'menu.png'" alt="menu">
       </a>
       <div id="nav-collapse" class="collapse navbar-collapse ml-auto">
@@ -38,6 +44,9 @@ export default {
   },
 
   methods: {
+    toggleMenu() {
+      document.getElementById('nav-collapse').classList.toggle('active');
+    },
     reload() {
       location.reload();
     },
@@ -171,10 +180,23 @@ export default {
 
   .navbar-collapse
     float: right
-    padding: $s-s-6 0
+    padding: 0
+    max-height: 0
+    display: block
+    transition: max-height 180ms ease-in, padding 180ms ease-in
+    -webkit-transition: max-height 180ms ease-in, padding 180ms ease-in
+    -ms-transition: max-height 180ms ease-in, padding 180ms ease-in
 
     @include media-large
+      height: auto
+      // Max height higher than auto
+      max-height: 5em
       padding: 0
+
+  .navbar-collapse.active
+    padding: $s-s-6 0
+    // Max height higher than auto
+    max-height: 10em
 
   .navbar-nav
     position: relative

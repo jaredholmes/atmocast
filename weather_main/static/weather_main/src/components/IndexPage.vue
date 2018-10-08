@@ -154,7 +154,7 @@ export default {
       });
     },
     hideCollapse() {
-      document.getElementById('nav-collapse').classList.remove('show');
+      document.getElementById('nav-collapse').classList.remove('active');
     },
     commitWeatherToStore() {
       this.$store.commit({

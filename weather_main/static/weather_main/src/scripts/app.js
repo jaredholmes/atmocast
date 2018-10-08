@@ -1,12 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import moment from 'moment-timezone/builds/moment-timezone-with-data-2012-2022.min';
 import moment from 'moment/min/moment.min'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/js/dist/button';
-import 'bootstrap/js/dist/collapse';
-import 'bootstrap/js/dist/dropdown';
-import 'bootstrap/js/dist/util';
 
 import { store } from './store';
 import '../stylesheets/styles.sass';

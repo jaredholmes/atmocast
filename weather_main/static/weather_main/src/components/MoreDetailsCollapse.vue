@@ -92,20 +92,25 @@ export default {
 
   .more-details-collapse
     position: relative
-    display: none
-    // max-height: 0
-    // -webkit-transition: max-height 200ms ease-in
+    display: block
+    max-height: 0
+    transition: max-height 180ms ease-in, opacity 100ms linear
+    -webkit-transition: max-height 180ms ease-in, opacity 100ms linear
+    -ms-transition: max-height 180ms ease-in, opacity 100ms linear
 
-  // .more-details-collapse *
-  //   display: none
+  .more-details-collapse *
+    opacity: 0
+    transition: opacity 150ms linear
+    -webkit-transition: opacity 150ms linear
+    -ms-transition: opacity 150ms linear
 
   // 'shown' overrides Bootstrap's 'show', allowing for custom animations, etc.
   .more-details-collapse.shown
-    // max-height: 200px
+    max-height: 200px
     display: block
 
-  // .more-details-collapse.shown *
-  //   display: inline-block
+  .more-details-collapse.shown *
+    opacity: 1
 
   .more-details-header
     margin-bottom: $s-s-5

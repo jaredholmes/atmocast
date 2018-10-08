@@ -7,7 +7,7 @@
   :id="collapseId">
     <div class="card card-body row more-details-card bc-light-accent">
       <h3 v-if="modeHourly" class="fs-large fw-bold more-details-header">
-      {{ $momentConvertByTimeZone(weatherDatum.time, timeZone) }}</h3>
+      {{ $momentOffsetTime(weatherDatum.time, offset) }}</h3>
       <h3 v-else class="fs-large fw-bold more-details-header">{{ $momentAddDays(datumIndex) }}</h3>
       <button @click="$removeCardsColor(modeHourly);
         closeCollapse();"
@@ -57,8 +57,8 @@ export default {
         return this.$store.getters.dailyWeather[this.datumIndex];
       }
     },
-    timeZone() {
-      return this.$store.getters.currentTimeZone;
+    offset() {
+      return this.$store.getters.currentOffset;
     },
     metric() {
       return this.$store.state.metric;

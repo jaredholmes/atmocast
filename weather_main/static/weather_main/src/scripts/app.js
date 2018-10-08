@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import moment from 'moment-timezone/builds/moment-timezone-with-data.min';
+// import moment from 'moment-timezone/builds/moment-timezone-with-data-2012-2022.min';
+import moment from 'moment/min/moment.min'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/dist/button';
 import 'bootstrap/js/dist/collapse';
@@ -30,6 +31,7 @@ const router = new VueRouter({
 
 Vue.mixin ({
   methods: {
+
     $hideNavbarSearchButton() {
       const searchBtn = document.getElementById('btn-navbar-search');
       const searchInput = document.getElementById('input-location-search');
@@ -79,9 +81,10 @@ Vue.mixin ({
         return moment().add(days, 'days').format('dddd');
       }
     },
-    $momentConvertByTimeZone(time ,timeZone) {
-      const parsedTime = moment(moment.unix(time));
-      return moment(parsedTime).tz(timeZone).format('HH:mm');
+    $momentOffsetTime(time ,offset) {
+      const utc = moment.utc(moment.unix(time));
+      const offsetTime = moment(utc).add(offset, 'h');
+      return moment(offsetTime).format('HH:mm');
     },
     // Imperial to metric conversions
     $fToC(f) {

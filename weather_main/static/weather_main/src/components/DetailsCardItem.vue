@@ -23,7 +23,7 @@
         <img :src="$store.state.iconLocationPrefix + weatherDatum.icon + '-small.png'">
       </span>
       <span v-if="modeHourly" class="inner-time">
-        {{ $momentConvertByTimeZone(weatherDatum.time, timeZone) }}
+        {{ $momentOffsetTime(weatherDatum.time, offset) }}
       </span>
       <span v-else class="inner-date">
         {{ $momentAddDays(datumIndex) }}
@@ -53,8 +53,8 @@ export default {
         return this.$store.getters.dailyWeather[this.datumIndex];
       }
     },
-    timeZone() {
-      return this.$store.getters.currentTimeZone;
+    offset() {
+      return this.$store.getters.currentOffset;
     },
     detailsId() {
       // Used in the template

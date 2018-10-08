@@ -5,12 +5,15 @@
         <img class="nav-logo" :src="$store.state.iconLocationPrefix + 'logo-small.png'" alt="">
         <h1 class="fw-semi fs-moderate">Atmocast</h1>
       </a>
-      <button class="ml-auto navbar-toggler col-1 offset-5" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="ml-auto navbar-toggler col-1 offset-5" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
         <img class="icon icon-menu" :src="$store.state.iconLocationPrefix + 'menu.png'" alt="menu">
-      </button>
+      </a>
       <div id="nav-collapse" class="collapse navbar-collapse ml-auto">
         <ul class="navbar-nav ml-auto">
           <navbar-location-search-bar></navbar-location-search-bar>
+          <a class="btn-refresh" @click="reload" type="button" >
+            <img :src="$store.state.iconLocationPrefix + 'refresh.png'" alt="Refresh">
+          </a>
           <navbar-units-toggle-item></navbar-units-toggle-item>
           <!-- <li class="nav-item"><a href="#" class="nav-link c-pro-red  fw-semi">Go Pro</a></li> -->
         </ul>
@@ -35,6 +38,9 @@ export default {
   },
 
   methods: {
+    reload() {
+      location.reload();
+    },
     setBCFromIcon(icon) {
       const navbar = document.getElementById('navbar-main');
       const navCollapse = document.getElementById('nav-collapse');
@@ -126,9 +132,9 @@ export default {
   @import "../stylesheets/styles"
 
   nav
-    padding: $s-s-6 0
+    padding: 0
     // Prevents thin white line between nav and main section
-    padding-bottom: $s-l-1 + 1px
+    padding-bottom: 1px
 
     @include media-large
       padding-top: 0
@@ -152,17 +158,26 @@ export default {
     .nav-logo
       max-width: $s-s-3
       position: relative
-      bottom: 4px
+      bottom: 3px
       margin-right: 2px
 
       @include media-tablet
-        margin: 0 $s-s-6
+        margin-left: $s-s-6
+        bottom: 4px
 
       @include media-large
         max-width: $s-s-2
+        margin-left: 0
 
   .navbar-collapse
     float: right
+    padding: $s-s-6 0
+
+    @include media-large
+      padding: 0
+
+  .navbar-nav
+    position: relative
 
   .nav-item
     padding: $s-s-6
@@ -172,6 +187,20 @@ export default {
 
   .nav-item:hover
     cursor: pointer
+
+  .btn-refresh
+    position: absolute
+    top: $s-s-5
+    right: $s-s-4
+    max-width: 1em
+    background-color: rgba(0, 0, 0, 0)
+    border: none
+
+    @include media-large
+      display: none
+
+    img
+      max-width: 1.2em
 
   .toggle-active
     text-decoration: underline

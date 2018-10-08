@@ -59,7 +59,7 @@ export default {
       const mainSection = document.getElementById('main-section');
       const loadingSection = document.getElementById('loading-section')
       if (mainSection) {
-          mainSection.style.opacity = 0.3;
+          mainSection.style.opacity = 0.1;
       }
       loadingSection.style.display = 'block';
 
@@ -72,13 +72,13 @@ export default {
 
             this.weatherData = response.data;
             if (this.metric) {
-              this.convertAll(this.$fToC, this.$mToKm);
+              this.convertAll(this.$fToC, this.$mToKm)
             } else {
               this.commitWeatherToStore();
             }
 
             this.$adjustCurrentWeather(this.$store.state.weather.hourly.data);
-            this.$store.commit('setCurrentTimeZone');
+            this.$store.commit('setCurrentOffset');
 
             if (mainSection) {
               mainSection.style.opacity = 1;
@@ -258,17 +258,16 @@ export default {
   beforeCreate() {
     // Check every 5 minutes if the weather data may be outdated. If so, refresh the page.
     // For PWA, to ensure that data does not become too outdated
-    if (this.weatherData) {
-      window.setInterval(
-        () => {
-          const weatherHour = this.$store.hourlyWeather[0].time
-          if (!this.$weatherHourMatchesCurrent(weatherHour)) {
-            location.reload();
-          }
-        },
-        1000
-      );
-    }
+    window.setInterval(
+      () => {
+        const weatherHour = this.$store.getters.hourlyWeather[0].time
+        if (!this.$weatherHourMatchesCurrent(weatherHour)) {
+          this.getCurrentLocation();
+          this.getMainData();
+        }
+      },
+      1000
+    );
   },
   created() {
     this.getCurrentLocation();

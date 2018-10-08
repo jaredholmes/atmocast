@@ -256,8 +256,8 @@ export default {
     }
   },
   beforeCreate() {
-    // Check every 5 minutes if the weather data may be outdated. If so, refresh the page.
-    // For PWA, to ensure that data does not become too outdated
+    // For PWA, to ensure that data does not become too outdatedz
+    // Check every second if the weather data may be outdated. If so, refresh the page.
     window.setInterval(
       () => {
         const weatherHour = this.$store.getters.hourlyWeather[0].time

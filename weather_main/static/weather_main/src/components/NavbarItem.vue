@@ -218,6 +218,9 @@ export default {
     background-color: rgba(0, 0, 0, 0)
     border: none
 
+    @include media-tablet
+      right: $s-s-1
+
     @include media-large
       display: none
 

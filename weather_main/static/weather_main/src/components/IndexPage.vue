@@ -260,10 +260,12 @@ export default {
     // Check every second if the weather data may be outdated. If so, refresh the page.
     window.setInterval(
       () => {
-        const weatherHour = this.$store.getters.hourlyWeather[0].time
-        if (!this.$weatherHourMatchesCurrent(weatherHour)) {
-          this.getCurrentLocation();
-          this.getMainData();
+        if (this.$store.getters.hourlyWeather) {
+          const weatherHour = this.$store.getters.hourlyWeather[0].time
+          if (!this.$weatherHourMatchesCurrent(weatherHour)) {
+            this.getCurrentLocation();
+            this.getMainData();
+          }
         }
       },
       1000

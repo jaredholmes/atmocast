@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
+    alertMessage: 'An empty message.',
     // For dev server
     // iconLocationPrefix: 'icons/',
     // For production in Django
@@ -15,15 +16,22 @@ export const store = new Vuex.Store({
     currentWeather: '',
     currentIcon: '',
     currentOffset: '',
+    currentCity: '',
     coords: {
-      lat: '',
-      lon: '',
+      lat: 0,
+      lon: 0,
     },
+    favLocationExists: false,
+    favCoords: {},
+    favLocationName: '',
     navbarSearchResults: [],
     displayedCollapseHourly: 0,
     displayedCollapseDaily: 0,
   },
   mutations: {
+    setAlertMessage(state, message) {
+      state.alertMessage = message.message;
+    },
     toggleMetric(state) {
       if (state.metric) {
         state.metric = false;
@@ -40,8 +48,26 @@ export const store = new Vuex.Store({
     setCurrentOffset(state) {
       state.currentOffset = state.weather.offset;
     },
+    setCurrentCity(state, city) {
+      state.currentCity = city.city;
+    },
     setCoords(state, coords) {
       state.coords = coords.coords;
+    },
+    setFavLocationExists(state, bool) {
+      state.favLocationExists = bool.bool;
+    },
+    setFavCoords(state, coords) {
+      state.favCoords = coords.coords;
+    },
+    unsetFavCoords(state) {
+      state.favCoords = {};
+    },
+    setFavLocationName(state, name) {
+      state.favLocationName = name.name;
+    },
+    unsetFavLocationName(state) {
+      state.favLocationName = '';
     },
     setNavbarSearchResults(state, results) {
       state.navbarSearchResults = results.results;

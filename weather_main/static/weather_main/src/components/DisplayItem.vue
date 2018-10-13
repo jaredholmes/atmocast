@@ -71,15 +71,16 @@ export default {
     },
     toggleFav() {
       if (this.isFav) {
+        this.isFav = false;
         // Unset fav co-ordinates
         localforage.removeItem('favCoords');
         this.$store.commit('unsetFavCoords');
         // Unset fav location name
         localforage.removeItem('favLocationName');
         this.$store.commit('unsetFavLocationName');
-        this.isFav = false;
         this.$showAlert('Unfavourited ' + this.currentCity);
       } else {
+        this.isFav = true;
         // Set fav co-ordinates
         localforage.setItem('favCoords', {
           lat: this.currentCoords.lat,
@@ -99,7 +100,6 @@ export default {
           name: this.currentCity,
         });
 
-        this.isFav = true;
         this.$showAlert('Favourited ' + this.currentCity);
       }
     },

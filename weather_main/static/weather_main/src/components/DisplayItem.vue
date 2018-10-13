@@ -4,19 +4,44 @@
       <h1 class="fw-bold fs-xl display-temp">{{ Math.round(currentTemp) }}&deg;</h1>
       <h3 class="fs-moderate fw-reg">{{ currentSummary }}</h3>
       <br>
-      <img :src="$store.state.iconLocationPrefix + currentIcon + '-large.png'" :alt="currentIcon">
-      <h2 class="fw-semi fs-large">{{ currentCity }}</h2>
+      <img class="main-icon" :src="$store.state.iconLocationPrefix + currentIcon + '-large.png'" :alt="currentIcon">
+      <h2 class="fw-semi fs-large current-city">
+        {{ currentCity }}
+        <img @click="toggleFav()" class="fav-heart" :src="favHeartImg" alt="Favourite">
+      </h2>
     </div>
   </div>
 </template>
 
 <script>
+import localforage from 'localforage';
+
 export default {
   name: "DisplayItem",
 
-  props: ['currentCity'],
+  data() {
+    return {
+      isFav: false,
+    }
+  },
 
   computed: {
+    currentCity() {
+      return this.$store.state.currentCity;
+    },
+    currentCoords() {
+      return {
+        lat: this.$store.getters.latitude,
+        lon: this.$store.getters.longitude,
+      };
+    },
+    favHeartImg() {
+      if (this.isFav) {
+        return this.$store.state.iconLocationPrefix + 'heart-filled.png';
+      } else {
+        return this.$store.state.iconLocationPrefix + 'heart-outline.png';
+      }
+    },
     hourlyWeather() {
       return this.$store.getters.hourlyWeather;
     },
@@ -32,6 +57,52 @@ export default {
   },
 
   methods: {
+    checkIfLocationIsFav() {
+      localforage.getItem('favCoords')
+        .then(value => {
+          this.isFav = false;
+          if (value) {
+            if (this.currentCoords.lat == value.lat &&
+            this.currentCoords.lon == value.lon) {
+              this.isFav = true;
+            }
+          }
+        });
+    },
+    toggleFav() {
+      if (this.isFav) {
+        // Unset fav co-ordinates
+        localforage.removeItem('favCoords');
+        this.$store.commit('unsetFavCoords');
+        // Unset fav location name
+        localforage.removeItem('favLocationName');
+        this.$store.commit('unsetFavLocationName');
+        this.isFav = false;
+        this.$showAlert('Unfavourited ' + this.currentCity);
+      } else {
+        // Set fav co-ordinates
+        localforage.setItem('favCoords', {
+          lat: this.currentCoords.lat,
+          lon: this.currentCoords.lon,
+        });
+
+        this.$store.commit({
+          type: 'setFavCoords',
+          coords: this.currentCoords,
+        });
+
+        // Set fav location name
+        localforage.setItem('favLocationName', this.currentCity);
+
+        this.$store.commit({
+          type: 'setFavLocationName',
+          name: this.currentCity,
+        });
+
+        this.isFav = true;
+        this.$showAlert('Favourited ' + this.currentCity);
+      }
+    },
     // Adds class to the element to give it the background color corresponsing with the currentIcon property
     setGradientFromIcon(icon) {
       const display = document.getElementById('display');
@@ -82,6 +153,9 @@ export default {
   },
 
   watch: {
+    currentCoords() {
+      this.checkIfLocationIsFav();
+    },
     currentIcon() {
       this.setGradientFromIcon(this.currentIcon);
     },
@@ -90,6 +164,11 @@ export default {
   mounted() {
     this.setGradientFromIcon(this.currentIcon);
     this.$adjustCurrentWeather(this.hourlyWeather);
+    this.checkIfLocationIsFav();
+  },
+
+  beforeUpdate() {
+    this.checkIfLocationIsFav();
   },
 };
 </script>
@@ -117,8 +196,19 @@ export default {
   .display-temp
     margin-bottom: $s-s-5
 
-  img
+  .main-icon
     max-width: $s-l-4
     margin: $s-s-2 auto $s auto
     display: block
+
+  .current-city
+    position: relative
+
+  .fav-heart
+    position: absolute
+    margin: 3px
+    max-width: 1em
+
+  .fav-heart:hover
+    cursor: pointer
 </style>

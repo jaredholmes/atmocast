@@ -1,7 +1,10 @@
 <template lang="html">
   <div class="">
-    <div v-if="this.searchResults.length > 0" class="row" id="search-results">
-      <button @click="hideSearchResults" class="btn btn-close close-search-results fw-semi" type="button">
+    <div v-if="this.searchResults.length > 0"
+      class="row"
+      id="search-results"
+      >
+      <button @click="$hideSearchResults" class="btn btn-close close-search-results fw-semi" type="button">
         <img :src="$store.state.iconLocationPrefix + 'close-dark.png'" alt="">
       </button>
       <ul class="list-group">
@@ -13,7 +16,7 @@
               lon: parseFloat(result.lon)
             }
           });
-          hideSearchResults();"
+          $hideSearchResults();"
          class="list-group-item">
           {{ result.display_name }}
         </li>
@@ -27,15 +30,7 @@ export default {
   name: 'NavbarLocationSearchResults',
 
   props: ['searchResults'],
-
-  methods: {
-    hideSearchResults() {
-      document.getElementById('search-results').style.display = 'none';
-      document.getElementById('input-location-search').value = '';
-      this.$hideNavbarSearchButton();
-    }
-  },
-};
+}
 </script>
 
 <style scoped lang="sass">
@@ -45,10 +40,11 @@ export default {
     height: $s-l-6
     position: absolute
     left: 0
+    width: 100%
 
     @include media-large
-      right: 0
-      left: auto
+      // right: 30%
+      // left: auto
 
   .row *
     z-index: 1
@@ -58,9 +54,6 @@ export default {
     height: auto
     overflow-y: scroll
     position: relative
-
-    @include media-large
-      max-width: $s-l-7
 
   .list-group-item
     overflow: visible

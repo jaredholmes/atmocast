@@ -193,6 +193,9 @@ export default {
     @include media-tablet
       padding-top: $s-l-2
 
+    @include media-tiny
+      padding-top: $s-l-1
+
   .display-temp
     margin-bottom: $s-s-5
 

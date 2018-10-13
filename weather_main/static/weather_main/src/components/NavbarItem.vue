@@ -6,6 +6,7 @@
         <h1 class="fw-semi fs-moderate">Atmocast</h1>
       </a>
       <a @click="toggleMenu"
+      id="nav-menu-toggler"
       class="ml-auto navbar-toggler col-1 offset-5"
       data-toggle="collapse"
       data-target="#nav-collapse"
@@ -17,9 +18,6 @@
       <div id="nav-collapse" class="collapse navbar-collapse ml-auto">
         <ul class="navbar-nav ml-auto">
           <navbar-location-search-bar></navbar-location-search-bar>
-          <a class="btn-refresh" @click="reload">
-            <img :src="$store.state.iconLocationPrefix + 'refresh.png'" alt="Refresh">
-          </a>
           <navbar-units-toggle-item></navbar-units-toggle-item>
           <!-- <li class="nav-item"><a href="#" class="nav-link c-pro-red  fw-semi">Go Pro</a></li> -->
         </ul>
@@ -46,9 +44,6 @@ export default {
   methods: {
     toggleMenu() {
       document.getElementById('nav-collapse').classList.toggle('active');
-    },
-    reload() {
-      location.reload();
     },
     setBCFromIcon(icon) {
       const navbar = document.getElementById('navbar-main');
@@ -209,20 +204,6 @@ export default {
 
   .nav-item:hover
     cursor: pointer
-
-  .btn-refresh
-    position: absolute
-    top: $s-s-5
-    right: $s-s-4
-    max-width: 1em
-    background-color: rgba(0, 0, 0, 0)
-    border: none
-
-    @include media-tablet
-      right: $s-s-1
-
-    @include media-large
-      display: none
 
     img
       max-width: 1.2em

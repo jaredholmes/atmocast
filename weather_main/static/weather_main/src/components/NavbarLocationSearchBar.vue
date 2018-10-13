@@ -1,12 +1,18 @@
 <template lang="html">
-  <li class="nav-item">
-    <form @submit="preventDefaultSubmit" class="form-inline row" id="location-search-form">
-      <input v-model="searchQuery" @focus="showSearchBtn" @blur="hideSearchBtn" class="col-6 col-md-3 col-lg-9 form-control location-search-input" id="input-location-search" type="search" placeholder="Change location" aria-label="Change location">
-      <button @click="getSearchResults" class="col-2 col-lg-3 btn btn-location-search" id="btn-navbar-search" type="button" name="button">
+  <li @blur="hideSearchBtn" id="nav-item-search" class="nav-item">
+    <form @submit="preventDefaultSubmit" class="form-inline" id="location-search-form">
+      <input v-model="searchQuery" @focus="showSearchBtn" class="form-control location-search-input" id="input-location-search" type="search" placeholder="Change location" aria-label="Change location">
+      <button @click="getSearchResults" class="btn btn-location-search" id="btn-navbar-search" type="button" name="button">
         <img id="btn-search-icon" :src="$store.state.iconLocationPrefix + 'search.png'" alt="Search for a location">
         <div class="spinner" id="search-loading-spinner">
 
         </div>
+      </button>
+      <button @click="$getPosition(true)" class="btn btn-location-search" id="btn-navbar-location" type="button" name="button">
+        <img id="btn-location-icon" :src="$store.state.iconLocationPrefix + 'location.png'" alt="Current location">
+      </button>
+      <button @click="scrollToFavList" class="btn btn-location-search" id="btn-navbar-fav" type="button" name="button">
+        <img id="btn-fav-icon" :src="$store.state.iconLocationPrefix + 'heart-filled.png'" alt="Current location">
       </button>
     </form>
     <navbar-location-search-results :searchResults="searchResults"></navbar-location-search-results>
@@ -40,10 +46,12 @@ export default {
       }
     },
     showSearchBtn() {
+      const searchBtn = document.getElementsByClassName('btn-location-search');
       const searchInput = document.getElementById('input-location-search');
-      const searchBtn = document.getElementById('btn-navbar-search');
-      searchBtn.style.visibility = 'visible';
-      searchBtn.style.opacity = '1';
+      for (var i = 0; i < searchBtn.length; i++) {
+        searchBtn[i].style.visibility = 'visible';
+        searchBtn[i].style.opacity = '1';
+      }
       searchInput.style.left = '0';
     },
     hideSearchBtn() {
@@ -56,6 +64,7 @@ export default {
       if (this.searchQuery) {
         const searchIcon = document.getElementById('btn-search-icon');
         const searchSpinner = document.getElementById('search-loading-spinner');
+        const searchResults = document.getElementById('search-results');
         searchIcon.style.visibility = 'hidden';
         searchSpinner.style.display = 'block';
         const requestUrl = '/geocode/' + this.searchQuery + '/';
@@ -64,15 +73,41 @@ export default {
             this.searchResults = response.data;
             searchSpinner.style.display = 'none';
             searchIcon.style.visibility = 'visible';
+            if (searchResults) {
+              searchResults.style.display = 'flex';
+            }
           })
       }
-    }
+    },
+    scrollToFavList() {
+      const favList = document.getElementById('fav-list');
+      if (favList) {
+        favList.scrollIntoView();
+
+        window.setTimeout(
+          () => favList.classList.add('highlighted'),
+          150
+        );
+        
+        window.setTimeout(
+          () => favList.classList.remove('highlighted'),
+          1500
+        );
+      } else {
+        this.$showAlert("You don't have any favourite locations yet. Add one by clicking the heart next to the location name.");
+      }
+    },
   },
 };
 </script>
 
 <style scoped lang="sass">
   @import "../stylesheets/styles"
+
+  #nav-item-search
+
+    @include media-large
+      margin-left: 0
 
   .location-search-input
     background-color: rgba(0, 0, 0, 0)
@@ -82,9 +117,10 @@ export default {
     border: none
     padding: 0
     position: relative
+    max-width: 50%
 
     @include media-large
-      left: 4.5em
+      left: 10em
       padding: $s-s-6
       max-width: 75%
 
@@ -121,7 +157,7 @@ export default {
     transition: opacity 800ms
     -webkit-transition: opacity 800ms
     -ms-transition: opacity 800ms
-    padding: 0
+    padding: $s-s-6
     position: relative
     border: none
     background-color: rgba(0, 0, 0, 0)
@@ -136,8 +172,8 @@ export default {
       display: none
 
     #search-loading-spinner:before
-      right: 5px
-      top: 0
+      top: 8px
+      left: 5px
       z-index: 50000
       width: $s-s-2
       height: $s-s-2

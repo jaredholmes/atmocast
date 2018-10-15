@@ -75,7 +75,7 @@ export default {
     },
     metric() {
       if (this.metric) {
-        this.$convertAll(this.$store.state.weather, this.$fToC, this.$mToKm);
+        this.$convertAll(this.$store.state.weather, this.$fToC, this.$mToKm); 
       } else {
         this.$convertAll(this.$store.state.weather, this.$cToF, this.$kmToM);
       }
@@ -88,7 +88,7 @@ export default {
   created() {
     this.$checkFavLocation();
     this.$setLocation();
-    
+
     localforage.getItem('favLocationName')
       .then((value) => {
         if (value) {

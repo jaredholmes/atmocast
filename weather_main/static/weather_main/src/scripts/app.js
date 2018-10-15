@@ -78,7 +78,8 @@ Vue.mixin ({
               this.$commitWeatherToStore(response.data);
             }
 
-            this.$adjustCurrentWeather(this.$store.state.weather.hourly.data);
+            // this.$adjustCurrentWeather(this.$store.state.weather.hourly.data);
+            this.$adjustCurrentWeather();
             // Set offset to calculate correct time.
             this.$store.commit('setCurrentOffset');
 
@@ -332,6 +333,16 @@ Vue.mixin ({
           );
         }
 
+
+        this.$convertAllTempsInObject(
+          weatherObj.currently,
+          tempConversion
+        );
+        this.$convertAllDistanceInObject(
+          weatherObj.currently,
+          distanceConversion
+        );
+
         this.$commitWeatherToStore(weatherObj);
       } else {
         throw 'No weather object given as argument';
@@ -411,13 +422,16 @@ Vue.mixin ({
         return false;
       }
     },
-    $adjustCurrentWeather(hourlyData) {
-      if (this.$weatherHourMatchesCurrent(hourlyData[0].time)) {
-        this.$store.commit({
-          type: 'setCurrentWeather',
-          index: 0,
-        });
-      }
+    // $adjustCurrentWeather(hourlyData) {
+      // if (this.$weatherHourMatchesCurrent(hourlyData[0].time)) {
+      //   this.$store.commit({
+      //     type: 'setCurrentWeather',
+      //     index: 0,
+      //   });
+      // }
+    // },
+    $adjustCurrentWeather() {
+      this.$store.commit('setCurrentWeather');
     },
     $momentAddDays(days) {
       if (days <= 0) {

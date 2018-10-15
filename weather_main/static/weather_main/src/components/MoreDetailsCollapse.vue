@@ -24,7 +24,7 @@
         {{ weatherDatum.summary }}
       </div>
       <div class="col-12 col-md-6">
-        <b>Chance of rain:</b> {{ weatherDatum.precipProbability * 100 }}%
+        <b>Chance of rain:</b> {{ Math.round(weatherDatum.precipProbability * 100) }}%
       </div>
       <div class="col-12 col-md-6">
         <b>Wind speed:</b> {{ Math.round(weatherDatum.windSpeed) }}{{ speedUnit }}

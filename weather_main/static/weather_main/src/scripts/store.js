@@ -42,8 +42,11 @@ export const store = new Vuex.Store({
     setWeather(state, weatherData) {
       state.weather = weatherData.weatherData;
     },
-    setCurrentWeather(state, index) {
-      state.currentWeather = state.weather.hourly.data[index.index];
+    // setCurrentWeather(state, index) {
+    //   state.currentWeather = state.weather.hourly.data[index.index];
+    // },
+    setCurrentWeather(state) {
+      state.currentWeather = state.weather.currently;
     },
     setCurrentOffset(state) {
       state.currentOffset = state.weather.offset;

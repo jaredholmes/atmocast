@@ -19,6 +19,7 @@ Vue.use(VueRouter);
 
 const routes = [
   { path: '', component: IndexPage },
+  { path: '/android/www/index.html', component: IndexPage },
 ];
 
 const router = new VueRouter({
@@ -65,11 +66,11 @@ Vue.mixin ({
       // Ensure validity of location. If invalid, set it to the default.
       if (!isNaN(lat) && !isNaN(lon)) {
         // Django URLs
-        const darkSkyUrl = '/weather_data/' + lat.toFixed(8) + '/' + lon.toFixed(8) + '/';
+        const darkSkyUrl = 'https://atmocast.com/weather_data/' + lat.toFixed(8) + '/' + lon.toFixed(8) + '/';
 
         axios.get(darkSkyUrl)
           .then(response => {
-            const locationIQUrl = '/reverse_geocode/' + lat.toFixed(8) + '/' + lon.toFixed(8) + '/';
+            const locationIQUrl = 'https://atmocast.com/reverse_geocode/' + lat.toFixed(8) + '/' + lon.toFixed(8) + '/';
 
             // Data is in Farenheit by default.
             if (metric) {

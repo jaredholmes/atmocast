@@ -67,7 +67,7 @@ export default {
         const searchResults = document.getElementById('search-results');
         searchIcon.style.visibility = 'hidden';
         searchSpinner.style.display = 'block';
-        const requestUrl = '/geocode/' + this.searchQuery + '/';
+        const requestUrl = 'https://atmocast.com/geocode/' + this.searchQuery + '/';
         axios.get(requestUrl)
           .then(response => {
             this.searchResults = response.data;
@@ -88,7 +88,7 @@ export default {
           () => favList.classList.add('highlighted'),
           150
         );
-        
+
         window.setTimeout(
           () => favList.classList.remove('highlighted'),
           1500

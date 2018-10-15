@@ -9,8 +9,11 @@ export const store = new Vuex.Store({
     alertMessage: 'An empty message.',
     // For dev server
     // iconLocationPrefix: 'icons/',
-    // For production in Django
-    iconLocationPrefix: 'static/weather_main/dist/icons/',
+    // For dev in Django
+    // iconLocationPrefix: '/static/weather_main/dist/icons/',
+    // For production
+    // Absolute URL is required for Cordova app
+    iconLocationPrefix: 'https://atmocast.com/static/weather_main/dist/icons/',
     metric: true,
     weather: {},
     currentWeather: '',

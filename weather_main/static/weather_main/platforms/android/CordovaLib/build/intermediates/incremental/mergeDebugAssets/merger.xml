@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/CordovaLib/assets"/><source path="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/CordovaLib/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/CordovaLib/src/debug/assets"/></dataSet></merger>

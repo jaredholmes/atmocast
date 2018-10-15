@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#FFFFFF">
+  <meta name="description" content="Atmocast provides detailed weather forecasts, including current conditions, hourly forecasts and daily forecasts.">
+  <link rel="shortcut icon" href="static/weather_main/dist/icons/favicon.ico">
+  <link rel="stylesheet" href="static/weather_main/dist/spinner.min.css">
+  <title>Atmocast – Simple weather forecasting</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126836360-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-126836360-1');
+  </script>
+
+</head>
+<body>
+  <div id="loading-section">
+    <div class="spinner">
+    </div>
+    <div class="loading-caption">
+      Loading your weather data
+    </div>
+  </div>
+  <div id="app">
+    <router-view></router-view>
+  </div>
+  <script src="static/weather_main/dist/bundles/app.bundle.js" charset="utf-8"></script>
+</body>
+</html>

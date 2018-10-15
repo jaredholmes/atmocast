@@ -16,7 +16,7 @@ def weather_data(request, lat, lon):
     if lat and lon:
         dark_sky_key = os.environ.get('DARKSKY_KEY')
         dark_sky_URL = 'https://api.darksky.net/forecast/' + dark_sky_key + '/' + lat + ',' + lon
-        dark_sky_params = { 'exclude': 'currently,minutely,alerts,flags' }
+        dark_sky_params = { 'exclude': 'minutely,alerts,flags' }
         response = requests.get(dark_sky_URL, params=dark_sky_params)
     else:
         response = 'Invalid co-ordinates given in request.'

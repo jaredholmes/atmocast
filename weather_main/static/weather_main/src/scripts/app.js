@@ -67,10 +67,12 @@ Vue.mixin ({
       if (!isNaN(lat) && !isNaN(lon)) {
         // Django URLs
         const darkSkyUrl = 'https://atmocast.com/weather_data/' + lat.toFixed(8) + '/' + lon.toFixed(8) + '/';
+        // const darkSkyUrl = '/static/weather_main/www/static/weather_main/dist/data.json'; // Because I'm a cheap developer
 
         axios.get(darkSkyUrl)
           .then(response => {
             const locationIQUrl = 'https://atmocast.com/reverse_geocode/' + lat.toFixed(8) + '/' + lon.toFixed(8) + '/';
+            // const locationIQUrl = '/static/weather_main/www/static/weather_main/dist/location.json'; // Because I'm a cheap developer
 
             // Data is in Farenheit by default.
             if (metric) {
@@ -143,7 +145,6 @@ Vue.mixin ({
                   city: city,
                 });
               });
-            // console.log(this.weatherData); // For debugging
           });
           // .catch((error) => console.log(error));
       } else {

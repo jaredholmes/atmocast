@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
     // For dev server
     // iconLocationPrefix: 'icons/',
     // For dev in Django
-    // iconLocationPrefix: '/static/weather_main/dist/icons/',
+    // iconLocationPrefix: '/static/weather_main/www/static/weather_main/dist/icons/',
     // For production
     // Absolute URL is required for Cordova app
     iconLocationPrefix: 'https://atmocast.com/static/weather_main/www/static/weather_main/dist/icons/',

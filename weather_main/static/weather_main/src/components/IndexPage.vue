@@ -75,7 +75,7 @@ export default {
     },
     metric() {
       if (this.metric) {
-        this.$convertAll(this.$store.state.weather, this.$fToC, this.$mToKm); 
+        this.$convertAll(this.$store.state.weather, this.$fToC, this.$mToKm);
       } else {
         this.$convertAll(this.$store.state.weather, this.$cToF, this.$kmToM);
       }
@@ -112,20 +112,20 @@ export default {
       );
     }
   },
-  updated() {
-    window.setInterval(
-      () => {
-        if (this.$store.state.weather) {
-          const weatherHour = this.$store.getters.hourlyWeather[0].time;
-          if (!this.$weatherHourMatchesCurrent(weatherHour)) {
-            this.$setLocation();
-            this.$getMainData();
-          }
-        }
-      },
-      1000
-    );
-  },
+  // updated() {
+  //   window.setInterval(
+  //     () => {
+  //       if (this.$store.state.weather) {
+  //         const weatherHour = this.$store.getters.hourlyWeather[0].time;
+  //         if (!this.$weatherHourMatchesCurrent(weatherHour)) {
+  //           this.$setLocation();
+  //           this.$getMainData();
+  //         }
+  //       }
+  //     },
+  //     1000
+  //   );
+  // },
 };
 </script>
 

@@ -13,7 +13,7 @@ export const store = new Vuex.Store({
     // iconLocationPrefix: '/static/weather_main/dist/icons/',
     // For production
     // Absolute URL is required for Cordova app
-    iconLocationPrefix: 'https://atmocast.com/static/weather_main/dist/icons/',
+    iconLocationPrefix: 'https://atmocast.com/static/weather_main/www/static/weather_main/dist/icons/',
     metric: true,
     weather: {},
     currentWeather: '',

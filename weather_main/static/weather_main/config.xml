@@ -2,26 +2,30 @@
 <widget id="com.atmocast.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Atmocast</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Simple weather forecasting.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="jaredv@colgro.com" href="https://holmeswebdev.com">
+        Jared Holmes
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
-    <allow-intent href="tel:*" />
-    <allow-intent href="sms:*" />
-    <allow-intent href="mailto:*" />
-    <allow-intent href="geo:*" />
+    <allow-navigation href="*" />
+    <allow-intent href="*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <access origin="*" />
+        <allow-navigation href="*" />
+        <allow-intent href="*" />
+        <icon density="hdpi" src="/res/icon/android/icon-72x72.png" />
+        <icon density="xhdpi" src="/res/icon/android/icon-96x96.png" />
+        <icon density="xxhdpi" src="/res/icon/android/icon-144x144.png" />
+        <icon density="xxxhdpi" src="/res/icon/android/icon-72x72.png" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    <engine name="android" spec="^7.1.1" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+    <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
+    <engine name="android" spec="^7.1.1" />
 </widget>

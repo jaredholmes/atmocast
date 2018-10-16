@@ -19,7 +19,8 @@ Vue.use(VueRouter);
 
 const routes = [
   { path: '', component: IndexPage },
-  { path: '/android/www/index.html', component: IndexPage },
+  // For Cordova app
+  { path: '*', component: IndexPage },
 ];
 
 const router = new VueRouter({
@@ -27,8 +28,22 @@ const router = new VueRouter({
   routes,
 });
 
+const isApp =  document.URL.indexOf('http://') === -1
+&& document.URL.indexOf('https://') === -1;
+
+// TODO: make start loading and end loading methods
+
 Vue.mixin ({
   methods: {
+    // Set different location prefix for app, so that icons can be saved offline
+    $setAppIconLocation() {
+      if (isApp) {
+        this.$store.commit({
+          type: 'setIconLocationPrefix',
+          prefix: 'static/weather_main/dist/icons/',
+        });
+      }
+    },
     // Gets all the necessary weather and location data and shows (and hides) loading screen
     // Basically a package of functions to set up the weather UI
     $getMainData() {
@@ -153,7 +168,30 @@ Vue.mixin ({
     },
     // Gets the user's position, falls back on setting the default position.
     // if alertUser is true, the user will be notified if their position cannot be detected.
-    $getPosition(alertUser) {
+    $getPosition(alertUser, reload) {
+      const mainSection = document.getElementById('main-section');
+      const navCollapse  = document.getElementById('nav-collapse');
+      const loadingSection = document.getElementById('loading-section');
+      const alerts = document.getElementsByClassName('alert');
+      const smallScreen = window.innerWidth <= 992 ? true : false;
+      // Show that content is loading
+      if (mainSection) {
+          mainSection.style.opacity = 0.1;
+      }
+
+      if (smallScreen) {
+        if (navCollapse) {
+          navCollapse.style.display = 'none';
+        }
+      }
+
+      if (alerts) {
+        for (var i = 0; i < alerts.length; i++) {
+          alerts[i].style.display = 'none';
+        }
+      }
+
+      loadingSection.style.display = 'block';
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -170,13 +208,41 @@ Vue.mixin ({
           }
         );
       }
+
+      // Loading is finished. Hide loading elements and display main UI.
+      if (mainSection) {
+        mainSection.style.opacity = 1;
+      }
+
+      if (smallScreen) {
+        if (navCollapse) {
+          navCollapse.style.display = 'block';
+          this.$hideCollapse();
+        }
+      }
+
+      if (alerts) {
+        for (var i = 0; i < alerts.length; i++) {
+          alerts[i].style.display = 'block';
+        }
+      }
+
+      loadingSection.style.display = 'none';
+
+      // Used on first load to circumvent bug with location request in app.
+      // Without this, the app won't get the location the first time the user visits the app, if location permission is granted.
+      // The downside is that it also reloads if the user denies, causing the app to ask twice for location access
+      if (isApp && reload) {
+        location.reload()
+      };
     },
     // If the user has visited the site, attempt to get their position.
     // This prevents a location request on the first page load of a user, which is likely to be blocked.
     $setLocation() {
       localforage.getItem('returnVisit')
         .then((value) => {
-          if (value) {
+          // ||isApp results in the app asking for location permission on the first load, different to the website.
+          if (value || isApp) {
             this.$getPosition();
           } else {
             this.$setLocationToFav();
@@ -194,7 +260,11 @@ Vue.mixin ({
       }
 
       if (alertUser === true) {
-        this.$showAlert('Unable to get your location. Please check the location settings of your device or browser.', 15000);
+        if (isApp) {
+          this.$showAlert('Unable to get your location. Please restart the app or check location permissions.', 15000);
+        } else {
+          this.$showAlert('Unable to get your location. Please check the location settings of your device or browser.', 15000);
+        }
       }
     },
     // Set location to specific or default location

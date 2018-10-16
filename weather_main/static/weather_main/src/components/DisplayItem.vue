@@ -4,7 +4,7 @@
       <h1 class="fw-bold fs-xl display-temp">{{ Math.round(currentTemp) }}&deg;</h1>
       <h3 class="fs-moderate fw-reg">{{ currentSummary }}</h3>
       <br>
-      <img class="main-icon" :src="$store.state.iconLocationPrefix + currentIcon + '-large.png'" :alt="currentIcon">
+      <img class="main-icon" :src="$store.state.iconLocationPrefix + 'custom/' + currentIcon + '-large.png'" :alt="currentIcon">
       <h2 class="fw-semi fs-large current-city">
         {{ currentCity }}
         <img @click="toggleFav()" class="fav-heart" :src="favHeartImg" alt="Favourite">

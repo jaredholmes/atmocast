@@ -5,7 +5,7 @@
     <div id="alert-location" class="alert alert-primary bc-light" role="alert">
     <span>For a better experience, allow Atmocast to get weather information for your location.</span>
     <span class="alert-buttons-container">
-      <button @click="$getPosition(true)" id="btn-location-get" class="btn fw-semi" type="button" name="button">Get my location</button>
+      <button @click="$getPosition(true, true)" id="btn-location-get" class="btn fw-semi" type="button" name="button">Get my location</button>
       <button @click="$focusLocationSearch(); $hideAlert('alert-location');" id="btn-location-search" class="btn fw-semi" type="button" name="button">Search location</button>
       <img @click="$hideAlert('alert-location')" :src="$store.state.iconLocationPrefix + 'close-light.png'" class="alert-close" alt="Close alert">
     </span>
@@ -88,6 +88,7 @@ export default {
   created() {
     this.$checkFavLocation();
     this.$setLocation();
+    this.$setAppIconLocation();
 
     localforage.getItem('favLocationName')
       .then((value) => {
@@ -105,27 +106,25 @@ export default {
         'returnVisit',
         (err, value) => {
           if (!value) {
-            this.$showLocationAlert();
             localforage.setItem('returnVisit', true);
+            this.$showLocationAlert();
           }
         }
       );
     }
   },
-  // updated() {
-  //   window.setInterval(
-  //     () => {
-  //       if (this.$store.state.weather) {
-  //         const weatherHour = this.$store.getters.hourlyWeather[0].time;
-  //         if (!this.$weatherHourMatchesCurrent(weatherHour)) {
-  //           this.$setLocation();
-  //           this.$getMainData();
-  //         }
-  //       }
-  //     },
-  //     1000
-  //   );
-  // },
+  updated() {
+    // Reload data every 60 minutes
+    window.setInterval(
+      () => {
+        if (this.$store.state.weather) {
+          this.$setLocation();
+          this.$getMainData();
+        }
+      },
+      60 * 60000
+    );
+  },
 };
 </script>
 

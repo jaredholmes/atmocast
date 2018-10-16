@@ -20,7 +20,7 @@
         </span>
       </span>
       <span class="inner-icon">
-        <img :src="$store.state.iconLocationPrefix + weatherDatum.icon + '-small.png'">
+        <img :src="$store.state.iconLocationPrefix + 'custom/' + weatherDatum.icon + '-small.png'">
       </span>
       <span v-if="modeHourly" class="inner-time">
         {{ $momentOffsetTime(weatherDatum.time, offset) }}

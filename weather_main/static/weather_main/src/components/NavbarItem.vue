@@ -152,25 +152,25 @@ export default {
   .navbar-brand
     min-width: 75%
     margin: auto 0
+    display: flex
+    align-items: center
 
     @include media-large
       min-width: 0
 
     h1
       display: inline-block
+      line-height: 21px
 
     .nav-logo
-      max-width: $s-s-3
+      max-width: 21px * 4/3
       position: relative
-      bottom: 3px
-      margin-right: 2px
+      margin-right: 5px
 
       @include media-tablet
-        margin-left: $s-s-6
-        bottom: 4px
+        margin-left: 5px
 
       @include media-large
-        max-width: $s-s-2
         margin-left: 0
 
   .navbar-collapse
@@ -213,6 +213,11 @@ export default {
 
   .navbar-toggler
     padding-right: $s-s-2
+    display: flex
+    align-items: center
+
+    @include media-large
+      display: none
 
   .icon-menu
     max-width: $s-s-3

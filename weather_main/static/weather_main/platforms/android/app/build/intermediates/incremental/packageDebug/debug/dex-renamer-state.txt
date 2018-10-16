@@ -1,4 +1,4 @@
-#Mon Oct 15 12:55:40 SAST 2018
+#Tue Oct 16 14:48:08 SAST 2018
 base.0=/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0
 path.0=classes.dex
 renamed.0=classes.dex

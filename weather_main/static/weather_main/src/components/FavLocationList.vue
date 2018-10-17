@@ -35,8 +35,8 @@ export default {
         this.$store.commit({
               type: 'setCoords',
               coords: {
-                lat: favCoords.lat,
-                lon: favCoords.lon,
+                lat: this.favCoords.lat,
+                lon: this.favCoords.lon,
               }
             })
       } else {

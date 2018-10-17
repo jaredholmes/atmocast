@@ -120,7 +120,7 @@ export default {
     // Reload data every 60 minutes
     window.setInterval(
       () => {
-        if (navigator.online) {
+        if (navigator.onLine) {
           if (this.$store.state.weather) {
             this.$setLocation();
             this.$getMainData();

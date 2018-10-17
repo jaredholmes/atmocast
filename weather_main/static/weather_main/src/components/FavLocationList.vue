@@ -32,7 +32,7 @@ export default {
   methods: {
     goToFav() {
       if (navigator.onLine) {
-        $store.commit({
+        this.$store.commit({
               type: 'setCoords',
               coords: {
                 lat: favCoords.lat,

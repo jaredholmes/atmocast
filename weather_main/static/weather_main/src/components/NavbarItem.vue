@@ -1,7 +1,7 @@
 <template lang="html">
   <nav class="navbar navbar-expand-lg" id="navbar-main">
     <div class="nav-wrapper row">
-      <a href="/" class="navbar-brand col-4">
+      <a @click="reload" class="navbar-brand col-4">
         <img class="nav-logo" :src="$store.state.iconLocationPrefix + 'logo-small.png'" alt="">
         <h1 class="fw-semi fs-moderate">Atmocast</h1>
       </a>
@@ -42,6 +42,13 @@ export default {
   },
 
   methods: {
+    reload() {
+      if (navigator.onLine) {
+        location.reload();
+      } else {
+        this.$showAlert('Unable to connect to the internet.')
+      }
+    },
     toggleMenu() {
       document.getElementById('nav-collapse').classList.toggle('active');
     },

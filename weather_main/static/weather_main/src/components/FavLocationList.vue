@@ -2,15 +2,16 @@
   <div v-if="favLocationName" id="fav-list" class="fav-location-list">
     <h3 class="fav-location-header fw-semi">Favourite locations</h3>
     <ul class="list-group-flush">
-      <li @click="$store.commit({
-            type: 'setCoords',
-            coords: {
-              lat: favCoords.lat,
-              lon: favCoords.lon,
-            }
-          })"
-        class="list-group-item">
-        {{ this.favLocationName }}
+      <li class="list-group-item">
+        <span @click="goToFav"
+            class="fav-location-name"
+        >
+            {{ favLocationName }}
+        </span>
+        <img @click="$removeFavLocation(favLocationName)"
+        class="delete-fav"
+        :src="$store.state.iconLocationPrefix + 'delete.png'"
+        alt="Delete item">
       </li>
     </ul>
   </div>
@@ -26,6 +27,21 @@ export default {
     },
     favLocationName() {
       return this.$store.state.favLocationName;
+    }
+  },
+  methods: {
+    goToFav() {
+      if (navigator.onLine) {
+        $store.commit({
+              type: 'setCoords',
+              coords: {
+                lat: favCoords.lat,
+                lon: favCoords.lon,
+              }
+            })
+      } else {
+        this.$showAlert('Unable to connect to the internet.')
+      }
     }
   }
 }
@@ -56,5 +72,19 @@ export default {
   .list-group-item:hover
     background-color: $light-accent-hover
     cursor: pointer
+
+  .list-group-item
+    display: flex
+    align-items: center
+    justify-content: space-between
+
+    .fav-location-name
+      min-width: 80%
+
+    .delete-fav
+      max-width: 1em
+
+    .delete-fav:hover, .delete-fav:active
+      opacity: 0.6
 
 </style>

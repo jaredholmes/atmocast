@@ -46,13 +46,17 @@ export default {
       }
     },
     showSearchBtn() {
-      const searchBtn = document.getElementsByClassName('btn-location-search');
-      const searchInput = document.getElementById('input-location-search');
-      for (var i = 0; i < searchBtn.length; i++) {
-        searchBtn[i].style.visibility = 'visible';
-        searchBtn[i].style.opacity = '1';
+      if (navigator.onLine) {
+        const searchBtn = document.getElementsByClassName('btn-location-search');
+        const searchInput = document.getElementById('input-location-search');
+        for (var i = 0; i < searchBtn.length; i++) {
+          searchBtn[i].style.visibility = 'visible';
+          searchBtn[i].style.opacity = '1';
+        }
+        searchInput.style.left = '0';
+      } else {
+        this.$showAlert('Unable to connect to the internet.')
       }
-      searchInput.style.left = '0';
     },
     hideSearchBtn() {
       this.searchResults = [];
@@ -91,7 +95,7 @@ export default {
 
         window.setTimeout(
           () => favList.classList.remove('highlighted'),
-          1500
+          1000
         );
       } else {
         this.$showAlert("You don't have any favourite locations yet. Add one by clicking the heart next to the location name.");

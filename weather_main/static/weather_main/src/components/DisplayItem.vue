@@ -71,36 +71,10 @@ export default {
     },
     toggleFav() {
       if (this.isFav) {
-        this.isFav = false;
-        // Unset fav co-ordinates
-        localforage.removeItem('favCoords');
-        this.$store.commit('unsetFavCoords');
-        // Unset fav location name
-        localforage.removeItem('favLocationName');
-        this.$store.commit('unsetFavLocationName');
-        this.$showAlert('Unfavourited ' + this.currentCity);
+        this.$removeFavLocation(this.currentCity);
+        // this.$showAlert('You are limited to one favourite location. <a class="c-pro-red" href="https://atmocast.com/getpro">Upgrade to pro</a>')
       } else {
-        this.isFav = true;
-        // Set fav co-ordinates
-        localforage.setItem('favCoords', {
-          lat: this.currentCoords.lat,
-          lon: this.currentCoords.lon,
-        });
-
-        this.$store.commit({
-          type: 'setFavCoords',
-          coords: this.currentCoords,
-        });
-
-        // Set fav location name
-        localforage.setItem('favLocationName', this.currentCity);
-
-        this.$store.commit({
-          type: 'setFavLocationName',
-          name: this.currentCity,
-        });
-
-        this.$showAlert('Favourited ' + this.currentCity);
+        this.$addFavLocation(this.currentCity);
       }
     },
     // Adds class to the element to give it the background color corresponsing with the currentIcon property

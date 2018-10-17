@@ -85,6 +85,9 @@ export default {
       this.$getMainData();
     }
   },
+  beforeMount() {
+    this.$checkMetric();
+  },
   created() {
     this.$checkFavLocation();
     this.$setLocation();
@@ -115,15 +118,17 @@ export default {
   },
   updated() {
     // Reload data every 60 minutes
-    window.setInterval(
-      () => {
-        if (this.$store.state.weather) {
-          this.$setLocation();
-          this.$getMainData();
-        }
-      },
-      60 * 60000
-    );
+    // window.setInterval(
+    //   () => {
+    //     if (this.$store.state.weather) {
+    //       if (navigator.online) {
+    //         this.$setLocation();
+    //         this.$getMainData();
+    //       }
+    //     }
+    //   },
+    //   60 * 60000
+    // );
   },
 };
 </script>

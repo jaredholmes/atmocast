@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import localforage from 'localforage';
 
 // Vuex config
 Vue.use(Vuex);
@@ -37,11 +38,21 @@ export const store = new Vuex.Store({
     setIconLocationPrefix(state, prefix) {
       state.iconLocationPrefix = prefix.prefix;
     },
+    setMetric(state, bool) {
+      state.metric = bool.bool
+      localforage.setItem('metric', bool.bool);
+    },
     toggleMetric(state) {
       if (state.metric) {
-        state.metric = false;
+        store.commit({
+          type: 'setMetric',
+          bool: false
+        });
       } else {
-        state.metric = true;
+        store.commit({
+          type: 'setMetric',
+          bool: true
+        });
       }
     },
     setWeather(state, weatherData) {

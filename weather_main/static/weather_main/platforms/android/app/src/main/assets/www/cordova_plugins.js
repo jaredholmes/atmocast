@@ -15,12 +15,11 @@ module.exports = [
     "runs": true
   }
 ];
-module.exports.metadata =
+module.exports.metadata = 
 // TOP OF METADATA
 {
-  "cordova-plugin-whitelist": "1.3.3",
   "cordova-plugin-geolocation": "4.0.1",
-  "cordova-plugin-statusbar": "2.4.2"
+  "cordova-plugin-whitelist": "1.3.3"
 };
 // BOTTOM OF METADATA
 });

@@ -17,20 +17,22 @@
       >
         <img :src="$store.state.iconLocationPrefix + 'close-light.png'" alt="Close more details">
       </button>
-      <div v-if="modeHourly" class="col-12 col-md-6">
-        <b>Feels like:</b> {{ Math.round(weatherDatum.apparentTemperature) }}&deg;
-      </div>
-      <div v-else class="col-12 daily-summary fw-semi">
-        {{ weatherDatum.summary }}
-      </div>
-      <div class="col-12 col-md-6">
-        <b>Chance of rain:</b> {{ Math.round(weatherDatum.precipProbability * 100) }}%
-      </div>
-      <div class="col-12 col-md-6">
-        <b>Wind speed:</b> {{ Math.round(weatherDatum.windSpeed) }}{{ speedUnit }}
-      </div>
-      <div class="col-12 col-md-6">
-        <b>Humidity:</b> {{ Math.round(weatherDatum.humidity * 100) }}%
+      <div class="col-12 col-sm-6 row collapse-inner-container">
+        <div v-if="modeHourly" class="col-12 col-md-12">
+          <b>Feels like:</b> {{ Math.round(weatherDatum.apparentTemperature) }}&deg;
+        </div>
+        <div v-else class="col-12 daily-summary fw-semi">
+          {{ weatherDatum.summary }}
+        </div>
+        <div class="col-12 col-md-12">
+          <b>Chance of rain:</b> {{ Math.round(weatherDatum.precipProbability * 100) }}%
+        </div>
+        <div class="col-12 col-md-12">
+          <b>Wind speed:</b> {{ Math.round(weatherDatum.windSpeed) }}{{ speedUnit }}
+        </div>
+        <div class="col-12 col-md-12">
+          <b>Humidity:</b> {{ Math.round(weatherDatum.humidity * 100) }}%
+        </div>
       </div>
     </div>
   </div>
@@ -118,6 +120,9 @@ export default {
   .more-details-card
     border: none
     padding: $s-s-4
+
+    .collapse-inner-container
+      padding: 0
 
     .col-12, .col-12 *
       color: $text-secondary

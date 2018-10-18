@@ -34,8 +34,9 @@ module.exports = {
   ],
 
   devServer: {
-    publicPath: '/dist/bundles/',
-    contentBase: path.resolve(__dirname + '/dist/'),
+    // publicPath: '/www/static/weather_main/dist/bundles/',
+    publicPath: '/bundles/',
+    contentBase: path.resolve(__dirname + '/www/static/weather_main/dist/'),
     watchContentBase: true,
     compress: true,
   },

@@ -13,6 +13,7 @@ django-cors-headers = "*"
 django-rest-framework = "*"
 "boto3" = "*"
 awscli = "*"
+dj-database-url = "*"
 
 [dev-packages]
 

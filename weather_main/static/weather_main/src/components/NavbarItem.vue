@@ -19,7 +19,10 @@
         <ul class="navbar-nav ml-auto">
           <navbar-location-search-bar></navbar-location-search-bar>
           <navbar-units-toggle-item></navbar-units-toggle-item>
-          <!-- <li class="nav-item"><a href="#" class="nav-link c-pro-red  fw-semi">Go Pro</a></li> -->
+          <li v-if="!$store.state.paidUser" class="nav-item"><a class="nav-link fw-semi" href="/products/">Products</a></li>
+          <li v-if="!$store.state.paidUser" class="nav-item"><a class="nav-link fw-semi" href="/log-in/">Log In</a></li>
+          <li v-else class="nav-item"><a class="nav-link fw-semi" href="/settings/">Account</a></li>
+          <li v-if="!$store.state.proUser" class="nav-item"><a class="nav-link fw-semi c-pro-red" href="/choose-plan/">Upgrade</a></li>
         </ul>
       </div>
     </div>
@@ -46,7 +49,7 @@ export default {
       if (navigator.onLine) {
         location.reload();
       } else {
-        this.$showAlert('Unable to connect to the internet.')
+        this.$showConnAlert();
       }
     },
     toggleMenu() {
@@ -56,6 +59,7 @@ export default {
       const navbar = document.getElementById('navbar-main');
       const navCollapse = document.getElementById('nav-collapse');
       const whiteClass = 'bc-light';
+      const metaTheme =   document.getElementsByName('theme-color')[0];
       let bcClass;
       let bcClassColor;
 
@@ -119,7 +123,9 @@ export default {
 
       // Change theme color to match navbar
       bcClassColor = window.getComputedStyle(navbar).getPropertyValue('background-color');
-      document.getElementsByName('theme-color')[0].content = bcClassColor;
+      if (metaTheme) {
+        metaTheme.content = bcClassColor;
+      }
     },
   },
 
@@ -198,7 +204,7 @@ export default {
   .navbar-collapse.active
     padding: $s-s-6 0
     // Max height higher than auto
-    max-height: 10em
+    max-height: 30em
 
   .navbar-nav
     position: relative

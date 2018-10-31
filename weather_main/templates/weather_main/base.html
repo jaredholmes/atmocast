@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="shortcut icon" href="{% static 'weather_main/www/static/weather_main/dist/icons/favicon.ico' %}">
+  {% block meta_description %}{% endblock %}
+  {% block meta_extras %}{% endblock %}
+  <title>{% block title %}{% endblock %} | Atmocast – Simple, acccurate weather forecasts</title>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-126836360-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-126836360-1');
+</script>
+</head>
+<body>
+    {% block navbar %}
+    <nav id="nav" class="bc-sunny navbar navbar-expand-lg" id="navbar-main">
+      <div class="nav-wrapper row">
+        <a href="/" class="navbar-brand col-4">
+          <img class="nav-logo" src={% static 'weather_main/www/static/weather_main/dist/icons/logo-small.png' %} alt="Atmocast">
+          <h1 class="fw-semi fs-moderate">Atmocast</h1>
+        </a>
+        <a @click="toggleMenu"
+        id="nav-menu-toggler"
+        class="ml-auto navbar-toggler col-1 offset-5"
+        data-toggle="collapse"
+        data-target="#nav-collapse"
+        aria-controls="nav-collapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+          <img class="icon icon-menu" src="{% static 'weather_main/www/static/weather_main/dist/icons/menu.png' %}" alt="menu">
+        </a>
+        <div id="nav-collapse" class="collapse navbar-collapse ml-auto">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link fw-semi" href="{% url 'weather' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link fw-semi" href="{% url 'products' %}">Products</a></li>
+            {% if user.is_authenticated %}
+              <li class="nav-item"><a class="nav-link fw-semi" href="{% url 'settings' %}">Account</a></li>
+            {% else %}
+              <li class="nav-item"><a class="nav-link fw-semi" href="{% url 'log_in' %}">Log In</a></li>
+            {% endif %}
+            <li class="nav-item"><a class="nav-link fw-semi c-pro-red" href="{% url 'choose_plan' %}">Upgrade</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% endblock %}
+
+    <div class="main">
+      {% block main %}{% endblock %}
+    </div>
+
+    <footer class="footer bc-light-accent">
+      {% block footer %}
+      <div class="footer-top-section row">
+        <div class="col-6 row">
+          <details class="col-12">
+            <summary class="fs-small fw-semi">Attributions</summary>
+            <a class="footer-link fs-small c-secondary" href="https://darksky.net/poweredby/">Powered by Dark Sky</a>
+            <a class="footer-link fs-small c-secondary" href="https://locationiq.com/">Search by LocationIQ.com</a>
+          </details>
+          <details class="col-12">
+            <summary class="fs-small fw-semi">Contact</summary>
+            <a class="footer-link fs-small c-secondary" href="mailto:jared@colgro.com">Email: jared@colgro.com</a>
+          </details>
+          <a class="col-12 footer-link fw-semi fs-small" href="{% url 'terms' %}">Terms of Use</a>
+        </div>
+
+        <div class="col-6 footer-right row">
+          <a class="col-12 footer-link fs-small" href="/">Atmocast Weather</a>
+          <a class="col-12 footer-link fs-small" href="{% url 'products' %}">Products</a>
+          {% if user.is_authenticated %}
+          <a class="col-12 footer-link fs-small" href="{% url 'settings' %}">Account</a>
+          {% else %}
+          <a class="col-12 footer-link fs-small" href="{% url 'log_in' %}">Log In</a>
+          {% endif %}
+          <a class="col-12 footer-link fs-small" href="{% url 'choose_plan' %}">Upgrade</a>
+        </div>
+      </div>
+      {% endblock %}
+    </footer>
+
+    <script src="{% static 'weather_main/www/static/weather_main/dist/bundles/nav.bundle.js' %}" charset="utf-8"></script>
+    {% block extra_scripts %}
+    {% endblock %}
+</body>
+</html>

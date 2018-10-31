@@ -28,6 +28,10 @@ $sleet-grey: #dae5e5
 $snow-blue: #e8f9f9
 $wind-blue: #cedddd
 $pro-red: #E50909
+$cta-red: #ef412d
+$cta-red-hover: #F87666
+$cta-blue: #18a6bc
+$cta-blue-hover: #7EC4CF
 
 .bc-sunny
   background-color: $sunny-blue
@@ -158,6 +162,7 @@ $s-l-4: $s / $ratio / $ratio / $ratio / $ratio
 $s-l-5: $s / $ratio / $ratio / $ratio / $ratio / $ratio
 $s-l-6: $s / $ratio / $ratio / $ratio / $ratio / $ratio / $ratio
 $s-l-7: $s / $ratio / $ratio / $ratio / $ratio / $ratio / $ratio / $ratio
+$s-l-8: $s / $ratio / $ratio / $ratio / $ratio / $ratio / $ratio / $ratio /$ratio
 
 body *
   font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Roboto, 'Segoe UI', Arial, sans-serif
@@ -182,6 +187,9 @@ body *
 
 .fs-xl
   font-size: 38px
+
+.fs-xxl
+  font-size: 50px
 
 // Font Weights
 .fw-light
@@ -209,6 +217,9 @@ body
 h1, h2, h3, h4, h5, h6
   margin: 0
 
+.btn
+  border-radius: 9px
+
 .btn-close
   border: none
   background-color: rgba(0, 0, 0, 0)
@@ -217,5 +228,132 @@ h1, h2, h3, h4, h5, h6
   img
     max-width: 1em
 
-a:hover
+footer
+  margin-top: $s-l-4
+
+footer > .row
+  padding: $s-s-4
+  position: relative
+
+  @include media-large
+    padding: $s-s-1
+
+.footer-right *
+  display: flex
+  justify-content: flex-end
+
+details
+  margin-bottom: $s-s-5
+
+summary:focus
+  outline: none
+
+.footer-link
+  padding-left: $s-s-6
+
+nav.navbar
+  padding: 0
+
+  // Prevents thin white line between nav and main section
+  padding-bottom: 1px
+
+  @include media-large
+    padding-top: 0
+    padding-left: $s-s-6
+    padding-right: $s-s-6
+
+.nav-wrapper
+  width: 100%
+  margin: 0
+
+.navbar-brand
+  min-width: 75%
+  margin: auto 0
+  display: flex
+  align-items: center
+
+  @include media-large
+    min-width: 0
+
+  h1
+    display: inline-block
+    line-height: 21px
+
+  .nav-logo
+    max-width: 21px * 4/3
+    position: relative
+    margin-right: 5px
+
+    @include media-tablet
+      margin-left: 5px
+
+    @include media-large
+      margin-left: 0
+
+.collapse.active:not(.show)
+  display: block
+
+.navbar-collapse
+  float: right
+  padding: 0
+  max-height: 0
+  display: block
+  transition: max-height 180ms ease-in, padding 180ms ease-in
+  -webkit-transition: max-height 180ms ease-in, padding 180ms ease-in
+  -ms-transition: max-height 180ms ease-in, padding 180ms ease-in
+
+  @include media-large
+    height: auto
+    // Max height higher than auto
+    max-height: 5em
+    padding: 0
+
+.navbar-collapse.active
+  padding: $s-s-6 0
+  // Max height higher than auto
+  max-height: 30em
+
+.navbar-nav
+  position: relative
+
+.nav-item
+  padding: $s-s-6
+  margin-left: $s-s-4
+  margin-top: auto
+  margin-bottom: auto
+
+.nav-item:hover
+  cursor: pointer
+
+img
+  max-width: 1.2em
+
+.toggle-active
+  text-decoration: underline
+
+.navbar-toggler
+  padding-right: $s-s-2
+  display: flex
+  align-items: center
+
+  @include media-large
+    display: none
+
+.icon-menu
+  max-width: $s-s-3
+
+.nav-link:hover
   color: inherit
+
+.nav-link.c-pro-red:hover
+  color: $pro-red
+
+.terms
+  padding: $s-l-2 $s 0 $s
+
+  p:not(.intro)
+    padding: 0 $s-s-3
+
+  li
+    list-style-type: none
+    padding-left: $s-s-4

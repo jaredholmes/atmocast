@@ -1,0 +1,119 @@
+{% extends 'weather_main/account_base.html'%}
+{% load static %}
+
+{% block title %}
+  Upgrade
+{% endblock %}
+
+{% block form %}
+  <form action="" method="post">
+    {% csrf_token %}
+    <!-- <div class="form-inner-container row">
+      <div class="promo-inner col-10 col-md-8 col-lg-6">
+        <h2 class="form-header text-center fs-large fw-bold">Atmocast Weather Pro</h2>
+        <h4 class="promo-price c-secondary text-center fw-bold">$7/year <span>or</span>$1/month</h4>
+        <p class="text-center">Get access to accurate, more comprehensive weather data and up to 20 favourite locations, synchronised across multiple devices. <a class="learn-more-link" href="/products/#atmocast-weather-pro">Learn more</a></p>
+        <button @click="addToCart($event.target, { name: 'Atmocast Pro' })" class="btn btn-cart fw-bold bc-light" type="button">Add to cart</button>
+      </div>
+    </div> -->
+    {% for p in products %}
+    <div class="form-inner-container row">
+      <div class="promo-inner col-10 col-md-8 col-lg-6">
+        <h2 class="form-header text-center fs-large fw-bold">{{ p.name }}</h2>
+        <h4 class="promo-price c-secondary text-center fw-bold">${{ p.price|floatformat }} {{ p.frequency }}</h4>
+        <p class="text-center">{{ p.description }} <a class="learn-more-link" href="/products/#atmocast-weather-pro">Learn more</a></p>
+        <button @click="addToCart($event.target, { name: '{{ p.name }}' }, {{ cart.id }})" class="btn btn-cart fw-bold bc-light" type="button">Add to cart</button>
+      </div>
+    </div>
+    {% endfor %}
+    <div v-if="cartItems.length" class="radio-container">
+      <div class="custom-control custom-radio">
+        <input v-model="radioNewUser" value="true" required type="radio" id="radio-sign-up" name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="radio-sign-up">I'm a new user</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input v-model="radioNewUser" value="false" required type="radio" id="radio-log-in" name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="radio-log-in">I already have an account</label>
+      </div>
+    </div>
+  </form>
+
+    <div v-if="newUser && cartItems.length" class="">
+      <form class="sign-up-form" action="{% url 'cart_sign_up' %}" method="post">
+        <div class="form-inner-container row">
+          <div class="form-inner login-form-inner col-10 col-md-8 col-lg-6">
+            <h3 class="form-header text-center fs-large fw-bold">Your Details</h3>
+            {% csrf_token %}
+            {{ sign_up_form }}
+          </div>
+        </div>
+        <div class="submit-btn-container">
+          <input class="form-submit btn fs-moderate fw-semi" type="submit" name="sign" value="Continue to payment">
+        </div>
+      </form>
+    </div>
+
+    <div v-if="!newUser && radioNewUser && cartItems.length" class="">
+      <form class="sign-up-form" action="{% url 'cart_log_in' %}" method="post">
+        <div class="form-inner-container row">
+          <div class="form-inner login-form-inner col-10 col-md-8 col-lg-6">
+            <h3 class="form-header text-center fs-large fw-bold">Log In</h3>
+            {% csrf_token %}
+            {{ log_in_form }}
+            <a class="learn-more-link forgot-password" href="{% url 'password_reset' %}">Forgot password?</a>
+          </div>
+        </div>
+        <div class="submit-btn-container">
+          <input class="form-submit btn fs-moderate fw-semi" type="submit" name="log" value="Continue to payment">
+        </div>
+      </form>
+    </div>
+
+    <div style="display: none" class="">
+      <form class="sign-up-form" action="https://sandbox.payfast.co.za/eng/process" method="post">
+        <div class="form-inner-container row">
+          <div class="form-inner login-form-inner col-10 col-md-8 col-lg-6">
+            <h3 class="form-header text-center fs-large fw-bold">PayFast</h3>
+            <!-- Seller Details -->
+            <input type="hidden" name="merchant_id" value="10010682">
+            <input type="hidden" name="merchant_key" value="9xcilcrr581ci">
+            <input type="hidden" name="return_url" value="https://atmocast.com/">
+            <input type="hidden" name="cancel_url" value="https://atmocast.com/">
+            <input type="hidden" name="notify_url" value="https://atmocast.com/">
+            <!-- Buyer Details -->
+            <!-- <input type="hidden" name="name_first" value="John">
+            <input type="hidden" name="name_last" value="Doe"> -->
+            <input type="hidden" name="email_address" value="sbtu01@payfast.co.za">
+            <!-- <input type="hidden" name="cell_number" value="0823456789"> -->
+            <!-- Transaction Details -->
+            <input type="hidden" name="amount" value="10000">
+            <input type="hidden" name="item_name" value="Atmocast Pro">
+            <!-- Email Confirmation -->
+            <!-- Payment Method -->
+            <input type="hidden" name="payment_method" value="cc">
+            <!-- Subscription Billing -->
+            <input type="hidden" name="subscription_type" value="1">
+            <input type="hidden" name="billing_date" value="2018-11-29">
+            <input type="hidden" name="recurring_amount" value="10000">
+            <input type="hidden" name="frequency" value="6">
+            <input type="hidden" name="cycles" value="0">
+            <!-- Signature -->
+            <input type="hidden" name="signature" value="939ee400debd5a1f5d253a680f79fd5e"
+            >
+          </div>
+        </div>
+        <div class="submit-btn-container">
+          <input class="form-submit btn fs-moderate fw-semi" type="submit" name="log" value="PayFast">
+        </div>
+      </form>
+    </div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script type="text/javascript">
+  const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+</script>
+  <script src="{% static 'weather_main/www/static/weather_main/dist/bundles/loginStyles.bundle.js' %}" charset="utf-8"></script>
+  <script src="{% static 'weather_main/www/static/weather_main/dist/bundles/account.bundle.js' %}" charset="utf-8"></script>
+{% endblock %}

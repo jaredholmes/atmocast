@@ -1,14 +1,14 @@
 <template lang="html">
-  <div v-if="favLocationName" id="fav-list" class="fav-location-list">
+  <div v-if="favLocation.length > 0" id="fav-list" class="fav-location-list">
     <h3 class="fav-location-header fw-semi">Favourite locations</h3>
     <ul class="list-group-flush">
-      <li class="list-group-item">
-        <span @click="goToFav"
+      <li v-for="i, x in favLocation" class="list-group-item">
+        <span @click="goToFav(x)"
             class="fav-location-name"
         >
-            {{ favLocationName }}
+            {{ i.name }}
         </span>
-        <img @click="$removeFavLocation(favLocationName)"
+        <img @click="$removeFavLocation(i.name)"
         class="delete-fav"
         :src="$store.state.iconLocationPrefix + 'delete.png'"
         alt="Delete item">
@@ -27,20 +27,23 @@ export default {
     },
     favLocationName() {
       return this.$store.state.favLocationName;
+    },
+    favLocation() {
+      return this.$store.state.favLocation;
     }
   },
   methods: {
-    goToFav() {
+    goToFav(index) {
       if (navigator.onLine) {
         this.$store.commit({
               type: 'setCoords',
               coords: {
-                lat: this.favCoords.lat,
-                lon: this.favCoords.lon,
+                lat: this.favLocation[index].lat,
+                lon: this.favLocation[index].lon,
               }
             })
       } else {
-        this.$showAlert('Unable to connect to the internet.')
+        this.$showConnAlert()
       }
     }
   }

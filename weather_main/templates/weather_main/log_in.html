@@ -1,0 +1,24 @@
+{% extends "weather_main/account_base.html" %}
+{% load static %}
+
+{% block title %}
+  Log In
+{% endblock %}
+
+{% block main %}
+<h1 class="fs-xxl fw-bold text-center sign-up-title">Welcome back.</h1>
+{% block form %}
+<form class="sign-up-form" method="post">
+  <div class="form-inner-container row">
+    <div class="form-inner login-form-inner col-10 col-md-8 col-lg-6">
+      <h3 class="form-header text-center fs-large fw-bold">Log In</h3>
+      {% csrf_token %}
+      {{ log_in_form }}
+      <a class="learn-more-link forgot-password" href="{% url 'password_reset' %}">Forgot password?</a>
+    </div>
+  <div class="submit-btn-container">
+    <input class="form-submit btn fs-moderate fw-semi" type="submit" name="" value="Log In">
+  </div>
+</form>
+{% endblock %}
+{% endblock %}

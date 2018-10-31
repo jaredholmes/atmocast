@@ -1,0 +1,238 @@
+@import "/styles"
+
+// Navbar
+nav.navbar
+  padding: 0
+  // Prevents thin white line between nav and main section
+  padding-bottom: 1px
+
+  @include media-large
+    padding-top: 0
+    padding-left: $s-s-6
+    padding-right: $s-s-6
+
+.nav-wrapper
+  width: 100%
+  margin: 0
+
+.navbar-brand
+  min-width: 75%
+  margin: auto 0
+  display: flex
+  align-items: center
+
+  @include media-large
+    min-width: 0
+
+  h1
+    display: inline-block
+    line-height: 21px
+
+  .nav-logo
+    max-width: 21px * 4/3
+    position: relative
+    margin-right: 5px
+
+    @include media-tablet
+      margin-left: 5px
+
+    @include media-large
+      margin-left: 0
+
+.navbar-collapse
+  float: right
+  padding: 0
+  max-height: 0
+  display: block
+  transition: max-height 180ms ease-in, padding 180ms ease-in
+  -webkit-transition: max-height 180ms ease-in, padding 180ms ease-in
+  -ms-transition: max-height 180ms ease-in, padding 180ms ease-in
+
+  @include media-large
+    height: auto
+    // Max height higher than auto
+    max-height: 5em
+    padding: 0
+
+.navbar-collapse.active
+  padding: $s-s-6 0
+
+.navbar-nav
+  position: relative
+
+.nav-item
+  padding: $s-s-6
+  margin-left: $s-s-4
+  margin-top: auto
+  margin-bottom: auto
+
+.nav-item:hover
+  cursor: pointer
+
+  img
+    max-width: 1.2em
+
+.toggle-active
+  text-decoration: underline
+
+.navbar-toggler
+  padding-right: $s-s-2
+  display: flex
+  align-items: center
+
+  @include media-large
+    display: none
+
+.icon-menu
+  max-width: $s-s-3
+
+// Main section
+.main
+  margin-top: $s-l-2
+
+// Sign up page
+.sign-up-title, .sign-up-progress
+  width: 90%
+  margin: auto
+
+.sign-up-title
+  margin-bottom: $s-l-2
+
+  @include media-tablet
+    width: 70%
+
+.progress-step
+  position: relative
+  text-align: center
+  display: flex
+  justify-content: center
+  align-items: center
+  padding: $s-s-6
+
+.progress-step.active
+  border: 2px solid $night-blue
+  border-radius: 5px
+
+.form-inner, .promo-inner
+  background-color: $wind-blue
+  margin: $s-l-2 auto 0 auto
+  padding-bottom: $s-l-1
+
+  @include media-tablet
+    padding: 0 $s-l-1
+    padding-bottom: $s
+
+  @include media-large
+    padding: 0 $s-l-2
+    padding-bottom: $s
+
+  .form-header
+    margin: $s-s-1
+
+.login-form-inner
+  margin-top: 0
+
+.form-inner
+  max-width: 500px
+
+  .form-control
+    margin-bottom: $s-s-3
+
+.section-container.row
+  margin: auto
+
+  @include media-tablet
+    max-width: 90%
+
+  @include media-large
+    max-width: 80%
+
+  .form-inner-container
+    padding: 0 $s-s-2
+
+    @include media-tablet
+      padding: 0 $s-s-5
+
+.promo-inner
+  padding: $s-s-2 $s-s-5
+  padding-top: 0
+  position: relative
+
+  @include media-tablet
+    padding: $s $s-s-3
+    padding-top: 0
+
+  @include media-large
+    padding: $s
+    padding-top: 0
+
+  // Allows buttons for Atmocast Free to align to the bottom
+  .btn-container
+
+    @include media-tablet
+      bottom: $s
+      position: absolute
+      width: 100%
+      left: 0
+      right: 0
+
+.submit-btn-container, .radio-container
+  margin: $s-l-1 auto
+  text-align: center
+  width: 100%
+
+  .form-submit
+    background-color: $cta-blue
+    color: white
+    padding-left: $s-s-3
+    padding-right: $s-s-3
+
+  .form-submit:hover
+    background-color: $cta-blue-hover
+
+.errorlist
+  list-style-type: none
+  padding: 0
+
+  li
+    color: red
+
+.learn-more-link
+  color: #007bff
+
+.forgot-password
+  display: block
+  margin-left: auto
+  padding-top: $s-s-4
+  text-align: right
+
+.promo-price
+  margin: -$s-s-3 auto $s-s-2 auto
+
+.btn-cart
+  margin: auto
+  margin-top: $s-s-1
+  display: block
+  border: 3px solid $cta-red
+  color: $cta-red
+
+.btn-cart:hover
+  font-weight: 600
+  border-color: $cta-red-hover
+  color: $cta-red-hover
+
+.btn-cart.clicked
+  background-color: $cta-red
+  color: $light
+
+.form-submit.disabled, .form-submit.disabled:hover
+  background-color: $rain-grey
+
+.form-submit.disabled:hover
+  cursor: not-allowed
+
+label[for=id_agreed_terms], #id_agreed_terms
+  display: inline
+
+#id_agreed_terms
+  margin-left: 0.5em

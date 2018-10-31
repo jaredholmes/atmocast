@@ -1,0 +1,16 @@
+{% extends "weather_main/account_base.html" %}
+{% load static %}
+
+{% block form %}
+<form class="sign-up-form" method="post">
+  <div class="form-inner-container row">
+    <div class="form-inner col-10 col-md-8 col-lg-6">
+      <h3 class="form-header text-center fs-large fw-bold">Your Details</h3>
+      {% csrf_token %}
+      {{ form }}
+    </div>
+  <div class="submit-btn-container">
+    <input class="form-submit btn fs-moderate fw-semi" type="submit" name="" value="Continue to payment">
+  </div>
+</form>
+{% endblock %}

@@ -19,13 +19,22 @@ import localforage from 'localforage';
 export default {
   name: "DisplayItem",
 
-  data() {
-    return {
-      isFav: false,
-    }
-  },
+  // data() {
+  //   return {
+  //     isFav: false,
+  //   }
+  // },
 
   computed: {
+    currentIsFav() {
+      return this.$store.state.currentIsFav;
+    },
+    favLocation() {
+      return this.$store.state.favLocation;
+    },
+    favLimit() {
+      return this.$store.state.favLimit;
+    },
     currentCity() {
       return this.$store.state.currentCity;
     },
@@ -36,7 +45,7 @@ export default {
       };
     },
     favHeartImg() {
-      if (this.isFav) {
+      if (this.currentIsFav) {
         return this.$store.state.iconLocationPrefix + 'heart-filled.png';
       } else {
         return this.$store.state.iconLocationPrefix + 'heart-outline.png';
@@ -58,23 +67,31 @@ export default {
 
   methods: {
     checkIfLocationIsFav() {
-      localforage.getItem('favCoords')
-        .then(value => {
-          this.isFav = false;
-          if (value) {
-            if (this.currentCoords.lat == value.lat &&
-            this.currentCoords.lon == value.lon) {
-              this.isFav = true;
-            }
-          }
+      let isFav;
+
+      for (var i = 0; i < this.favLocation.length; i++) {
+        if (this.favLocation[i].name === this.currentCity) {
+          isFav = true;
+          break;
+        } else {
+          isFav = false;
+        }
+      }
+
+      this.$store.commit({
+          type: 'setCurrentIsFav',
+          bool: isFav,
         });
     },
     toggleFav() {
-      if (this.isFav) {
+      if (this.currentIsFav === true) {
         this.$removeFavLocation(this.currentCity);
-        // this.$showAlert('You are limited to one favourite location. <a class="c-pro-red" href="https://atmocast.com/getpro">Upgrade to pro</a>')
       } else {
-        this.$addFavLocation(this.currentCity);
+        if (this.favLocation.length < this.favLimit) {
+          this.$addFavLocation(this.currentCoords.lat, this.currentCoords.lon, this.currentCity);
+        } else {
+          this.$showAlert('You are limited to one favourite location. <a class="c-pro-red" href="https://atmocast.com/choose_plan">Upgrade to pro</a>')
+        }
       }
     },
     // Adds class to the element to give it the background color corresponsing with the currentIcon property
@@ -127,11 +144,14 @@ export default {
   },
 
   watch: {
-    currentCoords() {
-      this.checkIfLocationIsFav();
-    },
+    // currentCoords() {
+    //   this.checkIfLocationIsFav();
+    // },
     currentIcon() {
       this.setGradientFromIcon(this.currentIcon);
+    },
+    favLocation() {
+      this.checkIfLocationIsFav();
     },
   },
 

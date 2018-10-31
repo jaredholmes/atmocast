@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 import django_heroku
+import rest_framework
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,9 +25,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost']
+
+DEBUG_PROPAGATE_EXCEPTIONS = True
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'jar3dh0lm3s@gmail.com'
+EMAIL_HOST_PASSWORD = 'seveneleven'
+EMAIL_PORT = 587
 
 
 # Application definition
@@ -40,9 +49,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'corsheaders',
+    'rest_framework',
 
     'weather_main.apps.WeatherMainConfig',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
 
 MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',
@@ -84,8 +100,12 @@ WSGI_APPLICATION = 'weather.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'atmo',
+        'USER': 'jaredholmes',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
@@ -137,5 +157,6 @@ STATICFILES_DIRS = (
 )
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.WhiteNoiseStaticFilesStorage'
 
 django_heroku.settings(locals())

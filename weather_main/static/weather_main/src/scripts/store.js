@@ -7,11 +7,16 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
+    paidUser: paidUser,
+    proUser: proUser,
+    userID: userID,
+    csrf: csrf,
+    favLimit: 1,
     alertMessage: 'An empty message.',
     // For dev server
     // iconLocationPrefix: '/icons/',
     // For website
-    iconLocationPrefix: 'static/weather_main/www/static/weather_main/dist/icons/',
+    iconLocationPrefix: window.location.origin + '/static/weather_main/www/static/weather_main/dist/icons/',
     // Required for Cordova app
     // iconLocationPrefix: 'static/weather_main/dist/icons/',
     metric: true,
@@ -20,6 +25,7 @@ export const store = new Vuex.Store({
     currentIcon: '',
     currentOffset: '',
     currentCity: '',
+    currentIsFav: false,
     coords: {
       lat: 0,
       lon: 0,
@@ -27,11 +33,15 @@ export const store = new Vuex.Store({
     favLocationExists: false,
     favCoords: {},
     favLocationName: '',
+    favLocation: [],
     navbarSearchResults: [],
     displayedCollapseHourly: 0,
     displayedCollapseDaily: 0,
   },
   mutations: {
+    setFavLimit(state, limit) {
+      this.state.favLimit = limit.limit;
+    },
     setAlertMessage(state, message) {
       state.alertMessage = message.message;
     },
@@ -70,6 +80,9 @@ export const store = new Vuex.Store({
     setCurrentCity(state, city) {
       state.currentCity = city.city;
     },
+    setCurrentIsFav(state, bool) {
+      state.currentIsFav = bool.bool;
+    },
     setCoords(state, coords) {
       state.coords = coords.coords;
     },
@@ -87,6 +100,26 @@ export const store = new Vuex.Store({
     },
     unsetFavLocationName(state) {
       state.favLocationName = '';
+    },
+    setFavLocation(state, lat, lon, name) {
+      const favLocation = {
+        lat: lat.lat,
+        lon: lat.lon,
+        name: lat.name,
+      };
+
+      state.favLocation.push(favLocation);
+    },
+    unsetFavLocation(state, locationName) {
+      let favLocation = state.favLocation;
+
+      for (var i = 0; i < favLocation.length; i++) {
+        if (favLocation[i].name == locationName) {
+          favLocation.splice(i, 1);
+        }
+      }
+
+      state.favLocation = favLocation;
     },
     setNavbarSearchResults(state, results) {
       state.navbarSearchResults = results.results;

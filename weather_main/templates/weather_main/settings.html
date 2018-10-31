@@ -1,0 +1,49 @@
+{% extends "weather_main/base.html" %}
+{% load static %}
+
+{% block title %}
+  Your Account
+{% endblock %}
+
+{% block main %}
+  <h1 class="settings-header fw-bold fs-large text-center">Your Account</h1>
+
+  <div class="settings-container container bc-wind">
+    <div class="settings-email settings-item text-center">
+      <span class="fw-semi">Email address:</span> {{ user.username }}
+    </div>
+    <div class="settings-item">
+      <p class="fw-semi text-center">Your Subscriptions</p>
+      <ul class="list-group list-group-flush">
+        {% for p in products %}
+          <li class="list-group-item bc-wind row product-item">
+            <div class="col-8 col-md-9 col-lg-10">
+              {{ p.name }}
+            </div>
+            <div class="col-4 col-md-3 col-lg-2">
+              <a {% if products|length <= 1 %}
+                href="{% url 'cancel_log_out' p.id %}"
+              {% else %}
+                href="{% url 'cancel_product' p.id %}"
+              {% endif %}><button class="btn-cancel btn" type="button" name="button"
+                {% if products|length <= 1 %}
+                  onclick="return confirm('Are you sure you want to cancel this subscription? You will be logged out.')"
+                {% else %}
+                  onclick="return confirm('Are you sure you want to cancel this subscription?')"
+                {% endif %}>Cancel</button></a>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="log-out-container container text-center">
+    <a href="{% url 'log_out' %}"><button class="btn btn-log-out fw-semi fs-moderate" type="button" name="button">Log Out</button></a>
+  </div>
+{% endblock %}
+
+{% block extra_scripts %}
+  <script src="{% static 'weather_main/www/static/weather_main/dist/bundles/styles.bundle.js' %}" charset="utf-8"></script>
+  <script src="{% static 'weather_main/www/static/weather_main/dist/bundles/settingsStyles.bundle.js' %}" charset="utf-8"></script>
+{% endblock %}

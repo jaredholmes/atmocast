@@ -10,6 +10,13 @@ module.exports = {
 
   entry: {
     app: './src/scripts/app',
+    persist: './src/scripts/persist',
+    account: './src/scripts/account',
+    nav: './src/scripts/nav',
+    styles: './src/scripts/styles',
+    loginStyles: './src/scripts/loginStyles',
+    productStyles: './src/scripts/productStyles',
+    settingsStyles: './src/scripts/settingsStyles',
   },
 
   output: {
@@ -18,8 +25,8 @@ module.exports = {
     publicPath: '/www/static/weather_main/dist/bundles/',
   },
 
-  // mode: 'development',
-  mode: 'production',
+  mode: 'development',
+  // mode: 'production',
 
   optimization: {
     minimizer: [new UglifyJsPlugin({
@@ -90,8 +97,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      // vue: 'vue/dist/vue.js', // for dev
-      vue: 'vue/dist/vue.common', // for production
+      vue: 'vue/dist/vue.js', // for dev
+      // vue: 'vue/dist/vue.common', // for production
     },
   },
 };

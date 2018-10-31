@@ -1,0 +1,86 @@
+{% extends "weather_main/account_base.html" %}
+{% load static %}
+
+{% block title %}
+  Products
+{% endblock %}
+
+{% block main %}
+    <h1 class="fs-xxl fw-bold text-center sign-up-title">Weather forecasts. No clutter. Nothing unnecessary.</h1>
+
+    <div class="product-intro text-center">
+      <h3 class="product-intro-header fs-moderate fw-semi"><img class="prouduct-intro-icon" src="{% static 'weather_main/www/static/weather_main/dist/icons/custom/partly-cloudy-day-small.png' %}" alt="Partly Cloudy">For Weather Lovers</h3>
+      <p class="product-intro-para">Feature-packed weather applications, offering superior accuracy and a simple aesthetic. Available on the web, as a progressive web app, and on Google Play.</p>
+    </div>
+
+    {% block form %}
+    <div class="row section-container">
+      <div class="form-inner-container row col-12 col-md-6">
+        <div class="promo-inner promo-product-inner col-12">
+          <h2 class="form-header text-center fs-large fw-bold">Atmocast Weather Free</h2>
+          <h4 class="promo-price c-secondary text-center fw-bold">$0</h4>
+          <ul class="text-center list-group-flush">
+            <li class="list-group-item"><span class="fw-semi">Current, 7-day and 24-hour weather information</span></li>
+            <li class="list-group-item"><span class="fw-semi">Weather summary</span> (current, hourly and daily)</li>
+            <li class="list-group-item"><span class="fw-semi">Temperature</span> (current, hourly and daily)</li>
+            <li class="list-group-item"><span class="fw-semi">Chance of rain</span> (hourly and daily)</li>
+            <li class="list-group-item"><span class="fw-semi">Humidity</span> (hourly and daily)</li>
+            <li class="list-group-item"><span class="fw-semi">Feels-like temperature</span> (hourly)</li>
+            <li class="list-group-item"><span class="fw-semi">Wind speed</span> (hourly)</li>
+            <li class="list-group-item"><span class="fw-semi">1 favourite location</span></li>
+          </ul>
+          <div class="btn-container">
+            <a class="button-link" href="{% url 'weather' %}"><button class="btn btn-cart fw-bold bc-light btn-blue" type="button">Go to Atmocast Weather</button></a>
+            <a class="button-link" href="https://atmocast.com"><button class="btn btn-cart fw-bold bc-light btn-red" type="button">Get Android App</button></a>
+          </div>
+        </div>
+      </div>
+
+      <div id="atmocast-weather-pro" class="form-inner-container row col-12 col-md-6">
+        <div class="promo-inner promo-product-inner col-12">
+          <h2 class="form-header text-center fs-large fw-bold">Atmocast Weather Pro</h2>
+          <h4 class="promo-price c-secondary text-center fw-bold">$7/year <span>or</span> $1/month</h4>
+          <ul class="text-center list-group-flush">
+            <li class="list-group-item"><span class="fw-bold">All free features</span></li>
+            <li class="list-group-item"><span class="fw-semi">Rainfall per hour</span> (hourly & daily)</li>
+            <li class="list-group-item"><span class="fw-semi">Percentage cloud cover</span> (hourly and daily)</li>
+            <li class="list-group-item"><span class="fw-semi">Atmospheric pressure</span> (hourly and daily)</li>
+            <li class="list-group-item"><span class="fw-semi">UV Index</span> (hourly and daily)</li>
+            <li class="list-group-item"><span class="fw-semi">Warmest and coolest time of day</span> (daily)</li>
+            <li class="list-group-item"><span class="fw-semi">Sunrise and sunset time</span> (daily)</li>
+            <li class="list-group-item"><span class="fw-semi">Moon phase</span> (daily)</li>
+            <li class="list-group-item"><span class="fw-semi">Wind direction</span> (hourly)</li>
+            <li class="list-group-item"><span class="fw-semi">Dew point temperature</span> (hourly)</li>
+            <li class="list-group-item"><span class="fw-semi">Visibility</span> (hourly)</li>
+            <li class="list-group-item"><span class="fw-semi">Up to 20 favourite locations</span></li>
+          </ul>
+          <a class="button-link" href="{% url 'choose_plan' %}"><button class="btn btn-cart fw-bold bc-light btn-blue" type="button">Sign Up</button></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="product-intro text-center">
+      <h3 class="product-intro-header fs-moderate fw-semi">For Developers</h3>
+      <p class="product-intro-para">Atmocast's API aims to assist developers create beautiful and performant weather-based websites.</p>
+    </div>
+
+    <div class="form-inner-container row">
+      <div class="promo-inner promo-product-inner col-10 col-md-8 col-lg-6">
+        <h2 class="form-header text-center fs-large fw-bold">Atmocast API</h2>
+        <h4 class="promo-price c-secondary text-center fw-bold">$0</h4>
+        <ul class="text-center list-group-flush">
+          <li class="list-group-item">Cras justo odio</li>
+          <li class="list-group-item">Cras justo odio</li>
+          <li class="list-group-item">Cras justo odio</li>
+          <li class="list-group-item">Cras justo odio</li>
+        </ul>
+        <a class="button-link" href="{% url 'choose_plan' %}"><button class="btn btn-cart fw-bold bc-light btn-red" type="button">Sign Up</button></a>
+      </div>
+    </div> -->
+    {% endblock %}
+{% endblock %}
+
+{% block extra_scripts %}
+  <script src="{% static 'weather_main/www/static/weather_main/dist/bundles/loginStyles.bundle.js' %}" charset="utf-8"></script>
+  <script src="{% static 'weather_main/www/static/weather_main/dist/bundles/productStyles.bundle.js' %}" charset="utf-8"></script>
+{% endblock %}

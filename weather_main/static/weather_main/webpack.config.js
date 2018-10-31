@@ -25,8 +25,8 @@ module.exports = {
     publicPath: '/www/static/weather_main/dist/bundles/',
   },
 
-  mode: 'development',
-  // mode: 'production',
+  // mode: 'development',
+  mode: 'production',
 
   optimization: {
     minimizer: [new UglifyJsPlugin({
@@ -97,8 +97,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      vue: 'vue/dist/vue.js', // for dev
-      // vue: 'vue/dist/vue.common', // for production
+      // vue: 'vue/dist/vue.js', // for dev
+      vue: 'vue/dist/vue.common', // for production
     },
   },
 };

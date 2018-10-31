@@ -31,13 +31,6 @@ ALLOWED_HOSTS = ['.herokuapp.com', 'localhost']
 
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'jar3dh0lm3s@gmail.com'
-EMAIL_HOST_PASSWORD = 'seveneleven'
-EMAIL_PORT = 587
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -104,8 +97,8 @@ DATABASES = {
         'NAME': 'atmo',
         'USER': 'jaredholmes',
         'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -157,6 +150,5 @@ STATICFILES_DIRS = (
 )
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# STATICFILES_STORAGE = 'whitenoise.storage.WhiteNoiseStaticFilesStorage'
 
 django_heroku.settings(locals())

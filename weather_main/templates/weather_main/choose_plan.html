@@ -19,6 +19,7 @@
     {% for p in products %}
     <div class="form-inner-container row">
       <div class="promo-inner col-10 col-md-8 col-lg-6">
+        <h4 class="text-center c-pro-red fw-bold"><br>Free until 30 November 2018!</h4>
         <h2 class="form-header text-center fs-large fw-bold">{{ p.name }}</h2>
         <h4 class="promo-price c-secondary text-center fw-bold">${{ p.price|floatformat }} {{ p.frequency }}</h4>
         <p class="text-center">{{ p.description }} <a class="learn-more-link" href="/products/#atmocast-weather-pro">Learn more</a></p>
@@ -27,6 +28,7 @@
     </div>
     {% endfor %}
     <div v-if="cartItems.length" class="radio-container">
+      <p class="text-center"><span class="fw-semi">Please note: </span>the free trial period will expire on 1 December 2018, after which you will need to purchase an Atmocast Pro subscription in order to continue using it.</p>
       <div class="custom-control custom-radio">
         <input v-model="radioNewUser" value="true" required type="radio" id="radio-sign-up" name="customRadio" class="custom-control-input">
         <label class="custom-control-label" for="radio-sign-up">I'm a new user</label>
@@ -48,7 +50,8 @@
           </div>
         </div>
         <div class="submit-btn-container">
-          <input class="form-submit btn fs-moderate fw-semi" type="submit" name="sign" value="Continue to payment">
+          <!--<input class="form-submit btn fs-moderate fw-semi" type="submit" name="log" value="Proceed to payment">-->
+          <input class="form-submit btn fs-moderate fw-semi" type="submit" name="log" value="Start For Free">
         </div>
       </form>
     </div>
@@ -64,46 +67,8 @@
           </div>
         </div>
         <div class="submit-btn-container">
-          <input class="form-submit btn fs-moderate fw-semi" type="submit" name="log" value="Continue to payment">
-        </div>
-      </form>
-    </div>
-
-    <div style="display: none" class="">
-      <form class="sign-up-form" action="https://sandbox.payfast.co.za/eng/process" method="post">
-        <div class="form-inner-container row">
-          <div class="form-inner login-form-inner col-10 col-md-8 col-lg-6">
-            <h3 class="form-header text-center fs-large fw-bold">PayFast</h3>
-            <!-- Seller Details -->
-            <input type="hidden" name="merchant_id" value="10010682">
-            <input type="hidden" name="merchant_key" value="9xcilcrr581ci">
-            <input type="hidden" name="return_url" value="https://atmocast.com/">
-            <input type="hidden" name="cancel_url" value="https://atmocast.com/">
-            <input type="hidden" name="notify_url" value="https://atmocast.com/">
-            <!-- Buyer Details -->
-            <!-- <input type="hidden" name="name_first" value="John">
-            <input type="hidden" name="name_last" value="Doe"> -->
-            <input type="hidden" name="email_address" value="sbtu01@payfast.co.za">
-            <!-- <input type="hidden" name="cell_number" value="0823456789"> -->
-            <!-- Transaction Details -->
-            <input type="hidden" name="amount" value="10000">
-            <input type="hidden" name="item_name" value="Atmocast Pro">
-            <!-- Email Confirmation -->
-            <!-- Payment Method -->
-            <input type="hidden" name="payment_method" value="cc">
-            <!-- Subscription Billing -->
-            <input type="hidden" name="subscription_type" value="1">
-            <input type="hidden" name="billing_date" value="2018-11-29">
-            <input type="hidden" name="recurring_amount" value="10000">
-            <input type="hidden" name="frequency" value="6">
-            <input type="hidden" name="cycles" value="0">
-            <!-- Signature -->
-            <input type="hidden" name="signature" value="939ee400debd5a1f5d253a680f79fd5e"
-            >
-          </div>
-        </div>
-        <div class="submit-btn-container">
-          <input class="form-submit btn fs-moderate fw-semi" type="submit" name="log" value="PayFast">
+          <!--<input class="form-submit btn fs-moderate fw-semi" type="submit" name="log" value="Proceed to payment">-->
+          <input class="form-submit btn fs-moderate fw-semi" type="submit" name="log" value="Start For Free">
         </div>
       </form>
     </div>

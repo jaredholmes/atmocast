@@ -6,7 +6,8 @@ from django.shortcuts import render, HttpResponseRedirect, reverse, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django import forms
+from django import forms, conf
+from django.core.mail import send_mail
 from django.http import QueryDict
 from rest_framework.response import Response
 from rest_framework import viewsets
@@ -14,6 +15,7 @@ from rest_framework import viewsets
 from .forms import LogInForm, SignUpForm
 from .models import Cart, Product, LocationList
 from .serializers import CartSerializer, LocationListSerializer
+from . import email
 
 location_IQ_Key = os.environ.get('LOCATIONIQ_KEY')
 
@@ -283,6 +285,16 @@ def sign_up(request, base_template, success_url, extra_key, extra_val, add_produ
                     product.save()
 
             login(request, user)
+
+            mail_subject = 'Welcome to Atmocast!'
+
+            mail_html = '<h4>Thank you for choosing Atmocast Weather!</h4><p>We hope you enjoy the service. If you have any feedback or questions, please do not hesitate to direct them to atmocastweather@gmail.com.</p><p>Please note that the Atmocast Pro free trial period ends on 1 December 2018, after which you will need to purchase an Atmocast Pro subsciption in order to continue using the service.</p><p>Kind regards,<br>Jared Holmes</p><p>Atmocast founder & engineer</p>'
+
+            mail_message = 'Thank you for choosing Atmocast Weather!\n\nWe hope you enjoy the service. If you have any feedback or questions, please do not hesitate to direct them to atmocastweather@gmail.com.\nPlease note that the Atmocast Pro free trial period ends on 1 December 2018, after which you will need to purchase an Atmocast Pro subsciption in order to continue using the service.\n\nKind regards,\nJared Holmes\nAtmocast founder & engineer'
+
+            mail_recip = user.username
+
+            send_mail(from_email=conf.settings.DEFAULT_FROM_EMAIL, subject=mail_subject, message=mail_message, html_message=mail_html, recipient_list=[mail_recip])
 
             return HttpResponseRedirect(success_url)
 

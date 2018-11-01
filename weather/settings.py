@@ -32,6 +32,13 @@ ALLOWED_HOSTS = ['.herokuapp.com', 'localhost']
 
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
+EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.environ.get('SMTP_USERNAME')
+EMAIL_HOST_PASSWORD = os.environ.get('SMTP_PASSWORD')
+DEFAULT_FROM_EMAIL = 'Atmocast <atmocastweather@gmail.com>'
+EMAIL_USE_SSL = True
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -92,12 +99,12 @@ WSGI_APPLICATION = 'weather.wsgi.application'
 
 DATABASES = {
     # 'default': {
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'atmo',
-        # 'USER': 'jaredholmes',
-        # 'PASSWORD': '',
-        # 'HOST': 'localhost',
-        # 'PORT': '5432',
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'atmo',
+    #     'USER': 'jaredholmes',
+    #     'PASSWORD': '',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
     # }
 }
 

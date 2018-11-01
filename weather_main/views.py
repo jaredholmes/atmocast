@@ -45,12 +45,17 @@ def weather(request):
                     product = Product.objects.get(name=name)
                     if request.user.id in product.users:
                         proUser = True
-                        break
+                        user_lists = 0
                         for l in LocationList.objects.all():
-                            if request.user.id != l.user.id:
-                                print(l.id)
-                                loc_list = LocationList.objects.create(user=request.user)
-                                LocationList.save()
+                            if request.user.id == l.user.id:
+                                user_lists += 1
+                                break
+
+                        if user_lists == 0:
+                            loc_list = LocationList.objects.create(user=request.user)
+                            LocationList.save()
+
+                        break
 
 
         return render(request, 'weather_main/weather.html', { 'proUser': proUser, 'paidUser': paidUser })

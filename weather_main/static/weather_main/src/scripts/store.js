@@ -133,10 +133,10 @@ export const store = new Vuex.Store({
   },
   getters: {
     hourlyWeather: state => {
-      return state.weather.hourly.data;
+      return state.weather.hourly ? state.weather.hourly.data : [];
     },
     dailyWeather: state => {
-      return state.weather.daily.data;
+      return state.weather.daily ? state.weather.daily.data : [];
     },
     currentOffset: state => {
       return state.currentOffset;

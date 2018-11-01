@@ -51,9 +51,9 @@ export default {
         return this.$store.state.iconLocationPrefix + 'heart-outline.png';
       }
     },
-    hourlyWeather() {
-      return this.$store.getters.hourlyWeather;
-    },
+    // hourlyWeather() {
+    //   return this.$store.getters.hourlyWeather;
+    // },
     currentTemp() {
       return this.$store.state.currentWeather.temperature;
     },
@@ -157,7 +157,7 @@ export default {
 
   mounted() {
     this.setGradientFromIcon(this.currentIcon);
-    this.$adjustCurrentWeather(this.hourlyWeather);
+    // this.$adjustCurrentWeather(this.hourlyWeather);
     this.checkIfLocationIsFav();
   },
 

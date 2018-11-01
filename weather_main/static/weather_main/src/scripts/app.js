@@ -255,15 +255,17 @@ Vue.mixin ({
       } else {
         localforage.getItem(
           'favLocation', (err, value) => {
-            if (value.length > 0) {
-              exists = true;
-              for (var i = 0; i < value.length; i++) {
-                this.$store.commit({
-                  type: 'setFavLocation',
-                  lat: value[i].lat,
-                  lon: value[i].lon,
-                  name: value[i].name,
-                });
+            if (value) {
+              if (value.length > 0) {
+                exists = true;
+                for (var i = 0; i < value.length; i++) {
+                  this.$store.commit({
+                    type: 'setFavLocation',
+                    lat: value[i].lat,
+                    lon: value[i].lon,
+                    name: value[i].name,
+                  });
+                }
               }
             }
 

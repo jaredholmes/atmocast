@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div v-if="loaded">
     <navbar-item></navbar-item>
 
     <div id="alert-location" class="alert alert-primary bc-light" role="alert">
@@ -19,15 +19,15 @@
     >
       <div id="alert-main" class="alert alert-primary bc-light" role="alert">
         <span v-html="$store.state.alertMessage" class="alert-message"></span>
-      <img @click="$hideAlert();" :src="$store.state.iconLocationPrefix + 'close-light.png'" class="alert-close" alt="Close alert">
-    </div>
+        <img @click="$hideAlert();" :src="$store.state.iconLocationPrefix + 'close-light.png'" class="alert-close" alt="Close alert">
+      </div>
 
-      <display-item></display-item>
+      <div v-if="$store.state.weather.hourly">
+        <display-item></display-item>
 
-      <details-pane-item :modeHourly="true"></details-pane-item>
-      <details-pane-item :modeHourly="false"></details-pane-item>
-      <!-- Fix this -->
-      <details-pane-item style="display: none;" :w="$store.state.weather.daily.data[0]"></details-pane-item>
+        <details-pane-item :modeHourly="true"></details-pane-item>
+        <details-pane-item :modeHourly="false"></details-pane-item>
+      </div>
 
       <fav-location-list></fav-location-list>
 
@@ -55,6 +55,12 @@ export default {
     FooterItem
   },
 
+  data() {
+    return {
+      loaded: false,
+    }
+  },
+
   computed: {
     metric() {
       return this.$store.state.metric;
@@ -68,8 +74,14 @@ export default {
     currentCity() {
       return this.$store.state.currentCity;
     },
+    weather() {
+      return this.$store.state.weather;
+    },
   },
   watch: {
+    weather() {
+      this.loaded = true;
+    },
     currentCity() {
       document.title = 'Weather in ' + this.currentCity + ' – Atmocast';
     },

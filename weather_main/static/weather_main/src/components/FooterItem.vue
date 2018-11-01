@@ -9,7 +9,7 @@
         </details>
         <details class="col-12">
           <summary class="fs-small fw-semi">Contact</summary>
-          <a class="footer-link fs-small c-secondary" href="mailto:jared@colgro.com">Email: jared@colgro.com</a>
+          <a class="footer-link fs-small c-secondary" href="mailto:atmocastweather@gmail.com">Email: atmocastweather@gmail.com</a>
         </details>
         <a class="col-12 footer-link fw-semi fs-small" href="https://atmocast.com/terms-of-use/">Terms of Use</a>
       </div>

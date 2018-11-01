@@ -53,7 +53,7 @@ def weather(request):
 
                         if user_lists == 0:
                             loc_list = LocationList.objects.create(user=request.user)
-                            LocationList.save()
+                            loc_list.save()
 
                         break
 

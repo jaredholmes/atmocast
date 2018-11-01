@@ -46,6 +46,12 @@ def weather(request):
                     if request.user.id in product.users:
                         proUser = True
                         break
+                        for l in LocationList.objects.all():
+                            if request.user.id != l.user.id:
+                                print(l.id)
+                                loc_list = LocationList.objects.create(user=request.user)
+                                LocationList.save()
+
 
         return render(request, 'weather_main/weather.html', { 'proUser': proUser, 'paidUser': paidUser })
     else:
@@ -136,21 +142,29 @@ class CartViewSet(viewsets.ViewSet):
 class LocationListViewSet(viewsets.ViewSet):
 
     def list(self, request, id):
-        loc_list = LocationList.objects.get(user=id)
-        serializer = LocationListSerializer(loc_list)
-
-        return Response(serializer.data)
+        try:
+            loc_list = LocationList.objects.get(user=id)
+        except:
+            return HttpResponse()
+        else:
+            serializer = LocationListSerializer(loc_list)
+            return Response(serializer.data)
 
     def update(self, request, id):
-        loc_list = LocationList.objects.get(user=id)
-        serializer = LocationListSerializer(loc_list)
 
-        locations = eval(request.body.decode('utf-8'))['params']['locations']
-        loc_list.locations = locations
+        try:
+            loc_list = LocationList.objects.get(user=id)
+        except:
+            return HttpResponse()
+        else:
+            serializer = LocationListSerializer(loc_list)
 
-        loc_list.save()
+            locations = eval(request.body.decode('utf-8'))['params']['locations']
+            loc_list.locations = locations
 
-        return Response(serializer.data)
+            loc_list.save()
+
+            return Response(serializer.data)
 
 def products(request):
     return render(request, 'weather_main/products.html')
@@ -211,7 +225,9 @@ def log_in(request, base_template, success_url, extra_key, extra_val, add_produc
             if user is not None:
                 for p in Product.objects.all():
                     if no_products and not user.id in p.users:
-                        log_in_form.add_error(None, 'Only paid users may log in. Please upgrade before proceeding.')
+                        # Prevents the following error message from duplicating
+                        if len(log_in_form.errors.as_data()) == 0:
+                            log_in_form.add_error(None, 'Only paid users may log in. Please upgrade before proceeding.')
 
                     else:
                         if add_products:
@@ -223,6 +239,7 @@ def log_in(request, base_template, success_url, extra_key, extra_val, add_produc
 
                         login(request, user)
                         return HttpResponseRedirect(success_url)
+
             else:
                 return render(request, base_template, context)
 
@@ -320,7 +337,7 @@ def cancel_product(request, id):
 
 def cancel_log_out(request, id):
     cancel_product(request, id)
-    return HttpResponseRedirect('log_out')
+    return HttpResponseRedirect(reverse('log_out'))
 
 # PayFast views
 def payment_success(request):

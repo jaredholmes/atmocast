@@ -3,10 +3,8 @@ import VueRouter from 'vue-router';
 import moment from 'moment/min/moment.min';
 import localforage from 'localforage';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { store } from './store';
-import '../stylesheets/styles.sass';
 import IndexPage from '../components/IndexPage.vue';
 
 // Service worker registration
@@ -91,7 +89,7 @@ Vue.mixin ({
 
             // Data is in Farenheit by default.
             if (metric) {
-              this.$convertAll(response.data, this.$fToC, this.$mToKm);
+              this.$convertAll(response.data, this.$fToC, this.$mToKm, this.$cmToIn);
             } else {
               this.$commitWeatherToStore(response.data);
             }
@@ -209,9 +207,15 @@ Vue.mixin ({
     // Either sets the location to a saved favourite or to the default.
     // Optional boolean argument can be passed to alert the user that their location cannot be retrieved
     $setLocationToFav(alertUser) {
-      if (this.favLocationExists) {
-        const favCoords = this.$store.state.favCoords;
-        this.$setDefaultLocation(favCoords.lat, favCoords.lon);
+      // if (this.$store.state.favLocationExists) {
+      //   const favCoords = this.$store.state.favCoords;
+      //   this.$setDefaultLocation(favCoords.lat, favCoords.lon);
+      // } else {
+      //   this.$setDefaultLocation();
+      // }
+      if (this.$store.state.favLocationExists) {
+        const favLocation = this.$store.state.favLocation[0];
+        this.$setDefaultLocation(favLocation.lat, favLocation.lon);
       } else {
         this.$setDefaultLocation();
       }
@@ -244,77 +248,96 @@ Vue.mixin ({
     },
     // Check IndexedDB for favourite co-ordinates and set favLocationExists accordingly.
     $checkFavLocation() {
-      localforage.getItem(
-        'favCoords', (err, value) => {
-          let exists;
-          if (value) {
-            exists = true;
+      let exists = false;
+
+      if (this.$store.state.proUser) {
+        this.$getFavLocations();
+      } else {
+        localforage.getItem(
+          'favLocation', (err, value) => {
+            if (value.length > 0) {
+              exists = true;
+              for (var i = 0; i < value.length; i++) {
+                this.$store.commit({
+                  type: 'setFavLocation',
+                  lat: value[i].lat,
+                  lon: value[i].lon,
+                  name: value[i].name,
+                });
+              }
+            }
+
             this.$store.commit({
-              type: 'setFavCoords',
-              coords: value,
+              type: 'setFavLocationExists',
+              bool: exists,
             });
-          } else {
-            exists = false;
           }
+        );
+      }
 
-          this.$store.commit({
-            type: 'setFavLocationExists',
-            bool: exists,
-          });
-        }
-      );
     },
-    $addFavLocation(locationName) {
-      this.isFav = true;
+    $addFavLocation(lat, lon, locationName) {
       // Set fav co-ordinates
-      localforage.setItem('favCoords', {
-        lat: this.currentCoords.lat,
-        lon: this.currentCoords.lon,
-      });
+      if (navigator.onLine) {
+        this.$store.commit({
+          type: 'setFavLocation',
+          lat: lat,
+          lon: lon,
+          name: locationName,
+        });
 
-      this.$store.commit({
-        type: 'setFavCoords',
-        coords: this.currentCoords,
-      });
+        if (this.$store.state.proUser) {
+          this.$showAlert('Favourited ' + locationName);
+          this.$putFavLocations(this.$store.state.favLocation);
+        } else {
+          this.$showAlert('Favourited ' + locationName);
+          localforage.setItem('favLocation', this.$store.state.favLocation);
+        }
 
-      // Set fav location name
-      localforage.setItem('favLocationName', locationName);
-
-      this.$store.commit({
-        type: 'setFavLocationName',
-        name: locationName,
-      });
-
-      this.$showAlert('Favourited ' + locationName);
+        this.$store.commit({
+          type: 'setCurrentIsFav',
+          bool: true,
+        });
+      } else {
+        this.$showConnAlert();
+      }
     },
     $removeFavLocation(locationName) {
-      this.isFav = false;
+      if (navigator.onLine) {
+        // Unset fav co-ordinates
+        this.$store.commit('unsetFavLocation', locationName);
 
-      // Unset fav co-ordinates
-      localforage.removeItem('favCoords');
-      this.$store.commit('unsetFavCoords');
+        if (this.$store.state.proUser) {
+          this.$showAlert('Unfavourited ' + locationName);
+          this.$putFavLocations(this.$store.state.favLocation);
+        } else {
+          this.$showAlert('Unfavourited ' + locationName);
+          localforage.setItem('favLocation', this.$store.state.favLocation);
+        }
 
-      // Unset fav location name
-      localforage.removeItem('favLocationName');
-      this.$store.commit('unsetFavLocationName');
-
-      this.$showAlert('Unfavourited ' + locationName);
-    },
-    $checkMetric() {
-      localforage.getItem('metric')
-        .then((value) => {
-          let bool;
-          if (value === false) {
-            bool = value;
-          } else {
-            bool = true;
-          }
-
-          this.$store.commit({
-            type: 'setMetric',
-            bool: bool,
-          });
+        this.$store.commit({
+          type: 'setCurrentIsFav',
+          bool: false,
         });
+      } else {
+        this.$showConnAlert();
+      }
+  },
+  $checkMetric() {
+    localforage.getItem('metric')
+      .then((value) => {
+        let bool;
+        if (value === false) {
+          bool = value;
+        } else {
+          bool = true;
+        }
+
+        this.$store.commit({
+          type: 'setMetric',
+          bool: bool,
+        });
+      });
     },
     $showLocationAlert() {
       const alert = document.getElementById('alert-location');
@@ -324,6 +347,9 @@ Vue.mixin ({
           () => alert.classList.remove('shown'),
           8000);
       }
+    },
+    $showConnAlert() {
+      this.$showAlert('Unable to connect to the internet. Please try again later.');
     },
     $hideCollapse() {
       document.getElementById('nav-collapse').classList.remove('active');
@@ -381,25 +407,34 @@ Vue.mixin ({
       this.$convertValuesInObject(keyArray, object, conversionFunction);
     },
     $convertAllTempsInObject(object, conversionFunction) {
-      const keyString = ['temperature', 'Temperature',];
+      const keyString = ['temperature', 'Temperature', 'dewPoint'];
       const excludeString = ['Time'];
       this.$convertValuesByKey(keyString, object, conversionFunction, excludeString);
     },
-    $convertAllDistanceInObject(object, conversionFunction) {
+    $convertAllLongDistanceInObject(object, conversionFunction) {
       const keyString = ['wind', 'visibility'];
       const excludeString = ['Bearing'];
       this.$convertValuesByKey(keyString, object, conversionFunction, excludeString);
     },
-    $convertAll(weatherObj, tempConversion, distanceConversion) {
+    $convertAllShortDistanceInObject(object, conversionFunction) {
+      const keyString = ['precipIntensity'];
+      const excludeString = [' '];
+      this.$convertValuesByKey(keyString, object, conversionFunction, excludeString);
+    },
+    $convertAll(weatherObj, tempConversion, longDistanceConversion, shortDistanceConversion) {
       if (weatherObj) {
         for (var i = 0; i < weatherObj.daily.data.length; i++) {
           this.$convertAllTempsInObject(
             weatherObj.daily.data[i],
             tempConversion
           );
-          this.$convertAllDistanceInObject(
+          this.$convertAllLongDistanceInObject(
             weatherObj.daily.data[i],
-            distanceConversion
+            longDistanceConversion
+          );
+          this.$convertAllShortDistanceInObject(
+            weatherObj.daily.data[i],
+            shortDistanceConversion
           );
         }
 
@@ -408,9 +443,13 @@ Vue.mixin ({
             weatherObj.hourly.data[i],
             tempConversion
           );
-          this.$convertAllDistanceInObject(
+          this.$convertAllLongDistanceInObject(
             weatherObj.hourly.data[i],
-            distanceConversion
+            longDistanceConversion
+          );
+          this.$convertAllShortDistanceInObject(
+            weatherObj.hourly.data[i],
+            shortDistanceConversion
           );
         }
 
@@ -419,9 +458,13 @@ Vue.mixin ({
           weatherObj.currently,
           tempConversion
         );
-        this.$convertAllDistanceInObject(
+        this.$convertAllLongDistanceInObject(
           weatherObj.currently,
-          distanceConversion
+          longDistanceConversion
+        );
+        this.$convertAllShortDistanceInObject(
+          weatherObj.currently,
+          shortDistanceConversion
         );
 
         this.$commitWeatherToStore(weatherObj);
@@ -514,6 +557,53 @@ Vue.mixin ({
     $adjustCurrentWeather() {
       this.$store.commit('setCurrentWeather');
     },
+    $getFavLocations() {
+      let exists = false;
+
+      const getURL = '/rest/location-list/' + this.$store.state.userID + '/';
+      axios.get(
+        getURL,
+        { headers: {
+          // CSRF Token is set in script tag in template. It prevents 403 status code
+          'X-CSRFToken': this.$store.state.csrf,
+          }
+        }
+      )
+      .then(response => {
+        if (response.data) {
+          const locations = response.data.locations;
+          if (locations.length > 0) {
+            exists = true;
+            for (var i = 0; i < locations.length; i++) {
+              this.$store.commit({
+                type: 'setFavLocation',
+                lat: locations[i].lat,
+                lon: locations[i].lon,
+                name: locations[i].name,
+              });
+            }
+          }
+
+          this.$store.commit({
+            type: 'setFavLocationExists',
+            bool: exists,
+          });
+        }
+      });
+    },
+    $putFavLocations(locations) {
+      const putURL = '/rest/location-list/' + this.$store.state.userID + '/';
+      // const jsonLocations = JSON.stringify({'locations' : locations});
+      axios.put(
+        putURL,
+        { params: {'locations': locations} },
+        { headers: {
+          // CSRF Token is set in script tag in template. It prevents 403 status code
+          'X-CSRFToken': this.$store.state.csrf,
+          }
+        }
+      );
+    },
     $momentAddDays(days) {
       if (days <= 0) {
         return 'Today';
@@ -535,13 +625,20 @@ Vue.mixin ({
     $mToKm(m) {
       return m * 1.609344;
     },
+    $inToCm(i) {
+      return i * 2.54 ;
+    },
     // Metric to imperial conversions
     $cToF(c) {
       return c * 9/5 + 32;
     },
     $kmToM(km) {
       return km / 1.609344;
-    }
+    },
+    $cmToIn(cm) {
+      // return cm / 0.3937 ;
+      return cm / 2.54 ;
+    },
   }
 });
 

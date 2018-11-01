@@ -55,7 +55,7 @@ export default {
         }
         searchInput.style.left = '0';
       } else {
-        this.$showAlert('Unable to connect to the internet.')
+        this.$showConnAlert();
       }
     },
     hideSearchBtn() {

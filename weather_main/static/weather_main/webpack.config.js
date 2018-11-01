@@ -10,6 +10,13 @@ module.exports = {
 
   entry: {
     app: './src/scripts/app',
+    persist: './src/scripts/persist',
+    account: './src/scripts/account',
+    nav: './src/scripts/nav',
+    styles: './src/scripts/styles',
+    loginStyles: './src/scripts/loginStyles',
+    productStyles: './src/scripts/productStyles',
+    settingsStyles: './src/scripts/settingsStyles',
   },
 
   output: {

@@ -1,12 +1,14 @@
 .DS_Store
 .DS_Store?
 *.xd
-logo.ai
+*.ai
+*.pages
 node_modules
 location.json
 data.json
 locationSearch.json
 weather_main/static/weather_main/dist/index.html
-.sqlite3
+*.sqlite3
 local_settings.py
 staticfiles
+*.mindnode

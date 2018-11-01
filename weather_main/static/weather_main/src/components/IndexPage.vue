@@ -75,9 +75,9 @@ export default {
     },
     metric() {
       if (this.metric) {
-        this.$convertAll(this.$store.state.weather, this.$fToC, this.$mToKm);
+        this.$convertAll(this.$store.state.weather, this.$fToC, this.$mToKm, this.$inToCm);
       } else {
-        this.$convertAll(this.$store.state.weather, this.$cToF, this.$kmToM);
+        this.$convertAll(this.$store.state.weather, this.$cToF, this.$kmToM, this.$cmToIn);
       }
     },
     lat() {
@@ -89,19 +89,15 @@ export default {
     this.$checkMetric();
   },
   created() {
+    if (this.$store.state.proUser) {
+      this.$store.commit({
+        type: 'setFavLimit',
+        limit: 20,
+      });
+    }
     this.$checkFavLocation();
     this.$setLocation();
     this.$setAppIconLocation();
-
-    localforage.getItem('favLocationName')
-      .then((value) => {
-        if (value) {
-          this.$store.commit({
-            type: 'setFavLocationName',
-            name: value,
-          });
-        }
-      });
   },
   beforeUpdate() {
     if (!this.favLocationExists) {
@@ -190,16 +186,16 @@ export default {
       color: $text-primary
 
     #btn-location-get:hover
-      background-color: #F87666
+      background-color: $cta-red-hover
 
     #btn-location-get
-      background-color: #ef412d
+      background-color: $cta-red
 
     #btn-location-search:hover
-      background-color: #7EC4CF
+      background-color: $cta-blue-hover
 
     #btn-location-search
-      background-color: #18a6bc
+      background-color: $cta-blue
 
   #alert-location.shown
 

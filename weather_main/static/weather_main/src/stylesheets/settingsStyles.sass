@@ -1,0 +1,43 @@
+@import "/styles"
+
+.settings-header
+  margin: $s-l-1 auto
+
+.settings-container
+  padding: $s-s-4
+  box-sizing: border-box
+
+  @include media-tablet
+    padding: $s-s-3 $s-s-2
+
+  @include media-large
+    max-width: 70%
+
+.settings-item
+  margin: $s-s-2 0
+
+.product-item
+  border-bottom: none
+  display: flex
+
+.product-item > *
+  display: flex
+  align-items: center
+
+.btn-cancel
+  margin-left: auto
+  color: $cta-red
+
+.btn-cancel:hover
+  color: $cta-red-hover
+
+.log-out-container
+  margin-top: $s-l-1
+
+.btn-log-out
+  border: 2px solid $cta-blue
+  color: $cta-blue
+
+.btn-log-out:hover
+  border-color: $cta-blue-hover
+  color: $cta-blue-hover

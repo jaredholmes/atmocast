@@ -74,4 +74,10 @@ export default {
     margin-left: auto
     z-index: 2
 
+    @include media-tablet
+      right: 265px
+
+    @include media-large
+      right: 200px
+
 </style>

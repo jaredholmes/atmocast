@@ -17,21 +17,65 @@
       >
         <img :src="$store.state.iconLocationPrefix + 'close-light.png'" alt="Close more details">
       </button>
-      <div class="col-12 col-sm-6 row collapse-inner-container">
-        <div v-if="modeHourly" class="col-12 col-md-12">
-          <b>Feels like:</b> {{ Math.round(weatherDatum.apparentTemperature) }}&deg;
-        </div>
-        <div v-else class="col-12 daily-summary fw-semi">
+      <div class="collapse-outer-container row">
+        <div class="col-12 daily-summary fw-semi">
           {{ weatherDatum.summary }}
         </div>
-        <div class="col-12 col-md-12">
-          <b>Chance of rain:</b> {{ Math.round(weatherDatum.precipProbability * 100) }}%
+        <div :class="{ innerWithBorder: proUser}" class="col-12 col-sm-6 row collapse-inner-container">
+          <div v-if="modeHourly" class="col-12 col-md-12">
+            <b>Feels like:</b> {{ Math.round(weatherDatum.apparentTemperature) }}&deg;
+          </div>
+          <div class="col-12 col-md-12">
+            <b>Chance of rain:</b> {{ Math.round(weatherDatum.precipProbability * 100) }}%
+          </div>
+          <div v-if="proUser" class="col-12 col-md-12">
+            <b v-if="modeHourly">Rainfall per hour:</b>
+            <b v-else>Average rainfall per hour:</b> {{ +weatherDatum.precipIntensity.toFixed(2) }} {{ shortDistanceUnit }}
+          </div>
+          <div v-if="modeHourly" class="col-12 col-md-12">
+            <b>Wind:</b> {{ Math.round(weatherDatum.windSpeed) }} {{ speedUnit }}<span v-if="proUser"> {{ windDirection }}</span>
+          </div>
+          <div class="col-12 col-md-12">
+            <b>Humidity:</b> {{ Math.round(weatherDatum.humidity * 100) }}%
+          </div>
+          <div v-if="!modeHourly && proUser" class="col-12 col-md-12">
+            <b>Warmest time:</b> {{ $momentOffsetTime(weatherDatum.temperatureHighTime, offset) }}
+          </div>
+          <div v-if="!modeHourly && proUser" class="col-12 col-md-12">
+            <b>Coolest time:</b> {{ $momentOffsetTime(weatherDatum.temperatureLowTime, offset) }}
+          </div>
+          <div v-if="!modeHourly && proUser" class="col-12 col-md-12">
+            <b>Moon phase:</b> {{ moonPhaseTerm }}
+          </div>
         </div>
-        <div class="col-12 col-md-12">
-          <b>Wind speed:</b> {{ Math.round(weatherDatum.windSpeed) }}{{ speedUnit }}
-        </div>
-        <div class="col-12 col-md-12">
-          <b>Humidity:</b> {{ Math.round(weatherDatum.humidity * 100) }}%
+
+        <div class="col-12 col-sm-6 row collapse-inner-container">
+          <div v-if="proUser" class="col-12 col-md-12">
+            <b v-if="modeHourly">Cloud cover:</b>
+            <b v-else>Average cloud cover:</b> {{ Math.round(weatherDatum.cloudCover * 100) }}%
+          </div>
+          <div v-if="proUser" class="col-12 col-md-12">
+            <b>Pressure:</b>
+            <span v-if="metric">{{ Math.round(weatherDatum.pressure/10) }} kPa</span>
+            <span v-else>{{ Math.round(weatherDatum.pressure) }} mbar</span>
+          </div>
+          <div v-if="proUser" class="col-12 col-md-12">
+            <b>UV index:</b> {{ weatherDatum.uvIndex }}
+          </div>
+          <div v-if="modeHourly && proUser" class="col-12 col-md-12">
+            <b>Dew point:</b> {{ Math.round(weatherDatum.dewPoint) }}&deg;
+          </div>
+          <div v-if="!modeHourly && proUser" class="col-12 col-md-12">
+            <b>Sunrise:</b> {{ $momentOffsetTime(weatherDatum.sunriseTime, offset) }}
+          </div>
+          <div v-if="proUser" class="col-12 col-md-12">
+            <div v-if="!modeHourly">
+              <b>Sunset:</b> {{ $momentOffsetTime(weatherDatum.sunsetTime, offset) }}
+            </div>
+            <div v-else>
+              <b>Visibility:</b> {{ Math.round(weatherDatum.visibility) }} {{ longDistanceUnit }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -45,6 +89,9 @@ export default {
   props: ['modeHourly'],
 
   computed: {
+    proUser() {
+      return this.$store.state.proUser;
+    },
     datumIndex() {
       if (this.modeHourly) {
         return this.$store.getters.displayedCollapseHourly;
@@ -72,11 +119,123 @@ export default {
         return 'mph'
       }
     },
+    longDistanceUnit() {
+      if (this.metric) {
+        return 'km'
+      } else {
+        return 'mi'
+      }
+    },
+    shortDistanceUnit() {
+      if (this.metric) {
+        return 'cm'
+      } else {
+        return 'in'
+      }
+    },
     collapseId() {
       if (this.modeHourly) {
         return 'more-details-hourly';
       } else {
         return 'more-details-daily';
+      }
+    },
+    moonPhaseTerm() {
+      if (this.proUser) {
+        const moonPhase = this.weatherDatum.moonPhase * 100;
+        let term;
+
+        switch(true) {
+          case 98 < moonPhase:
+            term = 'New moon';
+            break;
+          case moonPhase <= 1:
+            term = 'New moon';
+            break;
+          case moonPhase <= 17:
+            term = 'Waxing crescent';
+            break;
+          case moonPhase <= 33:
+            term = 'First quarter';
+            break;
+          case moonPhase <= 48:
+            term = 'Waxing gibbous';
+            break;
+          case moonPhase <= 51:
+            term = 'Full moon';
+            break;
+          case moonPhase <= 67:
+            term = 'Waning gibbous';
+            break;
+          case moonPhase <= 83:
+            term = 'Third quarter';
+            break;
+          case moonPhase <= 98:
+            term = 'Waning crescent';
+            break;
+          default:
+            term = '';
+        }
+
+        return term;
+      }
+    },
+    windDirection() {
+      if (this.proUser) {
+        const bearing = this.weatherDatum.windBearing;
+        let direction;
+
+        switch (true) {
+          case bearing < 23:
+            direction = 'N';
+            break;
+          case bearing < 46:
+            direction = 'NNE';
+            break;
+          case bearing < 68:
+            direction = 'ENE';
+            break;
+          case bearing < 91:
+            direction = 'E';
+            break;
+          case bearing < 113:
+            direction = 'ESE';
+            break;
+          case bearing < 136:
+            direction = 'SE';
+            break;
+          case bearing < 158:
+            direction = 'SSE';
+            break;
+          case bearing < 180:
+            direction = 'S';
+            break;
+          case bearing < 203:
+            direction = 'SSW';
+            break;
+          case bearing < 226:
+            direction = 'SW';
+            break;
+          case bearing < 248:
+            direction = 'WSW';
+            break;
+          case bearing < 271:
+            direction = 'W';
+            break;
+          case bearing < 293:
+            direction = 'WNW';
+            break;
+          case bearing < 316:
+            direction = 'NW';
+            break;
+          case bearing < 338:
+            direction = 'NNW';
+            break;
+          default:
+            direction = '';
+        }
+
+        return direction;
       }
     },
   },
@@ -93,7 +252,8 @@ export default {
   @import "../stylesheets/styles"
 
   .more-details-collapse
-    position: relative
+    z-index: -1
+    position: absolute
     display: block
     max-height: 0
     transition: max-height 180ms ease-in, opacity 100ms linear
@@ -108,7 +268,9 @@ export default {
 
   // 'shown' overrides Bootstrap's 'show', allowing for custom animations, etc.
   .more-details-collapse.shown
-    max-height: 200px
+    z-index: 0
+    position: relative
+    max-height: 400px
     display: block
 
   .more-details-collapse.shown *
@@ -122,7 +284,19 @@ export default {
     padding: $s-s-4
 
     .collapse-inner-container
-      padding: 0
+      padding: 0.5em 0
+      align-content: flex-start
+
+      @include media-tablet
+        padding: 0
+
+    .innerWithBorder
+      border: none
+      border-bottom: 1px solid #cccccc
+
+      @include media-tablet
+        border: none
+        border-right: 1px solid #cccccc
 
     .col-12, .col-12 *
       color: $text-secondary

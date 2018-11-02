@@ -272,6 +272,8 @@ Vue.mixin ({
               type: 'setFavLocationExists',
               bool: exists,
             });
+
+            this.$setLocation();
           }
         );
       }
@@ -589,6 +591,8 @@ Vue.mixin ({
             type: 'setFavLocationExists',
             bool: exists,
           });
+
+          this.$setLocation();
         }
       });
     },

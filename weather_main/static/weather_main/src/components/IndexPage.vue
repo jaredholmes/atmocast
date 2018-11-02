@@ -79,9 +79,9 @@ export default {
     },
   },
   watch: {
-    favLocationExists() {
-      this.$setLocationToFav();
-    },
+    // favLocationExists() {
+    //   this.$setLocationToFav();
+    // },
     weather() {
       this.loaded = true;
     },
@@ -109,7 +109,7 @@ export default {
       });
     }
     this.$checkFavLocation();
-    this.$setLocation();
+    // this.$setLocation();
     this.$setAppIconLocation();
   },
   // created() {

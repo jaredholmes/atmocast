@@ -79,6 +79,9 @@ export default {
     },
   },
   watch: {
+    favLocationExists() {
+      this.$setLocationToFav();
+    },
     weather() {
       this.loaded = true;
     },

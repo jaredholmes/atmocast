@@ -248,11 +248,10 @@ Vue.mixin ({
     },
     // Check IndexedDB for favourite co-ordinates and set favLocationExists accordingly.
     $checkFavLocation() {
-      let exists = false;
-
       if (this.$store.state.proUser) {
         this.$getFavLocations();
       } else {
+        let exists = false;
         localforage.getItem(
           'favLocation', (err, value) => {
             if (value) {

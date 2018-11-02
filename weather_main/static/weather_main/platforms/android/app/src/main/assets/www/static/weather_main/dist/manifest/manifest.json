@@ -1,6 +1,6 @@
 {
   "short_name": "Atmocast",
-  "name": "Atmocast",
+  "name": "Atmocast Weather",
   "icons": [
     {
       "src": "https://atmocast.com/static/weather_main/www/static/weather_main/dist/icons/app_icons/icon-72x72.png",

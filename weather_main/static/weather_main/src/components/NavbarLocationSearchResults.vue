@@ -42,10 +42,6 @@ export default {
     left: 0
     width: 100%
 
-    @include media-large
-      // right: 30%
-      // left: auto
-
   .row *
     z-index: 1
 
@@ -73,11 +69,5 @@ export default {
     text-align: left
     margin-left: auto
     z-index: 2
-
-    @include media-tablet
-      right: 265px
-
-    @include media-large
-      right: 200px
 
 </style>

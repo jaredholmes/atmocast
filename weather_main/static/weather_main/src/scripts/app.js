@@ -81,10 +81,12 @@ Vue.mixin ({
         // Django URLs
         const darkSkyUrl = '/weather_data/' + lat.toFixed(8) + '/' + lon.toFixed(8) + '/';
 
+        // const darkSkyUrl = '/static/weather_main/www/static/weather_main/dist/data.json';
+
         axios.get(darkSkyUrl)
           .then(response => {
             const locationIQUrl = '/reverse_geocode/' + lat.toFixed(8) + '/' + lon.toFixed(8) + '/';
-            // const locationIQUrl = '/static/weather_main/www/static/weather_main/dist/location.json'; // Because I'm a cheap developer
+            // const locationIQUrl = '/static/weather_main/www/static/weather_main/dist/location.json';
 
             // Data is in Farenheit by default.
             if (metric) {

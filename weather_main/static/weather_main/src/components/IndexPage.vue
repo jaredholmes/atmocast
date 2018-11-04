@@ -100,19 +100,7 @@ export default {
       this.$getMainData();
     }
   },
-  // beforeMount() {
-  //   this.$checkMetric();
-  //   if (this.$store.state.proUser) {
-  //     this.$store.commit({
-  //       type: 'setFavLimit',
-  //       limit: 20,
-  //     });
-  //   }
-  //   this.$checkFavLocation();
-  //   // this.$setLocation();
-  //   this.$setAppIconLocation();
-  // },
-  breforecreate() {
+  beforeMount() {
     this.$checkMetric();
     if (this.$store.state.proUser) {
       this.$store.commit({
@@ -121,7 +109,6 @@ export default {
       });
     }
     this.$checkFavLocation();
-    // this.$setLocation();
     this.$setAppIconLocation();
   },
   beforeUpdate() {

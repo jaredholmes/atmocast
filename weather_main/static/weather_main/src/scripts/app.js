@@ -79,12 +79,11 @@ Vue.mixin ({
       // Ensure validity of location. If invalid, set it to the default.
       if (!isNaN(lat) && !isNaN(lon)) {
         // Django URLs
-        const darkSkyUrl = 'https://atmocast.com/weather_data/' + lat.toFixed(8) + '/' + lon.toFixed(8) + '/';
-        // const darkSkyUrl = '/static/weather_main/www/static/weather_main/dist/data.json'; // Because I'm a cheap developer
+        const darkSkyUrl = '/weather_data/' + lat.toFixed(8) + '/' + lon.toFixed(8) + '/';
 
         axios.get(darkSkyUrl)
           .then(response => {
-            const locationIQUrl = 'https://atmocast.com/reverse_geocode/' + lat.toFixed(8) + '/' + lon.toFixed(8) + '/';
+            const locationIQUrl = '/reverse_geocode/' + lat.toFixed(8) + '/' + lon.toFixed(8) + '/';
             // const locationIQUrl = '/static/weather_main/www/static/weather_main/dist/location.json'; // Because I'm a cheap developer
 
             // Data is in Farenheit by default.

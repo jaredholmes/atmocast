@@ -100,7 +100,19 @@ export default {
       this.$getMainData();
     }
   },
-  beforeMount() {
+  // beforeMount() {
+  //   this.$checkMetric();
+  //   if (this.$store.state.proUser) {
+  //     this.$store.commit({
+  //       type: 'setFavLimit',
+  //       limit: 20,
+  //     });
+  //   }
+  //   this.$checkFavLocation();
+  //   // this.$setLocation();
+  //   this.$setAppIconLocation();
+  // },
+  breforecreate() {
     this.$checkMetric();
     if (this.$store.state.proUser) {
       this.$store.commit({
@@ -112,17 +124,6 @@ export default {
     // this.$setLocation();
     this.$setAppIconLocation();
   },
-  // created() {
-  //   if (this.$store.state.proUser) {
-  //     this.$store.commit({
-  //       type: 'setFavLimit',
-  //       limit: 20,
-  //     });
-  //   }
-  //   this.$checkFavLocation();
-  //   this.$setLocation();
-  //   this.$setAppIconLocation();
-  // },
   beforeUpdate() {
     if (!this.favLocationExists) {
       localforage.getItem(

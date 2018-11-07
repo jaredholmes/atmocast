@@ -23,11 +23,11 @@
       </div>
     </div>
 
-    <!-- <div class="footer-badges row">
+    <div class="footer-badges row">
       <a href="https://www.paypal.com/za/webapps/mpp/paypal-popup" title="How PayPal Works" onclick="javascript:window.open('https://www.paypal.com/za/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;"><img class="badge-img" src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" border="0" alt="PayPal Logo"></a>
 
       <a href='https://play.google.com/store/apps/details?id=com.atmocast.app&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img class="badge-img" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
-    </div> -->
+    </div>
 
   </footer>
 </template>

@@ -40,7 +40,7 @@ def weather(request):
         paidUser = False
 
         if request.user.is_authenticated:
-            accepted_names = ['Atmocast Pro (monthly subscription)', 'Atmocast Pro (annual subscription)']
+            accepted_names = ['Atmocast Weather Pro',]
             paidUser = True
 
             for name in accepted_names:

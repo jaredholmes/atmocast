@@ -2,13 +2,13 @@
 <instant-run
     abi="arm64-v8a,armeabi-v7a,armeabi"
     api-level="26"
-    build-mode="COLD"
+    build-mode="FULL"
     density="420dpi"
     format="10"
     plugin-version="3.2.0"
-    timestamp="1541150032043"
+    timestamp="1541403664404"
     token="400742526227533291"
-    verifier="COLD_SWAP_REQUESTED" >
+    verifier="FULL_BUILD_REQUESTED" >
 
     <task
         name="javac"
@@ -26,19 +26,52 @@
     <artifact
         location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/instant-run-apk/debug/app-debug.apk"
         type="SPLIT_MAIN" />
+    <artifact
+        location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/split-apk/debug/slices/slice_6.apk"
+        type="SPLIT" />
+    <artifact
+        location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/resources/instant-run/debug/resources-debug.apk"
+        type="SPLIT" />
+    <artifact
+        location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
+        type="SPLIT" />
+    <artifact
+        location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/split-apk/debug/slices/slice_7.apk"
+        type="SPLIT" />
+    <artifact
+        location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/split-apk/debug/slices/slice_8.apk"
+        type="SPLIT" />
+    <artifact
+        location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/split-apk/debug/slices/slice_9.apk"
+        type="SPLIT" />
+    <artifact
+        location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
+        type="SPLIT" />
+    <artifact
+        location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
+        type="SPLIT" />
+    <artifact
+        location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/split-apk/debug/slices/slice_2.apk"
+        type="SPLIT" />
+    <artifact
+        location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/split-apk/debug/slices/slice_0.apk"
+        type="SPLIT" />
+    <artifact
+        location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
+        type="SPLIT" />
 
     <build
         build-mode="FULL"
-        timestamp="1541149165491"
+        timestamp="1541403664404"
         verifier="FULL_BUILD_REQUESTED" >
-        <artifact
-            location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/resources/instant-run/debug/resources-debug.apk"
-            type="SPLIT" />
         <artifact
             location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/instant-run-apk/debug/app-debug.apk"
             type="SPLIT_MAIN" />
         <artifact
             location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/split-apk/debug/slices/slice_6.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/resources/instant-run/debug/resources-debug.apk"
             type="SPLIT" />
         <artifact
             location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
@@ -67,22 +100,6 @@
         <artifact
             location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
             type="SPLIT" />
-    </build>
-    <build
-        build-mode="COLD"
-        timestamp="1541149640890"
-        verifier="COLD_SWAP_REQUESTED" >
-        <artifact
-            location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/resources/instant-run/debug/resources-debug.apk"
-            type="SPLIT" />
-    </build>
-    <build
-        build-mode="COLD"
-        timestamp="1541150032043"
-        verifier="COLD_SWAP_REQUESTED" >
-        <artifact
-            location="/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/build/intermediates/instant-run-apk/debug/app-debug.apk"
-            type="SPLIT_MAIN" />
     </build>
 
 </instant-run>

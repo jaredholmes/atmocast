@@ -8,6 +8,7 @@ new Vue({
     cartItems: [],
     radioNewUser: '',
     newUser: false,
+    showAuthAlert: false,
   },
   methods: {
     addToCart(target, item, cartID) {
@@ -44,6 +45,12 @@ new Vue({
           }
         );
       // }
+    },
+    checkAuth(ev, isAuth) {
+      if (!isAuth) {
+        ev.preventDefault();
+        this.showAuthAlert = true;
+      }
     }
   },
   watch: {

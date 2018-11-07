@@ -1,16 +1,23 @@
 {% extends "weather_main/account_base.html" %}
 {% load static %}
 
+{% block title %}
+  Sign Up
+{% endblock %}
+
+{% block main %}
+<h1 class="fs-xxl fw-bold text-center sign-up-title">Welcome to Atmocast.</h1>
 {% block form %}
 <form class="sign-up-form" method="post">
   <div class="form-inner-container row">
-    <div class="form-inner col-10 col-md-8 col-lg-6">
-      <h3 class="form-header text-center fs-large fw-bold">Your Details</h3>
+    <div class="form-inner login-form-inner col-10 col-md-8 col-lg-6">
+      <h3 class="form-header text-center fs-large fw-bold">Sign Up</h3>
       {% csrf_token %}
-      {{ form }}
+      {{ sign_up_form }}
     </div>
   <div class="submit-btn-container">
-    <input class="form-submit btn fs-moderate fw-semi" type="submit" name="" value="Continue to payment">
+    <input class="form-submit btn fs-moderate fw-semi" type="submit" name="" value="Sign Up">
   </div>
 </form>
+{% endblock %}
 {% endblock %}

@@ -25,7 +25,11 @@ urlpatterns = [
 
     path('log-in/', views.log_in_page, name='log_in'),
 
+    path('log-in/upgrade/', views.log_in_upgrade, name='log_in_upgrade'),
+
     path('log-out/', views.log_out, name='log_out'),
+
+    path('sign-up/upgrade/', views.sign_up_upgrade, name='sign_up_upgrade'),
 
     path('password-reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
 
@@ -50,6 +54,12 @@ urlpatterns = [
     path('cancel-product/<int:id>/', views.cancel_product, name='cancel_product'),
 
     path('cancel-log-out/<int:id>/', views.cancel_log_out, name='cancel_log_out'),
+
+    re_path(r'^checkout/add-product/(?P<id>[0-9]+)/$', views.add_product, name='chk_add_product'),
+
+    path('checkout/cancel/', views.chk_cancel, name='chk_cancel'),
+
+    path('ipn/', views.ipn, name='ipn'),
 
     # PayFast URLs
     path('payment/success/', views.payment_success, name='payment_success'),

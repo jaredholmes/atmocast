@@ -6,72 +6,68 @@
 {% endblock %}
 
 {% block form %}
-  <form action="" method="post">
-    {% csrf_token %}
-    <!-- <div class="form-inner-container row">
-      <div class="promo-inner col-10 col-md-8 col-lg-6">
-        <h2 class="form-header text-center fs-large fw-bold">Atmocast Weather Pro</h2>
-        <h4 class="promo-price c-secondary text-center fw-bold">$7/year <span>or</span>$1/month</h4>
-        <p class="text-center">Get access to accurate, more comprehensive weather data and up to 20 favourite locations, synchronised across multiple devices. <a class="learn-more-link" href="/products/#atmocast-weather-pro">Learn more</a></p>
-        <button @click="addToCart($event.target, { name: 'Atmocast Pro' })" class="btn btn-cart fw-bold bc-light" type="button">Add to cart</button>
-      </div>
-    </div> -->
-    {% for p in products %}
-    <div class="form-inner-container row">
-      <div class="promo-inner col-10 col-md-8 col-lg-6">
-        <h4 class="text-center c-pro-red fw-bold"><br>Free until 30 November 2018!</h4>
-        <h2 class="form-header text-center fs-large fw-bold">{{ p.name }}</h2>
-        <h4 class="promo-price c-secondary text-center fw-bold">${{ p.price|floatformat }} {{ p.frequency }}</h4>
-        <p class="text-center">{{ p.description }} <a class="learn-more-link" href="/products/#atmocast-weather-pro">Learn more</a></p>
-        <button @click="addToCart($event.target, { name: '{{ p.name }}' }, {{ cart.id }})" class="btn btn-cart fw-bold bc-light" type="button">Add to cart</button>
-      </div>
-    </div>
-    {% endfor %}
-    <div v-if="cartItems.length" class="radio-container">
-      <p class="text-center"><span class="fw-semi">Please note: </span>the free trial period will expire on 1 December 2018, after which you will need to purchase an Atmocast Pro subscription in order to continue using it.</p>
-      <div class="custom-control custom-radio">
-        <input v-model="radioNewUser" value="true" required type="radio" id="radio-sign-up" name="customRadio" class="custom-control-input">
-        <label class="custom-control-label" for="radio-sign-up">I'm a new user</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input v-model="radioNewUser" value="false" required type="radio" id="radio-log-in" name="customRadio" class="custom-control-input">
-        <label class="custom-control-label" for="radio-log-in">I already have an account</label>
-      </div>
-    </div>
-  </form>
+  {% for p in products %}
+  <div class="form-inner-container row">
+    <div class="promo-inner col-10 col-md-8 col-lg-6">
+      <h2 class="form-header text-center fs-large fw-bold">{{ p.name }}</h2>
+      <h4 class="promo-price c-secondary text-center fw-bold">$7/year <span>or</span> $1/month | 1 month free trial</h4>
+      <p class="text-center">{{ p.description }} <a class="learn-more-link" href="/products/#atmocast-weather-pro">Learn more</a></p>
+      <!-- <button @click="addToCart($event.target, { name: '{{ p.name }}' }, {{ cart.id }})" class="btn btn-cart fw-bold bc-light" type="button">Add to cart</button> -->
+      <form
+      @submit="checkAuth(
+        $event,
+        {% if user.is_authenticated %}
+          true
+        {% else %}
+          false
+        {% endif %}
+        )"
+        id="paypal-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input type="hidden" name="cmd" value="_s-xclick">
+          <input type="hidden" name="hosted_button_id" value="M7PCKD5ZC9B9L">
+          <table>
+            <tr><td><input type="hidden" name="on0" value="Frequency">Frequency</td></tr><tr><td><select name="os0">
+            	<option value="Monthly">Monthly : $1.00 USD - monthly</option>
+            	<option value="Yearly">Yearly : $7.00 USD - yearly</option>
+            </select> </td></tr>
+          </table>
+          <input type="hidden" name="currency_code" value="USD">
+          <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribe_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+          <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+        </form>
 
-    <div v-if="newUser && cartItems.length" class="">
-      <form class="sign-up-form" action="{% url 'cart_sign_up' %}" method="post">
-        <div class="form-inner-container row">
-          <div class="form-inner login-form-inner col-10 col-md-8 col-lg-6">
-            <h3 class="form-header text-center fs-large fw-bold">Your Details</h3>
-            {% csrf_token %}
-            {{ sign_up_form }}
-          </div>
-        </div>
-        <div class="submit-btn-container">
-          <!--<input class="form-submit btn fs-moderate fw-semi" type="submit" name="log" value="Proceed to payment">-->
-          <input class="form-submit btn fs-moderate fw-semi" type="submit" name="log" value="Start For Free">
-        </div>
-      </form>
-    </div>
 
-    <div v-if="!newUser && radioNewUser && cartItems.length" class="">
-      <form class="sign-up-form" action="{% url 'cart_log_in' %}" method="post">
-        <div class="form-inner-container row">
-          <div class="form-inner login-form-inner col-10 col-md-8 col-lg-6">
-            <h3 class="form-header text-center fs-large fw-bold">Log In</h3>
-            {% csrf_token %}
-            {{ log_in_form }}
-            <a class="learn-more-link forgot-password" href="{% url 'password_reset' %}">Forgot password?</a>
-          </div>
-        </div>
-        <div class="submit-btn-container">
-          <!--<input class="form-submit btn fs-moderate fw-semi" type="submit" name="log" value="Proceed to payment">-->
-          <input class="form-submit btn fs-moderate fw-semi" type="submit" name="log" value="Start For Free">
-        </div>
-      </form>
+
+      <div v-if="showAuthAlert" class="auth-alert">
+        <p class="text-center fw-semi">Please <a class="learn-more-link fw-semi" href="{% url 'log_in_upgrade' %}">log in</a> or <a class="learn-more-link fw-semi" href="{% url 'sign_up_upgrade' %}">sign up</a> before subscribing.</p>
+      </div>
     </div>
+  </div>
+  {% endfor %}
+
+  <!-- <form
+  @submit="checkAuth(
+    $event,
+    {% if user.is_authenticated %}
+      true
+    {% else %}
+      false
+    {% endif %}
+    )"
+    id="paypal-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+  <input type="hidden" name="cmd" value="_s-xclick">
+  <input type="hidden" name="hosted_button_id" value="M7PCKD5ZC9B9L">
+  <table>
+  <tr><td><input type="hidden" name="on0" value="Frequency">Frequency</td></tr><tr><td><select name="os0">
+  	<option value="Monthly">Monthly : $1.00 USD - monthly</option>
+  	<option value="Yearly">Yearly : $7.00 USD - yearly</option>
+  </select> </td></tr>
+  </table>
+  <input type="hidden" name="currency_code" value="USD">
+  <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+  <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+  </form> -->
+
 
 {% endblock %}
 

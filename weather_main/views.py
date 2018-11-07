@@ -9,6 +9,7 @@ from django.contrib import messages
 from django import forms, conf
 from django.core.mail import send_mail
 from django.http import QueryDict
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework import viewsets
 
@@ -207,6 +208,16 @@ def choose_plan(request):
 
     return render(request, 'weather_main/choose_plan.html', context)
 
+def add_product(request, id):
+    if request.user.is_authenticated:
+        product = Product.objects.get(id=id)
+        product.users.append(request.user.id)
+        product.save()
+    return HttpResponseRedirect(reverse('weather'))
+
+def chk_cancel(request):
+    return render(request, 'weather_main/chk-cancel.html')
+
 def log_in(request, base_template, success_url, extra_key, extra_val, add_products, no_products):
 
     context = {
@@ -230,22 +241,22 @@ def log_in(request, base_template, success_url, extra_key, extra_val, add_produc
             )
 
             if user is not None:
-                for p in Product.objects.all():
-                    if no_products and not user.id in p.users:
+                # for p in Product.objects.all():
+                    # if no_products and not user.id in p.users:
                         # Prevents the following error message from duplicating
-                        if len(log_in_form.errors.as_data()) == 0:
-                            log_in_form.add_error(None, 'Only paid users may log in. Please upgrade before proceeding.')
+                        # if len(log_in_form.errors.as_data()) == 0:
+                        #     log_in_form.add_error(None, 'Only paid users may log in. Please upgrade before proceeding.')
 
-                    else:
-                        if add_products:
-                            user_products = request.session['cart_products']
-                            for i in user_products:
-                                product = Product.objects.get(id=i)
-                                product.users.append(user.id)
-                                product.save()
+                    # else:
+                if add_products:
+                    user_products = request.session['cart_products']
+                    for i in user_products:
+                        product = Product.objects.get(id=i)
+                        product.users.append(user.id)
+                        product.save()
 
-                        login(request, user)
-                        return HttpResponseRedirect(success_url)
+                login(request, user)
+                return HttpResponseRedirect(success_url)
 
             else:
                 return render(request, base_template, context)
@@ -258,6 +269,9 @@ def log_in(request, base_template, success_url, extra_key, extra_val, add_produc
 
 def log_in_page(request):
     return log_in(request, 'weather_main/log_in.html', reverse('weather'), extra_key='', extra_val='', add_products=False, no_products=True)
+
+def log_in_upgrade(request):
+    return log_in(request, 'weather_main/log_in.html', reverse('choose_plan'), extra_key='', extra_val='', add_products=False, no_products=True)
 
 def sign_up(request, base_template, success_url, extra_key, extra_val, add_products):
     if request.method == 'POST':
@@ -310,6 +324,9 @@ def sign_up(request, base_template, success_url, extra_key, extra_val, add_produ
         context[extra_key] = extra_val
 
     return render(request, base_template, context)
+
+def sign_up_upgrade(request):
+    return sign_up(request, 'weather_main/sign_up.html', reverse('choose_plan'), extra_key='', extra_val='', add_products=False)
 
 def log_out(request):
     if request.user.is_authenticated:
@@ -365,6 +382,13 @@ def payment_cancel(request):
 
 def payment_notify(request):
     return HttpResponse('Notify')
+
+# PayPal IPN view.
+# For the response flow description, see https://developer.paypal.com/docs/classic/ipn/integration-guide/IPNImplementation/
+@csrf_exempt
+def ipn(request):
+    print(request.POST.get('name'))
+    return HttpResponse()
 
 def not_found(request):
     return HttpResponseRedirect(reverse('weather'))

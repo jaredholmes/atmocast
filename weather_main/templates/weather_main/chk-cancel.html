@@ -1,0 +1,17 @@
+{% extends "weather_main/base.html" %}
+{% load static %}
+
+{% block title %}
+  Transaction Cancelled
+{% endblock %}
+
+{% block main %}
+<div class="text-center" style="padding: 10em 0;">
+  <h2 class="fw-bold fs-large">Your transaction was cancelled.</h2>
+  <p><a style="color: blue;" href="{% url 'weather' %}">Return to atmocast.com</a></p>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+  <script src="{% static 'weather_main/www/static/weather_main/dist/bundles/styles.bundle.js' %}" charset="utf-8"></script>
+{% endblock %}

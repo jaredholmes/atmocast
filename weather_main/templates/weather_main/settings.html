@@ -21,7 +21,7 @@
               {{ p.name }}
             </div>
             <div class="col-4 col-md-3 col-lg-2">
-              <a {% if products|length <= 1 %}
+              <!--<a {% if products|length <= 1 %}
                 href="{% url 'cancel_log_out' p.id %}"
               {% else %}
                 href="{% url 'cancel_product' p.id %}"
@@ -30,7 +30,10 @@
                   onclick="return confirm('Are you sure you want to cancel this subscription? You will be logged out.')"
                 {% else %}
                   onclick="return confirm('Are you sure you want to cancel this subscription?')"
-                {% endif %}>Cancel</button></a>
+                {% endif %}>Cancel</button></a>-->
+                <A HREF="https://www.paypal.com/cgi-bin/webscr?cmd=_subscr-find&alias=NJUFNWZ87RWM8">
+                  <IMG SRC="https://www.paypalobjects.com/en_US/i/btn/btn_unsubscribe_LG.gif" BORDER="0">
+                </A>
             </div>
           </li>
         {% endfor %}

@@ -1,6 +1,10 @@
 import os
 import requests
 import datetime
+import sys
+import json
+import urllib.parse
+import requests
 
 from django.shortcuts import render, HttpResponseRedirect, reverse, HttpResponse
 from django.contrib.auth import authenticate, login, logout
@@ -387,7 +391,54 @@ def payment_notify(request):
 # For the response flow description, see https://developer.paypal.com/docs/classic/ipn/integration-guide/IPNImplementation/
 @csrf_exempt
 def ipn(request):
-    print(request.POST.get('name'))
+    VERIFY_URL_PROD = 'https://ipnpb.paypal.com/cgi-bin/webscr'
+    VERIFY_URL_TEST = 'https://ipnpb.sandbox.paypal.com/cgi-bin/webscr'
+    # Switch as appropriate
+    VERIFY_URL = VERIFY_URL_PROD
+
+    # Txn types sent in response which indicate that the subscriber's payment has failed and the product should be removed from their account
+    CANCELLED_TYPES = [
+        'mp_cancel',
+        'recurring_payment_expired',
+        'recurring_payment_failed',
+        'recurring_payment_profile_cancel',
+        'recurring_payment_suspended',
+        'recurring_payment_suspended_due_to_max_failed_payment',
+        'subscr_cancel',
+        'subscr_eot',
+        'subscr_failed',
+    ]
+
+    # Parse response
+    decoded_body = request.body.decode('utf-8')
+    parsed_qs = urllib.parse.parse_qs(decoded_body)
+    params = urllib.parse.parse_qsl(decoded_body)
+
+    # Add '_notify-validate' parameter
+    params.append(('cmd', '_notify-validate'))
+
+    # Post back to PayPal for validation
+    headers = {'content-type': 'application/x-www-form-urlencoded',
+               'user-agent': 'Python-IPN-Verification-Script'}
+    r = requests.post(VERIFY_URL, params=params, headers=headers, verify=True)
+    r.raise_for_status()
+
+    if r.text == 'VERIFIED':
+        # Extract necessary items
+        txn_type = parsed_qs['txn_type'][0]
+        item_name = parsed_qs['item_name'][0]
+        payer_email = parsed_qs['payer_email'][0]
+
+        # Attempt to remove user from product's users
+        for i in CANCELLED_TYPES:
+            if i == txn_type:
+                if User.objects.filter(username=payer_email).exists() and Product.objects.filter(name=item_name).exists():
+                    user_id = User.objects.get(username=payer_email).id
+                    product = Product.objects.get(name=item_name)
+                    product.users.remove(user_id)
+                    product.save()
+                break
+
     return HttpResponse()
 
 def not_found(request):

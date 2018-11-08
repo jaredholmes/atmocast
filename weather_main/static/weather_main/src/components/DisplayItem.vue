@@ -1,13 +1,13 @@
 <template lang="html">
   <div class="row">
     <div class="col-12 display-main-section" id="display">
-      <h1 class="fw-bold fs-xl display-temp">{{ Math.round(currentTemp) }}&deg;</h1>
-      <h3 class="fs-moderate fw-reg">{{ currentSummary }}</h3>
+      <h1 class="fw-bold fs-xl display-temp animated fadeInUp">{{ Math.round(currentTemp) }}&deg;</h1>
+      <h3 class="fs-moderate fw-reg animated fadeInUp">{{ currentSummary }}</h3>
       <br>
-      <img class="main-icon" :src="$store.state.iconLocationPrefix + 'custom/' + currentIcon + '-large.png'" :alt="currentIcon">
+      <img class="main-icon animated fadeInUp" :src="$store.state.iconLocationPrefix + 'custom/' + currentIcon + '-large.png'" :alt="currentIcon">
       <h2 class="fw-semi fs-large current-city">
         {{ currentCity }}
-        <img @click="toggleFav()" class="fav-heart" :src="favHeartImg" alt="Favourite">
+        <img @click="toggleFav()" class="fav-heart animated fadeInUp" :src="favHeartImg" alt="Favourite">
       </h2>
     </div>
   </div>
@@ -185,7 +185,7 @@ export default {
     padding-bottom: $s-l-1
 
     @include media-tablet
-      padding-top: $s-l-2
+      padding-top: $s-l-3
 
     @include media-tiny
       padding-top: $s-l-1

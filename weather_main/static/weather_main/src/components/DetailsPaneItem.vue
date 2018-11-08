@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="card details-card">
+  <div class="card details-card animated fadeInUp">
     <h5 class="card-title fw-semi">{{ cardTitle }}</h5>
     <div class="card-body details-card-body">
       <div class="inner-card-container"

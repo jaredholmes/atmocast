@@ -12,7 +12,6 @@
       <h2 class="form-header text-center fs-large fw-bold">{{ p.name }}</h2>
       <h4 class="promo-price c-secondary text-center fw-bold">$7/year <span>or</span> $1/month | 1 month free trial</h4>
       <p class="text-center">{{ p.description }} <a class="learn-more-link" href="/products/#atmocast-weather-pro">Learn more</a></p>
-      <!-- <button @click="addToCart($event.target, { name: '{{ p.name }}' }, {{ cart.id }})" class="btn btn-cart fw-bold bc-light" type="button">Add to cart</button> -->
       <form
       @submit="checkAuth(
         $event,
@@ -44,37 +43,12 @@
     </div>
   </div>
   {% endfor %}
-
-  <!-- <form
-  @submit="checkAuth(
-    $event,
-    {% if user.is_authenticated %}
-      true
-    {% else %}
-      false
-    {% endif %}
-    )"
-    id="paypal-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-  <input type="hidden" name="cmd" value="_s-xclick">
-  <input type="hidden" name="hosted_button_id" value="M7PCKD5ZC9B9L">
-  <table>
-  <tr><td><input type="hidden" name="on0" value="Frequency">Frequency</td></tr><tr><td><select name="os0">
-  	<option value="Monthly">Monthly : $1.00 USD - monthly</option>
-  	<option value="Yearly">Yearly : $7.00 USD - yearly</option>
-  </select> </td></tr>
-  </table>
-  <input type="hidden" name="currency_code" value="USD">
-  <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-  <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-  </form> -->
-
-
 {% endblock %}
 
 {% block extra_scripts %}
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value;
-</script>
+</script> -->
   <script src="{% static 'weather_main/www/static/weather_main/dist/bundles/loginStyles.bundle.js' %}" charset="utf-8"></script>
   <script src="{% static 'weather_main/www/static/weather_main/dist/bundles/account.bundle.js' %}" charset="utf-8"></script>
 {% endblock %}

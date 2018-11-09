@@ -15,8 +15,6 @@ urlpatterns = [
     re_path(r'^geocode/(?P<query>[\s\S]+)/$', views.geocode),
 
     # REST API URLs
-    re_path(r'^rest/cart/(?P<id>[0-9]+)/$', views.CartViewSet.as_view({'get': 'list', 'put': 'update'})),
-
     re_path(r'^rest/location-list/(?P<id>[0-9]+)/$', views.LocationListViewSet.as_view({'get': 'list', 'put': 'update'})),
 
     # General URLs

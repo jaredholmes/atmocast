@@ -18,8 +18,8 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 
 from .forms import LogInForm, SignUpForm
-from .models import Cart, Product, LocationList
-from .serializers import CartSerializer, LocationListSerializer
+from .models import Product, LocationList
+from .serializers import LocationListSerializer
 from . import email
 
 location_IQ_Key = os.environ.get('LOCATIONIQ_KEY')
@@ -29,15 +29,6 @@ def index(request):
     return render(request, 'weather_main/index.html')
 
 def weather(request):
-    # To save space in rows, carts should expire after two days
-    # This checks for two-day-old carts and deletes them
-    # When payment is sorted out, the cart should instead be deleted in the payment view
-    two_days_ago = datetime.date.today() - datetime.timedelta(days=2)
-    old_carts = Cart.objects.filter(created__lte=two_days_ago)
-    if old_carts:
-        for cart in old_carts:
-            cart.delete()
-
     # HTTP to HTTPS redirect
     if request.is_secure() or 'http://localhost' in request.build_absolute_uri():
         proUser = False
@@ -111,46 +102,6 @@ def geocode(request, query):
     return HttpResponse(response);
 
 # REST API Views
-
-class CartViewSet(viewsets.ViewSet):
-
-    def list(self, request, id):
-        cart = Cart.objects.get(id=id)
-        serializer = CartSerializer(cart)
-
-        return Response(serializer.data)
-
-    def update(self, request, id):
-        cart = Cart.objects.get(id=id)
-        serializer = CartSerializer(cart)
-
-        for i in cart.products.all():
-            cart.products.remove(i)
-
-        # Get the 'products' URL parameter passed in with AJAX
-        # request.body is a bytecode, which requires UTF-8 decoding to convert to a string literal of the params object
-        # The string literal is then converted to an object using eval()
-        products = eval(request.body.decode('utf-8'))['params']['products']
-
-        # Check which products selected by the user match products in Product model and add those product objects to Cart's products
-
-        # p is a dictionary, set as a JavaScript object in the template as an argument for the addToCart() function
-        for p in products:
-            match_product = Product.objects.filter(name=p['name'])
-            # match_product is a queryset, therefore match_product[0] is the actual product
-            if match_product:
-                cart.products.add(match_product[0].id)
-                cart.price += match_product[0].price
-
-            cart.save()
-
-        request.session['cart_products'] = []
-
-        for p in cart.products.all():
-            request.session['cart_products'].append(p.id)
-
-        return Response(serializer.data)
-
 class LocationListViewSet(viewsets.ViewSet):
 
     def list(self, request, id):
@@ -185,27 +136,10 @@ def choose_plan(request):
 
     log_in_form = LogInForm()
     sign_up_form = SignUpForm()
-    # Create an empty Cart object which is used in the template for AJAX request
-    cart = Cart.objects.create(price=0.0)
-    cart.save()
-
-    # if request.method == 'POST':
-    #     # return HttpResponseRedirect(reverse('create_account'))
-    #     if 'repeat_password' in request.POST:
-    #         sign_up_form = SignUpForm(request.POST)
-    #     else:
-    #         log_in_form = LogInForm(request.POST)
-    #
-    #     if request.user.is_authenticated:
-    #         cart_items = cart.objects.all()
-    #         for c in cart_items:
-    #             print(c)
-    #             c.product.users.append(request.user.id)
 
     context  = {
         'products': Product.objects.all(),
         'stage': 'choose_plan',
-        'cart': cart,
         'log_in_form': log_in_form,
         'sign_up_form': sign_up_form,
     }
@@ -245,15 +179,7 @@ def log_in(request, base_template, success_url, extra_key, extra_val, add_produc
             )
 
             if user is not None:
-                # for p in Product.objects.all():
-                    # if no_products and not user.id in p.users:
-                        # Prevents the following error message from duplicating
-                        # if len(log_in_form.errors.as_data()) == 0:
-                        #     log_in_form.add_error(None, 'Only paid users may log in. Please upgrade before proceeding.')
-
-                    # else:
                 if add_products:
-                    user_products = request.session['cart_products']
                     for i in user_products:
                         product = Product.objects.get(id=i)
                         product.users.append(user.id)
@@ -296,7 +222,6 @@ def sign_up(request, base_template, success_url, extra_key, extra_val, add_produ
             )
 
             if add_products:
-                user_products = request.session['cart_products']
                 for i in user_products:
                     product = Product.objects.get(id=i)
                     product.users.append(user.id)

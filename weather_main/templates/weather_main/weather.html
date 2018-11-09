@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#FFFFFF">
   <meta name="description" content="Atmocast provides detailed weather forecasts, including current conditions, hourly forecasts and daily forecasts.">
   <link rel="apple-touch-icon" href="{% static 'weather_main/www/static/weather_main/dist/icons/app_icons/apple-touch-icon.png' %}">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="shortcut icon" href="{% static 'weather_main/www/static/weather_main/dist/icons/favicon.ico' %}">
   <link rel="stylesheet" href="{% static 'weather_main/www/static/weather_main/dist/spinner.min.css' %}">
   <link rel="manifest" href="{% static 'weather_main/www/static/weather_main/dist/manifest/manifest.json' %}">
@@ -38,6 +38,7 @@
     <router-view></router-view>
   </div>
   <script type="text/javascript">
+    let isApp = false;
     let proUser = false;
     let paidUser = false;
     let userID = 0;
@@ -50,6 +51,12 @@
         proUser = true;
       }
     }
+
+    document.addEventListener(
+      "deviceready",
+      () => isApp = true,
+      false
+    );
 
   </script>
   <script src="{% static 'weather_main/www/static/weather_main/dist/bundles/styles.bundle.js' %}" charset="utf-8"></script>

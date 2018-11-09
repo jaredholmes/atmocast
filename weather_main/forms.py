@@ -23,10 +23,6 @@ class LogInForm(forms.Form):
 
             if user is None:
                 raise forms.ValidationError('Incorrect password')
-            # else:
-            #     for p in Product.objects.all():
-            #         if not user.id in p.users:
-            #             raise forms.ValidationError('Only paid users may log in. Please upgrade before proceeding.')
 
 class SignUpForm(LogInForm):
 

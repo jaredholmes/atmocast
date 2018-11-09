@@ -10,11 +10,6 @@ class Product(models.Model):
     frequency = models.CharField(default='monthly', max_length=20)
     users = ArrayField(models.IntegerField(), blank=True, null=True)
 
-class Cart(models.Model):
-    products = models.ManyToManyField('Product', default=1)
-    price = models.FloatField()
-    created = models.DateField(auto_now_add=True)
-
 class LocationList(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     locations = JSONField(default=dict)

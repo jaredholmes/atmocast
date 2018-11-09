@@ -49,7 +49,8 @@ Vue.mixin ({
       const lat = this.$store.state.coords.lat;
       const lon = this.$store.state.coords.lon;
       const metric = this.$store.state.metric;
-      const mainSection = document.getElementById('main-section');
+      const refresher = document.getElementById('refresher');
+      // const mainSection = document.getElementById('main-section');
       const navCollapse  = document.getElementById('nav-collapse');
       const loadingSection = document.getElementById('loading-section');
       const alerts = document.getElementsByClassName('alert');
@@ -58,10 +59,14 @@ Vue.mixin ({
       // Scroll to top
       window.scrollTo(0, 0);
 
-      // Show that content is loading
-      if (mainSection) {
-          mainSection.style.opacity = 0.1;
+      if (refresher) {
+        refresher.classList.add('spinning');
       }
+
+      // Show that content is loading
+      // if (mainSection) {
+      //     mainSection.style.opacity = 0.1;
+      // }
 
       if (smallScreen) {
         if (navCollapse) {
@@ -75,7 +80,7 @@ Vue.mixin ({
         }
       }
 
-      loadingSection.style.display = 'block';
+      // loadingSection.style.display = 'block';
 
       // Ensure validity of location. If invalid, set it to the default.
       if (!isNaN(lat) && !isNaN(lon)) {
@@ -101,10 +106,14 @@ Vue.mixin ({
             // Set offset to calculate correct time.
             this.$store.commit('setCurrentOffset');
 
-            // Loading is finished. Hide loading elements and display main UI.
-            if (mainSection) {
-              mainSection.style.opacity = 1;
+            if (refresher) {
+              refresher.classList.remove('spinning');
             }
+
+            // Loading is finished. Hide loading elements and display main UI.
+            // if (mainSection) {
+            //   mainSection.style.opacity = 1;
+            // }
 
             if (smallScreen) {
               if (navCollapse) {

@@ -71,7 +71,7 @@ export default {
         const searchResults = document.getElementById('search-results');
         searchIcon.style.visibility = 'hidden';
         searchSpinner.style.display = 'block';
-        const requestUrl = 'https://atmocast.com/geocode/' + this.searchQuery + '/';
+        const requestUrl = '/geocode/' + this.searchQuery + '/';
         axios.get(requestUrl)
           .then(response => {
             this.searchResults = response.data;

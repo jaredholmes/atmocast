@@ -1,21 +1,24 @@
 <template lang="html">
   <nav class="navbar navbar-expand-lg" id="navbar-main">
     <div class="nav-wrapper row">
-      <a @click="reload" class="navbar-brand col-4">
+      <a @click="reload" class="navbar-brand col-4 col-lg-2">
         <img class="nav-logo" :src="$store.state.iconLocationPrefix + 'logo-small.png'" alt="">
         <h1 class="fw-semi fs-moderate">Atmocast</h1>
       </a>
-      <a @click="toggleMenu"
-      id="nav-menu-toggler"
-      class="ml-auto navbar-toggler col-1 offset-5"
-      data-toggle="collapse"
-      data-target="#nav-collapse"
-      aria-controls="nav-collapse"
-      aria-expanded="false"
-      aria-label="Toggle navigation">
-        <img class="icon icon-menu" :src="$store.state.iconLocationPrefix + 'menu.png'" alt="menu">
-      </a>
-      <div id="nav-collapse" class="collapse navbar-collapse ml-auto">
+      <span class="icons-container col-8">
+        <refresh-button></refresh-button>
+        <a @click="toggleMenu"
+        id="nav-menu-toggler"
+        class="navbar-toggler"
+        data-toggle="collapse"
+        data-target="#nav-collapse"
+        aria-controls="nav-collapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+          <img class="icon icon-menu" :src="$store.state.iconLocationPrefix + 'menu.png'" alt="menu">
+        </a>
+      </span>
+      <div id="nav-collapse" class="collapse navbar-collapse ml-auto col-lg-10">
         <ul class="navbar-nav ml-auto">
           <navbar-location-search-bar></navbar-location-search-bar>
           <navbar-units-toggle-item></navbar-units-toggle-item>
@@ -32,11 +35,12 @@
 <script>
 import NavbarLocationSearchBar from './NavbarLocationSearchBar.vue';
 import NavbarUnitsToggleItem from './NavbarUnitsToggleItem.vue';
+import RefreshButton from './RefreshButton.vue';
 
 export default {
   name: 'NavbarItem',
 
-  components: { NavbarLocationSearchBar, NavbarUnitsToggleItem },
+  components: { NavbarLocationSearchBar, NavbarUnitsToggleItem, RefreshButton },
 
   computed: {
     currentIcon() {
@@ -150,8 +154,6 @@ export default {
 
   nav
     padding: 0
-    // Prevents thin white line between nav and main section
-    padding-bottom: 1px
 
     @include media-large
       padding-top: 0
@@ -163,7 +165,6 @@ export default {
     margin: 0
 
   .navbar-brand
-    min-width: 75%
     margin: auto 0
     display: flex
     align-items: center
@@ -206,6 +207,9 @@ export default {
     // Max height higher than auto
     max-height: 30em
 
+    img
+      max-width: 1.2em
+
   .navbar-nav
     position: relative
 
@@ -218,14 +222,18 @@ export default {
   .nav-item:hover
     cursor: pointer
 
-    img
-      max-width: 1.2em
-
   .toggle-active
     text-decoration: underline
 
+  .icons-container
+    display: flex
+    align-items: center
+    padding: 0
+
+    @include media-large
+      display: none
+
   .navbar-toggler
-    padding-right: $s-s-2
     display: flex
     align-items: center
 
@@ -233,5 +241,6 @@ export default {
       display: none
 
   .icon-menu
-    max-width: $s-s-3
+    max-width: 1.2em
+
 </style>

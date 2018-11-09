@@ -7,6 +7,7 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
+    isApp: isApp,
     paidUser: paidUser,
     proUser: proUser,
     userID: userID,

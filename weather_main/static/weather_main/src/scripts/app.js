@@ -26,8 +26,9 @@ const router = new VueRouter({
   routes,
 });
 
-const isApp =  document.URL.indexOf('http://') === -1
-&& document.URL.indexOf('https://') === -1;
+if (store.state.isApp && StatusBar) {
+  StatusBar.backgroundColorByName('black');
+}
 
 // TODO: make start loading and end loading methods
 
@@ -35,7 +36,7 @@ Vue.mixin ({
   methods: {
     // Set different location prefix for app, so that icons can be saved offline
     $setAppIconLocation() {
-      if (isApp) {
+      if (this.$store.state.isApp) {
         this.$store.commit({
           type: 'setIconLocationPrefix',
           prefix: 'static/weather_main/dist/icons/',
@@ -188,7 +189,7 @@ Vue.mixin ({
       // Used on first load to circumvent bug with location request in app.
       // Without this, the app won't get the location the first time the user visits the app, if location permission is granted.
       // The downside is that it also reloads if the user denies, causing the app to ask twice for location access
-      if (isApp && reload) {
+      if (this.$store.state.isApp && reload) {
         location.reload()
       }
     },
@@ -197,8 +198,8 @@ Vue.mixin ({
     $setLocation() {
       localforage.getItem('returnVisit')
         .then((value) => {
-          // ||isApp results in the app asking for location permission on the first load, different to the website.
-          if (value || isApp) {
+          // ||this.$store.state.isApp results in the app asking for location permission on the first load, different to the website.
+          if (value || this.$store.state.isApp) {
             this.$getPosition();
           } else {
             this.$setLocationToFav();
@@ -222,7 +223,7 @@ Vue.mixin ({
       }
 
       if (alertUser === true) {
-        if (isApp) {
+        if (this.$store.state.isApp) {
           this.$showAlert('Unable to get your location. Please restart the app or check location permissions.', 15000);
         } else {
           this.$showAlert('Unable to get your location. Please check the location settings of your device or browser.', 15000);

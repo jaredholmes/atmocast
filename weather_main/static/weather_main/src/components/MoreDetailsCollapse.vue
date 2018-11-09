@@ -256,15 +256,15 @@ export default {
     position: absolute
     display: block
     max-height: 0
-    transition: max-height 180ms ease-in, opacity 100ms linear
-    -webkit-transition: max-height 180ms ease-in, opacity 100ms linear
-    -ms-transition: max-height 180ms ease-in, opacity 100ms linear
+    // transition: max-height 180ms ease-in, opacity 100ms linear
+    // -webkit-transition: max-height 180ms ease-in, opacity 100ms linear
+    // -ms-transition: max-height 180ms ease-in, opacity 100ms linear
 
   .more-details-collapse *
     opacity: 0
-    transition: opacity 150ms linear
-    -webkit-transition: opacity 150ms linear
-    -ms-transition: opacity 150ms linear
+    // transition: opacity 150ms linear
+    // -webkit-transition: opacity 150ms linear
+    // -ms-transition: opacity 150ms linear
 
   // 'shown' overrides Bootstrap's 'show', allowing for custom animations, etc.
   .more-details-collapse.shown

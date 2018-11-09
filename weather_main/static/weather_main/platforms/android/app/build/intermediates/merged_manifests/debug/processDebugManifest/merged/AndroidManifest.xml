@@ -3,7 +3,7 @@
     package="com.atmocast.app"
     android:hardwareAccelerated="true"
     android:versionCode="10000"
-    android:versionName="1.0.0" >
+    android:versionName="1.1.0" >
 
     <uses-sdk
         android:minSdkVersion="19"
@@ -28,7 +28,8 @@
         android:hardwareAccelerated="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
-        android:supportsRtl="true" >
+        android:supportsRtl="true"
+        android:testOnly="true" >
         <activity
             android:name="com.atmocast.app.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"

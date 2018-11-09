@@ -29,36 +29,32 @@ def index(request):
     return render(request, 'weather_main/index.html')
 
 def weather(request):
-    # HTTP to HTTPS redirect
-    if request.is_secure() or 'http://localhost' in request.build_absolute_uri():
-        proUser = False
-        paidUser = False
+    proUser = False
+    paidUser = False
 
-        if request.user.is_authenticated:
-            accepted_names = ['Atmocast Weather Pro',]
-            paidUser = True
+    if request.user.is_authenticated:
+        accepted_names = ['Atmocast Weather Pro',]
+        paidUser = True
 
-            for name in accepted_names:
-                if Product.objects.filter(name=name).exists():
-                    product = Product.objects.get(name=name)
-                    if request.user.id in product.users:
-                        proUser = True
-                        user_lists = 0
-                        for l in LocationList.objects.all():
-                            if request.user.id == l.user.id:
-                                user_lists += 1
-                                break
+        for name in accepted_names:
+            if Product.objects.filter(name=name).exists():
+                product = Product.objects.get(name=name)
+                if request.user.id in product.users:
+                    proUser = True
+                    user_lists = 0
+                    for l in LocationList.objects.all():
+                        if request.user.id == l.user.id:
+                            user_lists += 1
+                            break
 
-                        if user_lists == 0:
-                            loc_list = LocationList.objects.create(user=request.user)
-                            loc_list.save()
+                    if user_lists == 0:
+                        loc_list = LocationList.objects.create(user=request.user)
+                        loc_list.save()
 
-                        break
+                    break
 
 
-        return render(request, 'weather_main/weather.html', { 'proUser': proUser, 'paidUser': paidUser })
-    else:
-        return HttpResponseRedirect('https://atmocast.com/weather/')
+    return render(request, 'weather_main/weather.html', { 'proUser': proUser, 'paidUser': paidUser })
 
 def weather_data(request, lat, lon):
     if lat and lon:

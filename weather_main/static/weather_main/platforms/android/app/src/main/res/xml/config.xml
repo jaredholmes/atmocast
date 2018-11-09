@@ -7,9 +7,13 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
-    <name>Atmocast</name>
+    <feature name="StatusBar">
+        <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
+        <param name="onload" value="true" />
+    </feature>
+    <name>Atmocast Weather</name>
     <description>
-        Simple weather forecasting.
+        Simple weather forecasts
     </description>
     <author email="jared@colgro.com" href="https://holmeswebdev.com">
         Jared Holmes

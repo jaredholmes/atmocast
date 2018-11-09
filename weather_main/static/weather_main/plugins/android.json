@@ -12,6 +12,9 @@
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.atmocast.app"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.atmocast.app"
     }
   },
   "dependent_plugins": {}

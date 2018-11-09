@@ -181,13 +181,22 @@ Vue.mixin ({
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            this.$store.commit({
-              type: 'setCoords',
-              coords: {
-                lat: position.coords.latitude,
-                lon: position.coords.longitude,
-              }
-            });
+            setTimeout(
+              () => {
+                if (position) {
+                  this.$store.commit({
+                    type: 'setCoords',
+                    coords: {
+                      lat: position.coords.latitude,
+                      lon: position.coords.longitude,
+                    }
+                  });
+                } else {
+                  this.$setLocationToFav(alertUser);
+                }
+              },
+              7500
+            );
           },
           () => {
             this.$setLocationToFav(alertUser);

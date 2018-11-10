@@ -8,7 +8,7 @@
 
         </div>
       </button>
-      <button @click="$getPosition(true)" class="btn btn-location-search" id="btn-navbar-location" type="button" name="button">
+      <button @click="$getPosition(true); $getMainData()" class="btn btn-location-search" id="btn-navbar-location" type="button" name="button">
         <img id="btn-location-icon" :src="$store.state.iconLocationPrefix + 'location.png'" alt="Current location">
       </button>
       <button @click="scrollToFavList" class="btn btn-location-search" id="btn-navbar-fav" type="button" name="button">

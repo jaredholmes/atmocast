@@ -179,12 +179,6 @@ Vue.mixin ({
     // if alertUser is true, the user will be notified if their position cannot be detected.
     $getPosition(alertUser, reload) {
       if (navigator.geolocation) {
-        const refresher = document.getElementById('refresher');
-
-        if (refresher) {
-                refresher.classList.add('spinning');
-        }
-
         navigator.geolocation.getCurrentPosition(
           (position) => {
             setTimeout(
@@ -208,12 +202,6 @@ Vue.mixin ({
             this.$setLocationToFav(alertUser);
           }
         );
-      } else {
-        this.$setLocationToFav(alertUser);
-      }
-
-      if (refresher) {
-        refresher.classList.remove('spinning');
       }
 
       // Used on first load to circumvent bug with location request in app.

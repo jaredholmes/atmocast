@@ -183,6 +183,9 @@ export default {
     padding: 0
     padding-top: $s-l-3
     padding-bottom: $s-l-1
+    // Prevents thin white line between nav and main section
+    position: relative
+    bottom: 1px
 
     @include media-tablet
       padding-top: $s-l-3

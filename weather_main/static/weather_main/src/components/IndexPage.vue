@@ -86,7 +86,7 @@ export default {
       this.loaded = true;
     },
     currentCity() {
-      document.title = 'Weather in ' + this.currentCity + ' – Atmocast';
+      document.title = 'Weather in ' + this.currentCity + ' – Atmocast Weather';
     },
     metric() {
       if (this.metric) {

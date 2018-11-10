@@ -184,7 +184,7 @@ Vue.mixin ({
         if (refresher) {
                 refresher.classList.add('spinning');
         }
-        
+
         navigator.geolocation.getCurrentPosition(
           (position) => {
             setTimeout(
@@ -210,6 +210,10 @@ Vue.mixin ({
         );
       } else {
         this.$setLocationToFav(alertUser);
+      }
+
+      if (refresher) {
+        refresher.classList.remove('spinning');
       }
 
       // Used on first load to circumvent bug with location request in app.

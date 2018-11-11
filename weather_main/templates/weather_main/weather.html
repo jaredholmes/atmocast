@@ -38,7 +38,7 @@
     <router-view></router-view>
   </div>
   <script type="text/javascript">
-    let isApp = false;
+    let androidApp = false;
     let proUser = false;
     let paidUser = false;
     let userID = 0;
@@ -52,11 +52,9 @@
       }
     }
 
-    document.addEventListener(
-      "deviceready",
-      () => isApp = true,
-      false
-    );
+    if ('{{ userType }}' === 'android') {
+      androidApp = true;
+    }
 
   </script>
   <script src="{% static 'weather_main/www/static/weather_main/dist/bundles/styles.bundle.js' %}" charset="utf-8"></script>

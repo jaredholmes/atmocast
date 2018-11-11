@@ -53,8 +53,9 @@ def weather(request):
 
                     break
 
+    user_type = request.GET.get('type')
 
-    return render(request, 'weather_main/weather.html', { 'proUser': proUser, 'paidUser': paidUser })
+    return render(request, 'weather_main/weather.html', { 'proUser': proUser, 'paidUser': paidUser, 'userType': user_type })
 
 def weather_data(request, lat, lon):
     if lat and lon:

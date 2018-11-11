@@ -26,23 +26,19 @@ const router = new VueRouter({
   routes,
 });
 
-if (store.state.isApp && StatusBar) {
-  StatusBar.backgroundColorByName('black');
-}
-
 // TODO: make start loading and end loading methods
 
 Vue.mixin ({
   methods: {
     // Set different location prefix for app, so that icons can be saved offline
-    $setAppIconLocation() {
-      if (this.$store.state.isApp) {
-        this.$store.commit({
-          type: 'setIconLocationPrefix',
-          prefix: 'static/weather_main/dist/icons/',
-        });
-      }
-    },
+    // $setAppIconLocation() {
+    //   if (this.$store.state.androidApp) {
+    //     this.$store.commit({
+    //       type: 'setIconLocationPrefix',
+    //       prefix: 'static/weather_main/dist/icons/',
+    //     });
+    //   }
+    // },
     // Gets all the necessary weather and location data and shows (and hides) loading screen
     // Basically a package of functions to set up the weather UI
     $getMainData() {
@@ -178,37 +174,39 @@ Vue.mixin ({
     // Gets the user's position, falls back on setting the default position.
     // if alertUser is true, the user will be notified if their position cannot be detected.
     $getPosition(alertUser, reload) {
+      const positionOptions = {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60 * 60000,
+      }
+
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            setTimeout(
-              () => {
-                if (position) {
-                  this.$store.commit({
-                    type: 'setCoords',
-                    coords: {
-                      lat: position.coords.latitude,
-                      lon: position.coords.longitude,
-                    }
-                  });
-                } else {
-                  this.$setLocationToFav(alertUser);
+            if (position) {
+              this.$store.commit({
+                type: 'setCoords',
+                coords: {
+                  lat: position.coords.latitude,
+                  lon: position.coords.longitude,
                 }
-              },
-              7500
-            );
+              });
+            } else {
+              this.$setLocationToFav(alertUser);
+            }
           },
           () => {
             this.$setLocationToFav(alertUser);
-          }
+          },
+          positionOptions
         );
       }
 
       // Used on first load to circumvent bug with location request in app.
       // Without this, the app won't get the location the first time the user visits the app, if location permission is granted.
       // The downside is that it also reloads if the user denies, causing the app to ask twice for location access
-      if (this.$store.state.isApp && reload) {
-        location.reload()
+      if (this.$store.state.androidApp && reload) {
+        this.$getPosition(true);
       }
     },
     // If the user has visited the site, attempt to get their position.
@@ -216,8 +214,8 @@ Vue.mixin ({
     $setLocation() {
       localforage.getItem('returnVisit')
         .then((value) => {
-          // ||this.$store.state.isApp results in the app asking for location permission on the first load, different to the website.
-          if (value || this.$store.state.isApp) {
+          // ||this.$store.state.androidApp results in the app asking for location permission on the first load, different to the website.
+          if (value || this.$store.state.androidApp) {
             this.$getPosition();
           } else {
             this.$setLocationToFav();
@@ -241,8 +239,8 @@ Vue.mixin ({
       }
 
       if (alertUser === true) {
-        if (this.$store.state.isApp) {
-          this.$showAlert('Unable to get your location. Please restart the app or check location permissions.', 15000);
+        if (this.$store.state.androidApp) {
+          this.$showAlert('Unable to get your location. Please ensure that your location accuracy is set to high accuracy.', 15000);
         } else {
           this.$showAlert('Unable to get your location. Please check the location settings of your device or browser.', 15000);
         }

@@ -30,7 +30,7 @@
 }
 
 @keyframes spinner {
-  to {
+  from {
     transform: rotate(360deg);
   }
 }

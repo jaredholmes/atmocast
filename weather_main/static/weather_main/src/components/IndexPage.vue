@@ -109,7 +109,7 @@ export default {
       });
     }
     this.$checkFavLocation();
-    this.$setAppIconLocation();
+    // this.$setAppIconLocation();
   },
   beforeUpdate() {
     if (!this.favLocationExists) {

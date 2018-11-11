@@ -18,7 +18,7 @@ export default {
     padding: 0 $s-s-4
 
   #refresher.spinning
-    animation: spinner 1s linear infinite
+    animation: spinner 800ms infinite
 
   img.refresh-icon
     max-height: 1.6em

@@ -20,6 +20,7 @@
         <icon density="xhdpi" src="/res/icon/android/icon-96x96.png" />
         <icon density="xxhdpi" src="/res/icon/android/icon-144x144.png" />
         <icon density="xxxhdpi" src="/res/icon/android/icon-72x72.png" />
+        <preference name="StatusBarBackgroundColor" value="#000000" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

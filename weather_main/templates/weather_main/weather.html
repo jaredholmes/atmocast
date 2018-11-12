@@ -54,6 +54,7 @@
 
     if ('{{ userType }}' === 'android') {
       androidApp = true;
+      window.open = cordova.InAppBrowser.open;
     }
 
   </script>

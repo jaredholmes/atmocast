@@ -2,8 +2,8 @@
   <nav class="navbar navbar-expand-lg" id="navbar-main">
     <div class="nav-wrapper row">
       <a @click="reload" class="navbar-brand col-4 col-lg-2">
-        <img class="nav-logo" :src="$store.state.iconLocationPrefix + 'logo-small.png'" alt="">
-        <h1 class="fw-semi fs-moderate">Atmocast</h1>
+        <img class="nav-logo" :src="$store.state.iconLocationPrefix + 'logo-small.png'" alt="Atmocast">
+        <h1 class="fw-semi fs-medium">Atmocast</h1>
       </a>
       <span class="icons-container col-8">
         <refresh-button></refresh-button>

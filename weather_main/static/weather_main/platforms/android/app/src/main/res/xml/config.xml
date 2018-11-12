@@ -28,4 +28,7 @@
     <icon density="xxhdpi" src="/res/icon/android/icon-144x144.png" />
     <icon density="xxxhdpi" src="/res/icon/android/icon-72x72.png" />
     <preference name="loglevel" value="DEBUG" />
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
 </widget>

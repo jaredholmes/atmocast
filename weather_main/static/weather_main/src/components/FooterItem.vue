@@ -15,7 +15,7 @@
       </div>
 
       <div class="col-6 footer-right row">
-        <a class="col-12 footer-link fs-small" href="/">Atmocast Weather</a>
+        <a v-if="!$store.state.androidApp" class="col-12 footer-link fs-small" href="/">Atmocast Weather</a>
         <a class="col-12 footer-link fs-small" href="https://atmocast.com/products/">Products</a>
         <a v-if="$store.state.paidUser" class="col-12 footer-link fs-small" href="https://atmocast.com/settings/">Account</a>
         <a v-else class="col-12 footer-link fs-small" href="https://atmocast.com/log-in/">Log In</a>

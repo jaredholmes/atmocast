@@ -327,12 +327,11 @@ Vue.mixin ({
       if (navigator.onLine) {
         // Unset fav co-ordinates
         this.$store.commit('unsetFavLocation', locationName);
+        this.$showAlert('Unfavourited ' + locationName);
 
         if (this.$store.state.proUser) {
-          this.$showAlert('Unfavourited ' + locationName);
           this.$putFavLocations(this.$store.state.favLocation);
         } else {
-          this.$showAlert('Unfavourited ' + locationName);
           localforage.setItem('favLocation', this.$store.state.favLocation);
         }
 
@@ -343,6 +342,15 @@ Vue.mixin ({
       } else {
         this.$showConnAlert();
       }
+  },
+  $reorderFavLocation(index, locationName) {
+    this.$store.commit({
+      type: 'reOrderFavLocation',
+      index: index,
+    });
+
+    this.$showAlert('Set ' + locationName + ' to default favourite.');
+    this.$putFavLocations(this.$store.state.favLocation);
   },
   $checkMetric() {
     localforage.getItem('metric')

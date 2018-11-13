@@ -144,6 +144,14 @@ export default {
 <style scoped lang="sass">
   @import "../stylesheets/styles"
 
+  #alert-main
+    position: fixed
+    top: 0
+    left: 0
+    height: auto
+    width: 100%
+    z-index: 2
+
   .alert
     margin-bottom: 0
     max-height: 0

@@ -3,6 +3,17 @@
     <h3 class="fav-location-header fw-semi">Favourite locations</h3>
     <ul class="list-group-flush">
       <li v-for="i, x in favLocation" class="list-group-item">
+        <img v-if="x == 0"
+            class="default-fav-selected"
+            :src="$store.state.iconLocationPrefix + 'star-filled.png'"
+            alt="Set as defualt"
+            >
+        <img v-else
+            @click="$reorderFavLocation(x, i.name)"
+            class="default-fav"
+            :src="$store.state.iconLocationPrefix + 'star-outline.png'"
+            alt="Set as defualt"
+            >
         <span @click="goToFav(x)"
             class="fav-location-name"
         >
@@ -84,10 +95,14 @@ export default {
     .fav-location-name
       min-width: 80%
 
-    .delete-fav
+    .delete-fav, .default-fav, .default-fav-selected
       max-width: 1em
 
-    .delete-fav:hover, .delete-fav:active
+    .delete-fav:hover, .delete-fav:active, .default-fav:hover, .default-fav:active
       opacity: 0.6
+
+    .default-fav-selected:hover, .default-fav-selected:active
+      opacity: 1
+      cursor: default
 
 </style>

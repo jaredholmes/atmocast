@@ -122,6 +122,11 @@ export const store = new Vuex.Store({
 
       state.favLocation = favLocation;
     },
+    reOrderFavLocation(state, index) {
+      const i = index.index;
+      const item = state.favLocation.splice(i, 1)[0];
+      state.favLocation.unshift(item);
+    },
     setNavbarSearchResults(state, results) {
       state.navbarSearchResults = results.results;
     },

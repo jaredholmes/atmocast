@@ -1,10 +1,11 @@
 <template lang="html">
   <nav class="navbar navbar-expand-lg" id="navbar-main">
     <div class="nav-wrapper row">
-      <a @click="reload" class="navbar-brand col-4 col-lg-2">
+      <a v-if="!androidApp || showBrand" @click="reload" class="animated navbar-brand col-4 col-lg-2" :class="{ fadeIn: showBrand }">
         <img class="nav-logo" :src="$store.state.iconLocationPrefix + 'logo-small.png'" alt="Atmocast">
         <h1 class="fw-semi fs-medium">Atmocast</h1>
       </a>
+      <span v-else class="navbar-brand col-4 col-lg-2"></span>
       <span class="icons-container col-8">
         <refresh-button></refresh-button>
         <a @click="toggleMenu"
@@ -42,9 +43,18 @@ export default {
 
   components: { NavbarLocationSearchBar, NavbarUnitsToggleItem, RefreshButton },
 
+  data() {
+    return {
+      showBrand: false,
+    };
+  },
+
   computed: {
     currentIcon() {
       return this.$store.state.currentWeather.icon;
+    },
+    androidApp() {
+      return this.$store.state.androidApp;
     },
   },
 
@@ -57,7 +67,15 @@ export default {
       }
     },
     toggleMenu() {
-      document.getElementById('nav-collapse').classList.toggle('active');
+      const navCollapse = document.getElementById('nav-collapse');
+      navCollapse.classList.toggle('active');
+      if (this.androidApp) {
+        if (navCollapse.classList.contains('active')) {
+          this.showBrand = true;
+        } else {
+          this.showBrand = false;
+        }
+      }
     },
     setBCFromIcon(icon) {
       const navbar = document.getElementById('navbar-main');

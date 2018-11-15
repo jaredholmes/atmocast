@@ -33,7 +33,7 @@
             <b v-else>Average rainfall per hour:</b> {{ +weatherDatum.precipIntensity.toFixed(2) }} {{ shortDistanceUnit }}
           </div>
           <div v-if="modeHourly" class="col-12 col-md-12 collapse-wind">
-            <b>Wind:</b> {{ Math.round(weatherDatum.windSpeed) }} {{ speedUnit }}<img v-if="proUser"
+            <b>Wind:</b>&nbsp;{{ Math.round(weatherDatum.windSpeed) }} {{ speedUnit }}<img v-if="proUser"
             class="wind-arrow"
             :style="{ transform: 'rotate(' + weatherDatum.windBearing + 'deg)' }"
             :src="$store.state.iconLocationPrefix + 'arrow.png'" alt="arrow">

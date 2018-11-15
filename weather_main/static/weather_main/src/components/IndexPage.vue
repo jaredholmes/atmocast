@@ -92,7 +92,9 @@ export default {
       if (this.metric) {
         this.$convertAll(this.$store.state.weather, this.$fToC, this.$mToKm, this.$inToCm);
       } else {
-        this.$convertAll(this.$store.state.weather, this.$cToF, this.$kmToM, this.$cmToIn);
+        if (this.loaded) {
+          this.$convertAll(this.$store.state.weather, this.$cToF, this.$kmToM, this.$cmToIn);
+        }
       }
     },
     lat() {
@@ -111,6 +113,16 @@ export default {
     this.$checkFavLocation();
     // this.$setAppIconLocation();
   },
+  created() {
+    // const links = document.getElementsByTagName('a');
+    // console.log(links);
+    // for (var i = 0; i < links.length; i++) {
+    //   console.log(links[i]);
+    //   links[i].addEventListener('click', () => {
+    //     alert(links[i].href);
+    //   });
+    // }
+  },
   beforeUpdate() {
     if (!this.favLocationExists) {
       localforage.getItem(
@@ -125,6 +137,20 @@ export default {
     }
   },
   updated() {
+    // Open links in browser instead of WebView in app
+    if (this.$store.state.androidApp) {
+      const links = document.getElementsByTagName('a');
+      window.open = cordova.InAppBrowser.open;
+      
+      for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener('click', (event) => {
+          event.preventDefault();
+          if (event.target.href) {
+            window.open(event.target.href, "_system");
+          }
+        });
+      }
+    }
     // Reload data every 60 minutes
     window.setInterval(
       () => {

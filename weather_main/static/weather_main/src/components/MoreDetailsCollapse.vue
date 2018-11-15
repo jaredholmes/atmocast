@@ -32,8 +32,11 @@
             <b v-if="modeHourly">Rainfall per hour:</b>
             <b v-else>Average rainfall per hour:</b> {{ +weatherDatum.precipIntensity.toFixed(2) }} {{ shortDistanceUnit }}
           </div>
-          <div v-if="modeHourly" class="col-12 col-md-12">
-            <b>Wind:</b> {{ Math.round(weatherDatum.windSpeed) }} {{ speedUnit }}<span v-if="proUser"> {{ windDirection }}</span>
+          <div v-if="modeHourly" class="col-12 col-md-12 collapse-wind">
+            <b>Wind:</b> {{ Math.round(weatherDatum.windSpeed) }} {{ speedUnit }}<img v-if="proUser"
+            class="wind-arrow"
+            :style="{ transform: 'rotate(' + weatherDatum.windBearing + 'deg)' }"
+            :src="$store.state.iconLocationPrefix + 'arrow.png'" alt="arrow">
           </div>
           <div class="col-12 col-md-12">
             <b>Humidity:</b> {{ Math.round(weatherDatum.humidity * 100) }}%
@@ -44,8 +47,8 @@
           <div v-if="!modeHourly && proUser" class="col-12 col-md-12">
             <b>Coolest time:</b> {{ $momentOffsetTime(weatherDatum.temperatureLowTime, offset) }}
           </div>
-          <div v-if="!modeHourly && proUser" class="col-12 col-md-12">
-            <b>Moon phase:</b> {{ moonPhaseTerm }}
+          <div v-if="!modeHourly && proUser" class="collapse-moon col-12 col-md-12">
+            <b>Moon phase:</b>&nbsp;{{ moonPhaseTerm }} <img class="moon-img" :src="$store.state.iconLocationPrefix + moonImgName + '.png'" alt="Close more details">
           </div>
         </div>
 
@@ -53,6 +56,11 @@
           <div v-if="proUser" class="col-12 col-md-12">
             <b v-if="modeHourly">Cloud cover:</b>
             <b v-else>Average cloud cover:</b> {{ Math.round(weatherDatum.cloudCover * 100) }}%
+            <div class="cc-container">
+              <div class="cc-indicator" :style="{ width: weatherDatum.cloudCover * 100 + '%' }">
+
+              </div>
+            </div>
           </div>
           <div v-if="proUser" class="col-12 col-md-12">
             <b>Pressure:</b>
@@ -60,7 +68,7 @@
             <span v-else>{{ Math.round(weatherDatum.pressure) }} mbar</span>
           </div>
           <div v-if="proUser" class="col-12 col-md-12">
-            <b>UV index:</b> {{ weatherDatum.uvIndex }}
+            <b>UV index:</b> {{ weatherDatum.uvIndex }} <span v-if="UVIndicator">({{ UVIndicator }})</span>
           </div>
           <div v-if="modeHourly && proUser" class="col-12 col-md-12">
             <b>Dew point:</b> {{ Math.round(weatherDatum.dewPoint) }}&deg;
@@ -140,6 +148,36 @@ export default {
         return 'more-details-daily';
       }
     },
+    UVIndicator() {
+      if (this.proUser) {
+        const index = this.weatherDatum.uvIndex;
+        let indicator;
+        switch(true) {
+          case index == 0:
+            indicator = '';
+            break;
+          case index <= 2:
+            indicator = 'Low';
+            break;
+          case index <= 5:
+            indicator = 'Moderate';
+            break;
+          case index <= 7:
+            indicator = 'High';
+            break;
+          case index <= 10:
+            indicator = 'Very high';
+            break;
+          case index > 10:
+            indicator = 'Extreme';
+            break;
+          default:
+            indicator = '';
+        }
+
+        return indicator;
+      }
+    },
     moonPhaseTerm() {
       if (this.proUser) {
         const moonPhase = this.weatherDatum.moonPhase * 100;
@@ -180,62 +218,44 @@ export default {
         return term;
       }
     },
-    windDirection() {
+    moonImgName() {
       if (this.proUser) {
-        const bearing = this.weatherDatum.windBearing;
-        let direction;
+        const moonPhase = this.weatherDatum.moonPhase * 100;
+        let name;
 
-        switch (true) {
-          case bearing < 23:
-            direction = 'N';
+        switch(true) {
+          case 98 < moonPhase:
+            name = 'moon-new';
             break;
-          case bearing < 46:
-            direction = 'NNE';
+          case moonPhase <= 1:
+            name = 'moon-new';
             break;
-          case bearing < 68:
-            direction = 'ENE';
+          case moonPhase <= 17:
+            name = 'moon-wax-c';
             break;
-          case bearing < 91:
-            direction = 'E';
+          case moonPhase <= 33:
+            name = 'moon-fq';
             break;
-          case bearing < 113:
-            direction = 'ESE';
+          case moonPhase <= 48:
+            name = 'moon-wax-g';
             break;
-          case bearing < 136:
-            direction = 'SE';
+          case moonPhase <= 51:
+            name = 'moon-full';
             break;
-          case bearing < 158:
-            direction = 'SSE';
+          case moonPhase <= 67:
+            name = 'moon-wan-g';
             break;
-          case bearing < 180:
-            direction = 'S';
+          case moonPhase <= 83:
+            name = 'moon-lq';
             break;
-          case bearing < 203:
-            direction = 'SSW';
-            break;
-          case bearing < 226:
-            direction = 'SW';
-            break;
-          case bearing < 248:
-            direction = 'WSW';
-            break;
-          case bearing < 271:
-            direction = 'W';
-            break;
-          case bearing < 293:
-            direction = 'WNW';
-            break;
-          case bearing < 316:
-            direction = 'NW';
-            break;
-          case bearing < 338:
-            direction = 'NNW';
+          case moonPhase <= 98:
+            name = 'moon-wan-c';
             break;
           default:
-            direction = '';
+            name = '';
         }
 
-        return direction;
+        return name;
       }
     },
   },
@@ -310,5 +330,31 @@ export default {
     right: 8px
     top: 3px
     padding: 0
+
+  .moon-img
+    max-width: 1em
+    margin-left: $s-s-5
+
+  .cc-container
+    height: $s-s-6
+    width: $s-s-1
+    display: inline-block
+    border: 1px solid $text-secondary
+    border-radius: 5px
+    vertical-align: middle
+    margin-bottom: 3px
+    margin-left: $s-s-5
+
+  .cc-indicator
+    height: 100%
+    background-color: $text-secondary
+
+  .collapse-wind, .collapse-moon
+    display: flex
+    align-items: center
+
+  .wind-arrow
+    max-height: 1em
+    padding: 0 $s-s-6
 
 </style>

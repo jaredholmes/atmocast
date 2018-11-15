@@ -114,14 +114,10 @@ export default {
     // this.$setAppIconLocation();
   },
   created() {
-    // const links = document.getElementsByTagName('a');
-    // console.log(links);
-    // for (var i = 0; i < links.length; i++) {
-    //   console.log(links[i]);
-    //   links[i].addEventListener('click', () => {
-    //     alert(links[i].href);
-    //   });
-    // }
+    this.$store.commit({
+      type: 'setShowNavBrand',
+      bool: !this.$store.state.androidApp,
+    });
   },
   beforeUpdate() {
     if (!this.favLocationExists) {
@@ -141,7 +137,7 @@ export default {
     if (this.$store.state.androidApp) {
       const links = document.getElementsByTagName('a');
       window.open = cordova.InAppBrowser.open;
-      
+
       for (var i = 0; i < links.length; i++) {
         links[i].addEventListener('click', (event) => {
           event.preventDefault();

@@ -1,7 +1,7 @@
 <template lang="html">
   <nav class="navbar navbar-expand-lg" id="navbar-main">
     <div class="nav-wrapper row">
-      <a v-if="!androidApp || showBrand" @click="reload" class="animated navbar-brand col-4 col-lg-2" :class="{ fadeIn: showBrand }">
+      <a v-if="!androidApp || this.showNavBrand" @click="reload" class="animated navbar-brand col-4 col-lg-2" :class="{ fadeIn: this.showNavBrand }">
         <img class="nav-logo" :src="$store.state.iconLocationPrefix + 'logo-small.png'" alt="Atmocast">
         <h1 class="fw-semi fs-medium">Atmocast</h1>
       </a>
@@ -50,6 +50,9 @@ export default {
   },
 
   computed: {
+    showNavBrand() {
+      return this.$store.state.showNavBrand;
+    },
     currentIcon() {
       return this.$store.state.currentWeather.icon;
     },
@@ -69,12 +72,12 @@ export default {
     toggleMenu() {
       const navCollapse = document.getElementById('nav-collapse');
       navCollapse.classList.toggle('active');
+
       if (this.androidApp) {
-        if (navCollapse.classList.contains('active')) {
-          this.showBrand = true;
-        } else {
-          this.showBrand = false;
-        }
+        this.$store.commit({
+          type: 'setShowNavBrand',
+          bool: !this.showNavBrand,
+        });
       }
     },
     setBCFromIcon(icon) {
@@ -246,7 +249,8 @@ export default {
   .icons-container
     display: flex
     align-items: center
-    padding: 0
+    // Padding same as navbar brand
+    padding: .3125rem 0
 
     @include media-large
       display: none

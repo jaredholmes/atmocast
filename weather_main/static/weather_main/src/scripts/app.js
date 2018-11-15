@@ -382,6 +382,12 @@ Vue.mixin ({
     },
     $hideCollapse() {
       document.getElementById('nav-collapse').classList.remove('active');
+      if (this.$store.state.androidApp) {
+        this.$store.commit({
+          type: 'setShowNavBrand',
+          bool: false,
+        });
+      }
     },
     $focusLocationSearch() {
       document.getElementById('nav-menu-toggler').click();

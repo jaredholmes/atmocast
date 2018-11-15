@@ -48,7 +48,7 @@
             <b>Coolest time:</b> {{ $momentOffsetTime(weatherDatum.temperatureLowTime, offset) }}
           </div>
           <div v-if="!modeHourly && proUser" class="collapse-moon col-12 col-md-12">
-            <b>Moon phase:</b>&nbsp;{{ moonPhaseTerm }} <img class="moon-img" :src="$store.state.iconLocationPrefix + moonImgName + '.png'" alt="Close more details">
+            <b>Moon phase:</b>&nbsp;{{ moonPhaseTerm }} <img class="moon-img" :src="$store.state.iconLocationPrefix + moonImgName + '.png'" :alt="moonPhaseTerm">
           </div>
         </div>
 

@@ -14,6 +14,7 @@ export const store = new Vuex.Store({
     csrf: csrf,
     favLimit: 1,
     alertMessage: 'An empty message.',
+    showNavBrand: false,
     // For dev server
     // iconLocationPrefix: '/icons/',
     // For website
@@ -45,6 +46,9 @@ export const store = new Vuex.Store({
     },
     setAlertMessage(state, message) {
       state.alertMessage = message.message;
+    },
+    setShowNavBrand(state, bool) {
+      state.showNavBrand = bool.bool;
     },
     setIconLocationPrefix(state, prefix) {
       state.iconLocationPrefix = prefix.prefix;

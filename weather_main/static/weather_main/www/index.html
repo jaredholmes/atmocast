@@ -9,45 +9,10 @@
   <link rel="shortcut icon" href="static/weather_main/dist/icons/favicon.ico">
   <link rel="stylesheet" href="static/weather_main/dist/spinner.min.css">
   <title>Atmocast Weather – Simple weather forecasting</title>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126836360-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-126836360-1');
-  </script>
-
 </head>
 <body>
-  <div id="loading-section">
-    <div class="spinner">
-    </div>
-    <div class="loading-caption">
-      Loading
-    </div>
-  </div>
-  <div id="app">
-    <router-view></router-view>
-  </div>
   <script type="text/javascript">
-    let proUser = false;
-    let paidUser = false;
-    let userID = 0;
-    const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value;
-    if ('{{ paidUser }}' === 'True') {
-      paidUser = true;
-      userID = {{ user.id }};
-
-      if ('{{ proUser }}' === 'True') {
-        proUser = true;
-      }
-    }
-
+    window.location = 'https://atmocast.com/?type=android';
   </script>
-  <script src="static/weather_main/dist/bundles/styles.bundle.js" charset="utf-8"></script>
-  <script src="static/weather_main/dist/bundles/app.bundle.js" charset="utf-8"></script>
 </body>
 </html>

@@ -136,7 +136,6 @@ export default {
     // Open links in browser instead of WebView in app
     if (this.$store.state.androidApp) {
       const links = document.getElementsByTagName('a');
-      window.open = cordova.InAppBrowser.open;
 
       for (var i = 0; i < links.length; i++) {
         links[i].addEventListener('click', (event) => {

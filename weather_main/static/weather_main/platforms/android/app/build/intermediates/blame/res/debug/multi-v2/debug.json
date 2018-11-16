@@ -6,18 +6,18 @@
                 {
                     "source": "/Users/jaredholmes/Projects/Sites/weather/weather_main/static/weather_main/platforms/android/app/src/main/res/values/strings.xml",
                     "from": {
-                        "startLines": "-1,2,-1",
-                        "startColumns": "-1,4,-1",
-                        "startOffsets": "-1,55,-1",
-                        "endColumns": "-1,53,-1",
-                        "endOffsets": "-1,104,-1"
+                        "startLines": "-1,-1,3",
+                        "startColumns": "-1,-1,4",
+                        "startOffsets": "-1,-1,109",
+                        "endColumns": "-1,-1,49",
+                        "endOffsets": "-1,-1,154"
                     },
                     "to": {
                         "startLines": "2,3,4",
                         "startColumns": "4,4,4",
                         "startOffsets": "55,119,173",
-                        "endColumns": "63,53,58",
-                        "endOffsets": "114,168,227"
+                        "endColumns": "63,53,49",
+                        "endOffsets": "114,168,218"
                     }
                 }
             ]

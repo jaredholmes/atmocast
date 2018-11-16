@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.atmocast.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Atmocast Weather</name>
+<widget id="com.atmocast.app" version="1.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name short="Weather">Atmocast Weather</name>
     <description>
         Simple weather forecasts
     </description>
@@ -19,7 +19,7 @@
         <icon density="hdpi" src="/res/icon/android/icon-72x72.png" />
         <icon density="xhdpi" src="/res/icon/android/icon-96x96.png" />
         <icon density="xxhdpi" src="/res/icon/android/icon-144x144.png" />
-        <icon density="xxxhdpi" src="/res/icon/android/icon-72x72.png" />
+        <icon density="xxxhdpi" src="/res/icon/android/icon-192x192.png" />
         <preference name="StatusBarBackgroundColor" value="#000000" />
     </platform>
     <platform name="ios">
@@ -30,5 +30,4 @@
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <engine name="android" spec="^7.1.1" />
-    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
 </widget>

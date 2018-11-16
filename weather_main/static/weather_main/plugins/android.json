@@ -15,9 +15,6 @@
     },
     "cordova-plugin-statusbar": {
       "PACKAGE_NAME": "com.atmocast.app"
-    },
-    "cordova-plugin-inappbrowser": {
-      "PACKAGE_NAME": "com.atmocast.app"
     }
   },
   "dependent_plugins": {}

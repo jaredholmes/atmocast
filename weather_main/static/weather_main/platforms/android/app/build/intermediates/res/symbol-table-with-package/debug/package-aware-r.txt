@@ -1,7 +1,4 @@
 com.atmocast.app
-drawable ic_action_next_item
-drawable ic_action_previous_item
-drawable ic_action_remove
 drawable screen
 mipmap icon
 string activity_name

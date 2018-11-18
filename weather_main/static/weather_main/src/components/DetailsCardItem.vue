@@ -1,11 +1,13 @@
 <template lang="html">
-  <div v-if="weatherDatum" @click="selectMoreDetails(datumIndex)"
-  class="card details-inner-card"
-  :class="{
-    'inner-hourly': modeHourly,
-    'inner-daily': !modeHourly,
-  }"
-  :id="detailsId"
+  <div
+    v-if="weatherDatum"
+    @click="selectMoreDetails(datumIndex)"
+    class="card details-inner-card"
+    :class="{
+      'inner-hourly': modeHourly,
+      'inner-daily': !modeHourly,
+    }"
+    :id="detailsId"
   >
     <div class="card-body">
       <span v-if="modeHourly" class="inner-temp inner-temp-hourly">
@@ -47,22 +49,24 @@ export default {
       }
     },
     weatherDatum() {
-      if (this.modeHourly) {
-        return this.$store.getters.hourlyWeather[this.datumIndex];
-      } else {
-        return this.$store.getters.dailyWeather[this.datumIndex];
-      }
+      // if (this.modeHourly) {
+      //   return this.$store.getters.hourlyWeather[this.datumIndex];
+      // } else {
+      //   return this.$store.getters.dailyWeather[this.datumIndex];
+      // }
+      return this.modeHourly ? this.$store.getters.hourlyWeather[this.datumIndex] : this.$store.getters.dailyWeather[this.datumIndex];
     },
     offset() {
       return this.$store.getters.currentOffset;
     },
     detailsId() {
       // Used in the template
-      if (this.modeHourly) {
-        return 'details-hourly-' + this.datumIndex;
-      } else {
-        return 'details-daily-' + this.datumIndex;
-      }
+      // if (this.modeHourly) {
+      //   return 'details-hourly-' + this.datumIndex;
+      // } else {
+      //   return 'details-daily-' + this.datumIndex;
+      // }
+      return this.modeHourly ? 'details-hourly-' + this.datumIndex : 'details-daily-' + this.datumIndex;
     }
   },
 
@@ -73,18 +77,15 @@ export default {
     },
     selectMoreDetails(index, isHourly) {
       let collapse;
-      if (this.modeHourly) {
-        collapse = document.getElementById('more-details-hourly');
-      } else {
-        collapse = document.getElementById('more-details-daily');
-      }
+      // if (this.modeHourly) {
+      //   collapse = document.getElementById('more-details-hourly');
+      // } else {
+      //   collapse = document.getElementById('more-details-daily');
+      // }
+      collapse = this.modeHourly ? document.getElementById('more-details-hourly') : document.getElementById('more-details-daily');
 
       // Overrides Bootstrap's collapse animations, which cause a 'jumping' effect of the collapse when cards are sequentially selected
-      if (collapse.classList.contains('shown')) {
-        // if (this.displayedCollapse == this.datumIndex) {
-        //   collapse.classList.remove('shown');
-        // }
-      } else {
+      if (!collapse.classList.contains('shown')) {
         collapse.classList.add('shown');
       }
 

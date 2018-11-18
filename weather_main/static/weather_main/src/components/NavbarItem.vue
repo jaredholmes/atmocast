@@ -1,32 +1,55 @@
 <template lang="html">
   <nav class="navbar navbar-expand-lg" id="navbar-main">
     <div class="nav-wrapper row">
-      <a v-if="!androidApp || this.showNavBrand" @click="reload" class="animated navbar-brand col-4 col-lg-2" :class="{ fadeIn: this.showNavBrand }">
-        <img class="nav-logo" :src="$store.state.iconLocationPrefix + 'logo-small.png'" alt="Atmocast">
+      <a
+        v-if="!androidApp || this.showNavBrand"
+        @click="reload"
+        class="animated navbar-brand col-4 col-lg-2"
+        :class="{ fadeIn: this.showNavBrand }"
+      >
+        <img
+          class="nav-logo"
+          :src="$store.state.iconLocationPrefix + 'logo-small.png'"
+          alt="Atmocast"
+        >
         <h1 class="fw-semi fs-medium">Atmocast</h1>
       </a>
       <span v-else class="navbar-brand col-4 col-lg-2"></span>
       <span class="icons-container col-8">
         <refresh-button></refresh-button>
-        <a @click="toggleMenu"
-        id="nav-menu-toggler"
-        class="navbar-toggler"
-        data-toggle="collapse"
-        data-target="#nav-collapse"
-        aria-controls="nav-collapse"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-          <img class="icon icon-menu" :src="$store.state.iconLocationPrefix + 'menu.png'" alt="menu">
+        <a
+          @click="toggleMenu"
+          id="nav-menu-toggler"
+          class="navbar-toggler"
+          data-toggle="collapse"
+          data-target="#nav-collapse"
+          aria-controls="nav-collapse"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <img
+            class="icon icon-menu"
+            :src="$store.state.iconLocationPrefix + 'menu.png'"
+            alt="menu"
+          >
         </a>
       </span>
       <div id="nav-collapse" class="collapse navbar-collapse ml-auto col-lg-10">
         <ul class="navbar-nav ml-auto">
           <navbar-location-search-bar></navbar-location-search-bar>
           <navbar-units-toggle-item></navbar-units-toggle-item>
-          <li v-if="!$store.state.paidUser" class="nav-item"><a class="nav-link fw-semi" href="/products/">Products</a></li>
-          <li v-if="!$store.state.paidUser" class="nav-item"><a class="nav-link fw-semi" href="/log-in/">Log In</a></li>
-          <li v-else class="nav-item"><a class="nav-link fw-semi" href="/settings/">Account</a></li>
-          <li v-if="!$store.state.proUser" class="nav-item"><a class="nav-link fw-semi c-pro-red" href="/choose-plan/">Upgrade</a></li>
+          <li v-if="!$store.state.paidUser" class="nav-item">
+            <a class="nav-link fw-semi" href="/products/">Products</a>
+          </li>
+          <li v-if="!$store.state.paidUser" class="nav-item">
+            <a class="nav-link fw-semi" href="/log-in/">Log In</a>
+          </li>
+          <li v-else class="nav-item">
+            <a class="nav-link fw-semi" href="/settings/">Account</a>
+          </li>
+          <li v-if="!$store.state.proUser" class="nav-item">
+            <a class="nav-link fw-semi c-pro-red" href="/choose-plan/">Upgrade</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -85,43 +108,44 @@ export default {
       const navCollapse = document.getElementById('nav-collapse');
       const whiteClass = 'bc-light';
       const metaTheme =   document.getElementsByName('theme-color')[0];
-      let bcClass;
+      // let bcClass;
+      const bcClass = 'bc-' + icon;
       let bcClassColor;
 
-      switch (icon) {
-        case 'clear-day':
-          bcClass = 'bc-sunny';
-          break;
-        case 'clear-night':
-          bcClass = 'bc-night';
-          break;
-        case 'partly-cloudy-day':
-          bcClass = 'bc-partly-cloudy-day';
-          break;
-        case 'partly-cloudy-night':
-          bcClass = 'bc-partly-cloudy-night';
-          break;
-        case 'cloudy':
-          bcClass = 'bc-cloudy';
-          break;
-        case 'fog':
-          bcClass = 'bc-fog';
-          break;
-        case 'rain':
-          bcClass = 'bc-rain';
-          break;
-        case 'sleet':
-          bcClass = 'bc-sleet';
-          break;
-        case 'snow':
-          bcClass = 'bc-snow';
-          break;
-        case 'wind':
-          bcClass = 'bc-wind';
-          break;
-        default:
-          bcClass = 'bc-light';
-      }
+      // switch (icon) {
+      //   case 'clear-day':
+      //     bcClass = 'bc-clear-day';
+      //     break;
+      //   case 'clear-night':
+      //     bcClass = 'bc-clear-night';
+      //     break;
+      //   case 'partly-cloudy-day':
+      //     bcClass = 'bc-partly-cloudy-day';
+      //     break;
+      //   case 'partly-cloudy-night':
+      //     bcClass = 'bc-partly-cloudy-night';
+      //     break;
+      //   case 'cloudy':
+      //     bcClass = 'bc-cloudy';
+      //     break;
+      //   case 'fog':
+      //     bcClass = 'bc-fog';
+      //     break;
+      //   case 'rain':
+      //     bcClass = 'bc-rain';
+      //     break;
+      //   case 'sleet':
+      //     bcClass = 'bc-sleet';
+      //     break;
+      //   case 'snow':
+      //     bcClass = 'bc-snow';
+      //     break;
+      //   case 'wind':
+      //     bcClass = 'bc-wind';
+      //     break;
+      //   default:
+      //     bcClass = 'bc-light';
+      // }
 
       // Remove other background color classes first
       for (var i = 0; i < navbar.classList.length; i++) {

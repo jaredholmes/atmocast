@@ -1,19 +1,23 @@
 <template lang="html">
-  <div class="collapse multi-collapse more-details-collapse bc-light-accent"
-  :class="{
-    'hourly-collapse': modeHourly,
-    'daily-collapse': !modeHourly
-  }"
-  :id="collapseId">
+  <div
+    class="collapse multi-collapse more-details-collapse bc-light-accent"
+    :class="{
+      'hourly-collapse': modeHourly,
+      'daily-collapse': !modeHourly
+    }"
+    :id="collapseId"
+  >
     <div class="card card-body row more-details-card bc-light-accent">
       <h3 v-if="modeHourly" class="fs-large fw-bold more-details-header">
       {{ $momentOffsetTime(weatherDatum.time, offset) }}</h3>
       <h3 v-else class="fs-large fw-bold more-details-header">{{ $momentAddDays(datumIndex) }}</h3>
-      <button @click="$removeCardsColor(modeHourly);
-        closeCollapse();"
-      type="button"
-      class="btn btn-close close-more-details"
-
+      <button
+        @click="
+          $removeCardsColor(modeHourly);
+          closeCollapse();
+        "
+        type="button"
+        class="btn btn-close close-more-details"
       >
         <img :src="$store.state.iconLocationPrefix + 'close-light.png'" alt="Close more details">
       </button>
@@ -48,7 +52,12 @@
             <b>Coolest time:</b> {{ $momentOffsetTime(weatherDatum.temperatureLowTime, offset) }}
           </div>
           <div v-if="!modeHourly && proUser" class="collapse-moon col-12 col-md-12">
-            <b>Moon phase:</b>&nbsp;{{ moonPhaseTerm }} <img class="moon-img" :src="$store.state.iconLocationPrefix + moonImgName + '.png'" :alt="moonPhaseTerm">
+            <b>Moon phase:</b>&nbsp;{{ moonPhaseTerm }}
+            <img
+              class="moon-img"
+              :src="$store.state.iconLocationPrefix + moonImgName + '.png'"
+              :alt="moonPhaseTerm"
+            >
           </div>
         </div>
 
@@ -101,18 +110,20 @@ export default {
       return this.$store.state.proUser;
     },
     datumIndex() {
-      if (this.modeHourly) {
-        return this.$store.getters.displayedCollapseHourly;
-      } else {
-        return this.$store.getters.displayedCollapseDaily;
-      }
+      // if (this.modeHourly) {
+      //   return this.$store.getters.displayedCollapseHourly;
+      // } else {
+      //   return this.$store.getters.displayedCollapseDaily;
+      // }
+      return this.modeHourly ? this.$store.getters.displayedCollapseHourly : this.$store.getters.displayedCollapseDaily;
     },
     weatherDatum() {
-      if (this.modeHourly) {
-        return this.$store.getters.hourlyWeather[this.datumIndex];
-      } else {
-        return this.$store.getters.dailyWeather[this.datumIndex];
-      }
+      // if (this.modeHourly) {
+      //   return this.$store.getters.hourlyWeather[this.datumIndex];
+      // } else {
+      //   return this.$store.getters.dailyWeather[this.datumIndex];
+      // }
+      return this.modeHourly ? this.$store.getters.hourlyWeather[this.datumIndex] : this.$store.getters.dailyWeather[this.datumIndex];
     },
     offset() {
       return this.$store.getters.currentOffset;
@@ -121,32 +132,36 @@ export default {
       return this.$store.state.metric;
     },
     speedUnit() {
-      if (this.metric) {
-        return 'km/h'
-      } else {
-        return 'mph'
-      }
+      // if (this.metric) {
+      //   return 'km/h'
+      // } else {
+      //   return 'mph'
+      // }
+      return this.metric ? 'km/h' : 'mph';
     },
     longDistanceUnit() {
-      if (this.metric) {
-        return 'km'
-      } else {
-        return 'mi'
-      }
+      // if (this.metric) {
+      //   return 'km'
+      // } else {
+      //   return 'mi'
+      // }
+      return this.metric ? 'km' : 'mi';
     },
     shortDistanceUnit() {
-      if (this.metric) {
-        return 'cm'
-      } else {
-        return 'in'
-      }
+      // if (this.metric) {
+      //   return 'cm'
+      // } else {
+      //   return 'in'
+      // }
+      return this.metric ? 'cm' : 'in';
     },
     collapseId() {
-      if (this.modeHourly) {
-        return 'more-details-hourly';
-      } else {
-        return 'more-details-daily';
-      }
+      // if (this.modeHourly) {
+      //   return 'more-details-hourly';
+      // } else {
+      //   return 'more-details-daily';
+      // }
+      return this.modeHourly ? 'more-details-hourly' : 'more-details-daily';
     },
     UVIndicator() {
       if (this.proUser) {
@@ -276,16 +291,10 @@ export default {
     position: absolute
     display: block
     max-height: 0
-    // transition: max-height 180ms ease-in, opacity 100ms linear
-    // -webkit-transition: max-height 180ms ease-in, opacity 100ms linear
-    // -ms-transition: max-height 180ms ease-in, opacity 100ms linear
 
   .more-details-collapse *
     opacity: 0
-    // transition: opacity 150ms linear
-    // -webkit-transition: opacity 150ms linear
-    // -ms-transition: opacity 150ms linear
-
+    
   // 'shown' overrides Bootstrap's 'show', allowing for custom animations, etc.
   .more-details-collapse.shown
     z-index: 0

@@ -30,8 +30,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['.herokuapp.com', 'localhost']
 
-# DEBUG_PROPAGATE_EXCEPTIONS = True
-
 EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = os.environ.get('SMTP_USERNAME')

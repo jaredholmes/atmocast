@@ -18,15 +18,13 @@ Vue.use(VueRouter);
 const routes = [
   { path: '', component: IndexPage },
   // For Cordova app
-  { path: '*', component: IndexPage },
+  // { path: '*', component: IndexPage },
 ];
 
 const router = new VueRouter({
   mode: 'history',
   routes,
 });
-
-// TODO: make start loading and end loading methods
 
 Vue.mixin ({
   methods: {
@@ -59,11 +57,6 @@ Vue.mixin ({
         refresher.classList.add('spinning');
       }
 
-      // Show that content is loading
-      // if (mainSection) {
-      //     mainSection.style.opacity = 0.1;
-      // }
-
       if (smallScreen) {
         if (navCollapse) {
           navCollapse.style.display = 'none';
@@ -75,8 +68,6 @@ Vue.mixin ({
           alerts[i].style.display = 'none';
         }
       }
-
-      // loadingSection.style.display = 'block';
 
       // Ensure validity of location. If invalid, set it to the default.
       if (!isNaN(lat) && !isNaN(lon)) {
@@ -97,7 +88,6 @@ Vue.mixin ({
               this.$commitWeatherToStore(response.data);
             }
 
-            // this.$adjustCurrentWeather(this.$store.state.weather.hourly.data);
             this.$adjustCurrentWeather();
             // Set offset to calculate correct time.
             this.$store.commit('setCurrentOffset');
@@ -107,10 +97,6 @@ Vue.mixin ({
             }
 
             // Loading is finished. Hide loading elements and display main UI.
-            // if (mainSection) {
-            //   mainSection.style.opacity = 1;
-            // }
-
             if (smallScreen) {
               if (navCollapse) {
                 navCollapse.style.display = 'block';
@@ -240,7 +226,7 @@ Vue.mixin ({
 
       if (alertUser === true) {
         if (this.$store.state.androidApp) {
-          this.$showAlert('Unable to get your location. Please ensure that your location accuracy is set to high accuracy.', 15000);
+          this.$showAlert('Unable to get your location. Please restart the app or ensure that your location accuracy is set to high accuracy.', 15000);
         } else {
           this.$showAlert('Unable to get your location. Please check the location settings of your device or browser.', 15000);
         }
@@ -249,18 +235,19 @@ Vue.mixin ({
     // Set location to specific or default location
     $setDefaultLocation(lat, lon) {
       // Default location to New York City
-      if (!lat) {
-        lat = 40.7900869;
-      }
+      // if (!lat) {
+      //   lat = 40.7900869;
+      // }
+      //
+      // if (!lon) {
+      //   lon = -73.959829;
+      // }
 
-      if (!lon) {
-        lon = -73.959829;
-      }
       this.$store.commit({
         type: 'setCoords',
         coords: {
-          lat: lat,
-          lon: lon,
+          lat: lat || 40.7900869,
+          lon: lon || -73.959829,
         }
       });
     },
@@ -355,12 +342,13 @@ Vue.mixin ({
   $checkMetric() {
     localforage.getItem('metric')
       .then((value) => {
-        let bool;
-        if (value === false) {
-          bool = value;
-        } else {
-          bool = true;
-        }
+        // let bool;
+        const bool = value === false ? value : true;
+        // if (value === false) {
+        //   bool = value;
+        // } else {
+        //   bool = true;
+        // }
 
         this.$store.commit({
           type: 'setMetric',
@@ -526,12 +514,13 @@ Vue.mixin ({
       }
     },
     $hideAlert(id) {
-      let alert;
-      if (id) {
-        alert = document.getElementById(id);
-      } else {
-        alert = document.getElementById('alert-main');
-      }
+      // let alert;
+      const alert = id ? document.getElementById(id) : document.getElementById('alert-main');
+      // if (id) {
+      //   alert = document.getElementById(id);
+      // } else {
+      //   alert = document.getElementById('alert-main');
+      // }
       alert.classList.remove('shown');
     },
     $hideNavbarSearchButton() {
@@ -575,11 +564,12 @@ Vue.mixin ({
     $weatherHourMatchesCurrent(unixTime) {
       const currentHourDay = moment().format('H, D');
       moment.unix(unixTime);
-      if (moment.unix(unixTime).format('H, D') === currentHourDay) {
-        return true;
-      } else {
-        return false;
-      }
+      // if (moment.unix(unixTime).format('H, D') === currentHourDay) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      return moment.unix(unixTime).format('H, D') === currentHourDay;
     },
     // $adjustCurrentWeather(hourlyData) {
       // if (this.$weatherHourMatchesCurrent(hourlyData[0].time)) {

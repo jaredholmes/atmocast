@@ -1,23 +1,32 @@
 <template lang="html">
-  <div class="">
-    <div v-if="this.searchResults.length > 0"
+  <div>
+    <div
+      v-if="this.searchResults.length > 0"
       class="row"
       id="search-results"
+    >
+      <button
+        @click="$hideSearchResults"
+        class="btn btn-close close-search-results fw-semi"
+        type="button"
       >
-      <button @click="$hideSearchResults" class="btn btn-close close-search-results fw-semi" type="button">
-        <img :src="$store.state.iconLocationPrefix + 'close-dark.png'" alt="">
+        <img :src="$store.state.iconLocationPrefix + 'close-dark.png'" alt="Close">
       </button>
       <ul class="list-group">
-        <li v-for="result in searchResults"
-        @click="$store.commit({
-            type: 'setCoords',
-            coords: {
-              lat: parseFloat(result.lat),
-              lon: parseFloat(result.lon)
-            }
-          });
-          $hideSearchResults();"
-         class="list-group-item">
+        <li
+          v-for="result in searchResults"
+          @click="
+            $store.commit({
+              type: 'setCoords',
+              coords: {
+                lat: parseFloat(result.lat),
+                lon: parseFloat(result.lon)
+              }
+            });
+            $hideSearchResults();
+          "
+          class="list-group-item"
+        >
           {{ result.display_name }}
         </li>
       </ul>

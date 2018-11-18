@@ -1,18 +1,62 @@
 <template lang="html">
-  <li @blur="hideSearchBtn" id="nav-item-search" class="nav-item">
-    <form @submit="preventDefaultSubmit" class="form-inline" id="location-search-form">
-      <input v-model="searchQuery" @focus="showSearchBtn" class="form-control location-search-input" id="input-location-search" type="search" placeholder="Change location" aria-label="Change location">
-      <button @click="getSearchResults" class="btn btn-location-search" id="btn-navbar-search" type="button" name="button">
-        <img id="btn-search-icon" :src="$store.state.iconLocationPrefix + 'search.png'" alt="Search for a location">
+  <li
+    @blur="hideSearchBtn"
+    id="nav-item-search"
+    class="nav-item"
+  >
+    <form
+      @submit="preventDefaultSubmit"
+      class="form-inline"
+      id="location-search-form"
+    >
+      <input
+        v-model="searchQuery"
+        @focus="showSearchBtn"
+        class="form-control location-search-input"
+        id="input-location-search"
+        type="search"
+        placeholder="Change location"
+        aria-label="Change location"
+      >
+      <button
+        @click="getSearchResults"
+        class="btn btn-location-search"
+        id="btn-navbar-search"
+        type="button"
+        name="button"
+      >
+        <img
+          id="btn-search-icon"
+          :src="$store.state.iconLocationPrefix + 'search.png'"
+          alt="Search for a location"
+        >
         <div class="spinner" id="search-loading-spinner">
-
         </div>
       </button>
-      <button @click="$getPosition(true); $getMainData()" class="btn btn-location-search" id="btn-navbar-location" type="button" name="button">
-        <img id="btn-location-icon" :src="$store.state.iconLocationPrefix + 'location.png'" alt="Current location">
+      <button
+        @click="
+          $getPosition(true);
+          $getMainData();
+        "
+        class="btn btn-location-search"
+        id="btn-navbar-location"
+      >
+        <img
+          id="btn-location-icon"
+          :src="$store.state.iconLocationPrefix + 'location.png'"
+          alt="Current location"
+        >
       </button>
-      <button @click="scrollToFavList" class="btn btn-location-search" id="btn-navbar-fav" type="button" name="button">
-        <img id="btn-fav-icon" :src="$store.state.iconLocationPrefix + 'heart-filled.png'" alt="Current location">
+      <button
+        @click="scrollToFavList"
+        class="btn btn-location-search"
+        id="btn-navbar-fav"
+      >
+        <img
+          id="btn-fav-icon"
+          :src="$store.state.iconLocationPrefix + 'heart-filled.png'"
+          alt="Current location"
+        >
       </button>
     </form>
     <navbar-location-search-results :searchResults="searchResults"></navbar-location-search-results>
@@ -80,7 +124,7 @@ export default {
             if (searchResults) {
               searchResults.style.display = 'flex';
             }
-          })
+          });
       }
     },
     scrollToFavList() {

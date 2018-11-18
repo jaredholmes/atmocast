@@ -1,28 +1,34 @@
 <template lang="html">
-  <div v-if="favLocation.length > 0" id="fav-list" class="fav-location-list">
+  <div
+    v-if="favLocation.length > 0"
+    id="fav-list"
+    class="fav-location-list"
+  >
     <h3 class="fav-location-header fw-semi">Favourite locations</h3>
     <ul class="list-group-flush">
       <li v-for="i, x in favLocation" class="list-group-item">
-        <img v-if="x == 0"
-            class="default-fav-selected"
-            :src="$store.state.iconLocationPrefix + 'star-filled.png'"
-            alt="Set as defualt"
-            >
-        <img v-else
-            @click="$reorderFavLocation(x, i.name)"
-            class="default-fav"
-            :src="$store.state.iconLocationPrefix + 'star-outline.png'"
-            alt="Set as defualt"
-            >
-        <span @click="goToFav(x)"
-            class="fav-location-name"
+        <img
+          v-if="x == 0"
+          class="default-fav-selected"
+          :src="$store.state.iconLocationPrefix + 'star-filled.png'"
+          alt="Set as defualt"
         >
+        <img
+          v-else
+          @click="$reorderFavLocation(x, i.name)"
+          class="default-fav"
+          :src="$store.state.iconLocationPrefix + 'star-outline.png'"
+          alt="Set as defualt"
+        >
+        <span @click="goToFav(x)" class="fav-location-name">
             {{ i.name }}
         </span>
-        <img @click="$removeFavLocation(i.name)"
-        class="delete-fav"
-        :src="$store.state.iconLocationPrefix + 'delete.png'"
-        alt="Delete item">
+        <img
+          @click="$removeFavLocation(i.name)"
+          class="delete-fav"
+          :src="$store.state.iconLocationPrefix + 'delete.png'"
+          alt="Delete item"
+        >
       </li>
     </ul>
   </div>

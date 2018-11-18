@@ -2,8 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const { VueLoaderPlugin } = require('vue-loader');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-// const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   context: __dirname,
@@ -36,17 +34,14 @@ module.exports = {
 
   plugins: [
     new VueLoaderPlugin(),
-    // new BundleAnalyzerPlugin(),
-    // new CompressionPlugin(),
   ],
 
-  devServer: {
-    // publicPath: '/www/static/weather_main/dist/bundles/',
-    publicPath: '/bundles/',
-    contentBase: path.resolve(__dirname + '/www/static/weather_main/dist/'),
-    watchContentBase: true,
-    compress: true,
-  },
+  // devServer: {
+  //   publicPath: '/bundles/',
+  //   contentBase: path.resolve(__dirname + '/www/static/weather_main/dist/'),
+  //   watchContentBase: true,
+  //   compress: true,
+  // },
 
   module: {
     rules: [
@@ -85,14 +80,6 @@ module.exports = {
         test: /\.vue$/,
         use: 'vue-loader',
       },
-      // {
-      //   test: /\.(png|jpg|jpeg)$/,
-      //   use: [
-      //     {
-      //       loader: 'file-loader',
-      //     },
-      //   ],
-      // },
     ],
   },
   resolve: {

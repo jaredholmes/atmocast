@@ -2,19 +2,16 @@
   <div class="card details-card animated fadeInUp">
     <h5 class="card-title fw-semi">{{ cardTitle }}</h5>
     <div class="card-body details-card-body">
-      <div class="inner-card-container"
-      :class="{'hourly-inner': modeHourly}"
-      >
-        <details-card-item v-for="i, x in 24"
-        :key="x"
-        :datumIndex="x"
-        :modeHourly="modeHourly"
+      <div class="inner-card-container" :class="{'hourly-inner': modeHourly}">
+        <details-card-item
+          v-for="i, x in 24"
+          :key="x"
+          :datumIndex="x"
+          :modeHourly="modeHourly"
         ></details-card-item>
       </div>
     </div>
-    <more-details-collapse
-      :modeHourly="modeHourly"
-    ></more-details-collapse>
+    <more-details-collapse :modeHourly="modeHourly"></more-details-collapse>
   </div>
 </template>
 
@@ -37,11 +34,12 @@ export default {
       return this.$store.state.metric;
     },
     cardTitle() {
-      if (this.modeHourly) {
-        return 'Hourly';
-      } else {
-        return 'Daily';
-      }
+      // if (this.modeHourly) {
+      //   return 'Hourly';
+      // } else {
+      //   return 'Daily';
+      // }
+      return this.modeHourly ? 'Hourly' : 'Daily';
     }
   },
 }
@@ -65,11 +63,11 @@ export default {
       background: $light
 
     ::-webkit-scrollbar-thumb
-      background: $sunny-blue
-      -webkit-border-radius: 1ex
+      background: $clear-day-blue
+      -webkit-border-radius: 1em
 
-    ::-webkit-scrollbar-corner
-        background: #000
+    // ::-webkit-scrollbar-corner
+    //     background: #000
 
     @include media-tablet
       max-width: 56%

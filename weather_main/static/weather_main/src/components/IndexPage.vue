@@ -2,29 +2,53 @@
   <div v-if="loaded">
     <navbar-item></navbar-item>
 
-    <div id="alert-location" class="alert alert-primary bc-light" role="alert">
+    <div
+      v-if="!returnVisit"
+      id="alert-location"
+      class="alert alert-primary bc-light"
+      role="alert"
+    >
     <span>For a better experience, allow Atmocast to get weather information for your location.</span>
     <span class="alert-buttons-container">
-      <button @click="$getPosition(true, true)" id="btn-location-get" class="btn fw-semi" type="button" name="button">Get my location</button>
-      <button @click="$focusLocationSearch(); $hideAlert('alert-location');" id="btn-location-search" class="btn fw-semi" type="button" name="button">Search location</button>
-      <img @click="$hideAlert('alert-location')" :src="$store.state.iconLocationPrefix + 'close-light.png'" class="alert-close" alt="Close alert">
+      <button
+        @click="$getPosition(true, true)"
+        id="btn-location-get"
+        class="btn fw-semi"
+        type="button"
+        name="button"
+      >Get my location</button>
+      <button
+        @click="$focusLocationSearch();
+        $hideAlert('alert-location');"
+        id="btn-location-search"
+        class="btn fw-semi"
+      >Search location</button>
+      <img
+        @click="$hideAlert('alert-location')"
+        :src="$store.state.iconLocationPrefix + 'close-light.png'" class="alert-close" alt="Close alert"
+      >
     </span>
     </div>
 
     <div
-    id="main-section"
-    @click="$hideCollapse();
-    $hideNavbarSearchButton();
-    $hideSearchResults();"
+      id="main-section"
+      @click="
+        $hideCollapse();
+        $hideNavbarSearchButton();
+        $hideSearchResults();
+      "
     >
       <div id="alert-main" class="alert alert-primary bc-light" role="alert">
         <span v-html="$store.state.alertMessage" class="alert-message"></span>
-        <img @click="$hideAlert();" :src="$store.state.iconLocationPrefix + 'close-light.png'" class="alert-close" alt="Close alert">
+        <img
+          @click="$hideAlert();"
+          :src="$store.state.iconLocationPrefix + 'close-light.png'"
+          class="alert-close" alt="Close alert"
+        >
       </div>
 
       <div v-if="$store.state.weather.hourly">
         <display-item></display-item>
-
         <details-pane-item :modeHourly="true"></details-pane-item>
         <details-pane-item :modeHourly="false"></details-pane-item>
       </div>
@@ -58,6 +82,7 @@ export default {
   data() {
     return {
       loaded: false,
+      returnVisit: true,
     }
   },
 
@@ -79,9 +104,6 @@ export default {
     },
   },
   watch: {
-    // favLocationExists() {
-    //   this.$setLocationToFav();
-    // },
     weather() {
       this.loaded = true;
     },
@@ -111,7 +133,6 @@ export default {
       });
     }
     this.$checkFavLocation();
-    // this.$setAppIconLocation();
   },
   created() {
     this.$store.commit({
@@ -125,6 +146,7 @@ export default {
         'returnVisit',
         (err, value) => {
           if (!value) {
+            this.returnVisit = false;
             localforage.setItem('returnVisit', true);
             this.$showLocationAlert();
           }

@@ -10,8 +10,4 @@ new Vue({
       document.getElementById('nav-collapse').classList.toggle('active');
     },
   },
-  watch: {
-  },
-  created() {
-  }
 });

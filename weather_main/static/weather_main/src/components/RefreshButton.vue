@@ -1,6 +1,14 @@
 <template lang="html">
-  <span @click="$getMainData" id="refresher" class="ml-auto">
-    <img class="refresh-icon" :src="$store.state.iconLocationPrefix + 'refresh.png'" alt="refresh">
+  <span
+    @click="$getMainData"
+    id="refresher"
+    class="ml-auto"
+  >
+    <img
+      class="refresh-icon"
+      :src="$store.state.iconLocationPrefix + 'refresh.png'"
+      alt="refresh"
+    >
   </span>
 </template>
 

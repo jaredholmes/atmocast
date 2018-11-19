@@ -30,15 +30,7 @@ export default {
   props: ['modeHourly'],
 
   computed: {
-    metric() {
-      return this.$store.state.metric;
-    },
     cardTitle() {
-      // if (this.modeHourly) {
-      //   return 'Hourly';
-      // } else {
-      //   return 'Daily';
-      // }
       return this.modeHourly ? 'Hourly' : 'Daily';
     }
   },
@@ -57,6 +49,7 @@ export default {
     border-radius: 0
     height: auto
     max-width: 90%
+
     ::-webkit-scrollbar
       height: 7px
       width: 9px
@@ -66,10 +59,10 @@ export default {
       background: $clear-day-blue
       -webkit-border-radius: 1em
 
-    // ::-webkit-scrollbar-corner
-    //     background: #000
-
     @include media-tablet
+      max-width: 75%
+
+    @include media-large
       max-width: 56%
 
     .details-card-body

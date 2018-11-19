@@ -109,20 +109,11 @@ export default {
     proUser() {
       return this.$store.state.proUser;
     },
+    // Index of the data array used to display relevant data in the collapse
     datumIndex() {
-      // if (this.modeHourly) {
-      //   return this.$store.getters.displayedCollapseHourly;
-      // } else {
-      //   return this.$store.getters.displayedCollapseDaily;
-      // }
       return this.modeHourly ? this.$store.getters.displayedCollapseHourly : this.$store.getters.displayedCollapseDaily;
     },
     weatherDatum() {
-      // if (this.modeHourly) {
-      //   return this.$store.getters.hourlyWeather[this.datumIndex];
-      // } else {
-      //   return this.$store.getters.dailyWeather[this.datumIndex];
-      // }
       return this.modeHourly ? this.$store.getters.hourlyWeather[this.datumIndex] : this.$store.getters.dailyWeather[this.datumIndex];
     },
     offset() {
@@ -132,37 +123,18 @@ export default {
       return this.$store.state.metric;
     },
     speedUnit() {
-      // if (this.metric) {
-      //   return 'km/h'
-      // } else {
-      //   return 'mph'
-      // }
       return this.metric ? 'km/h' : 'mph';
     },
     longDistanceUnit() {
-      // if (this.metric) {
-      //   return 'km'
-      // } else {
-      //   return 'mi'
-      // }
       return this.metric ? 'km' : 'mi';
     },
     shortDistanceUnit() {
-      // if (this.metric) {
-      //   return 'cm'
-      // } else {
-      //   return 'in'
-      // }
       return this.metric ? 'cm' : 'in';
     },
     collapseId() {
-      // if (this.modeHourly) {
-      //   return 'more-details-hourly';
-      // } else {
-      //   return 'more-details-daily';
-      // }
       return this.modeHourly ? 'more-details-hourly' : 'more-details-daily';
     },
+    // Set a text indication of UV index intensity
     UVIndicator() {
       if (this.proUser) {
         const index = this.weatherDatum.uvIndex;
@@ -193,6 +165,7 @@ export default {
         return indicator;
       }
     },
+    // Set a text indication of the moon phase
     moonPhaseTerm() {
       if (this.proUser) {
         const moonPhase = this.weatherDatum.moonPhase * 100;
@@ -233,6 +206,7 @@ export default {
         return term;
       }
     },
+    // Set the moon phase image src
     moonImgName() {
       if (this.proUser) {
         const moonPhase = this.weatherDatum.moonPhase * 100;
@@ -294,7 +268,7 @@ export default {
 
   .more-details-collapse *
     opacity: 0
-    
+
   // 'shown' overrides Bootstrap's 'show', allowing for custom animations, etc.
   .more-details-collapse.shown
     z-index: 0

@@ -104,23 +104,26 @@ export default {
     },
   },
   watch: {
+    // Weather data will change and loading spinner can disappear
     weather() {
       this.loaded = true;
     },
     currentCity() {
       document.title = 'Weather in ' + this.currentCity + ' – Atmocast Weather';
     },
+    // Convert between metric and imperial
     metric() {
       if (this.metric) {
         this.$convertAll(this.$store.state.weather, this.$fToC, this.$mToKm, this.$inToCm);
       } else {
+        // Only executed if data is loaded. Prevents errors
         if (this.loaded) {
           this.$convertAll(this.$store.state.weather, this.$cToF, this.$kmToM, this.$cmToIn);
         }
       }
     },
+    // Lat changes when the location is set, which makes it a good time to fetch the main data
     lat() {
-      // lat changes when the location is set, which makes it a good time to fetch the main data
       this.$getMainData();
     }
   },
@@ -135,12 +138,14 @@ export default {
     this.$checkFavLocation();
   },
   created() {
+    // Navabar brand will be hidden if the app is being used
     this.$store.commit({
       type: 'setShowNavBrand',
       bool: !this.$store.state.androidApp,
     });
   },
   beforeUpdate() {
+    // Used on the first visit to request the user's location
     if (!this.favLocationExists) {
       localforage.getItem(
         'returnVisit',
@@ -156,18 +161,18 @@ export default {
   },
   updated() {
     // Open links in browser instead of WebView in app
-    if (this.$store.state.androidApp) {
-      const links = document.getElementsByTagName('a');
-
-      for (var i = 0; i < links.length; i++) {
-        links[i].addEventListener('click', (event) => {
-          event.preventDefault();
-          if (event.target.href) {
-            window.open(event.target.href, "_system");
-          }
-        });
-      }
-    }
+    // if (this.$store.state.androidApp) {
+    //   const links = document.getElementsByTagName('a');
+    //
+    //   for (var i = 0; i < links.length; i++) {
+    //     links[i].addEventListener('click', (event) => {
+    //       event.preventDefault();
+    //       if (event.target.href) {
+    //         window.open(event.target.href, "_system");
+    //       }
+    //     });
+    //   }
+    // }
     // Reload data every 60 minutes
     window.setInterval(
       () => {

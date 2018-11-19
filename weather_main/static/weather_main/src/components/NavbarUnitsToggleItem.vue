@@ -17,11 +17,6 @@ export default {
 
   methods: {
     toggleUnitIndicator() {
-      // if (this.$store.state.metric) {
-      //   this.unitIndicator = 'Metric';
-      // } else {
-      //   this.unitIndicator = 'Imperial';
-      // }
       this.unitIndicator = this.$store.state.metric ? 'Metric' : 'Imperial';
     },
   },

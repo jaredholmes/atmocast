@@ -15,12 +15,8 @@ export const store = new Vuex.Store({
     favLimit: 1,
     alertMessage: 'An empty message.',
     showNavBrand: false,
-    // For dev server
-    // iconLocationPrefix: '/icons/',
     // For website
     iconLocationPrefix: window.location.origin + '/static/weather_main/www/static/weather_main/dist/icons/',
-    // Required for Cordova app
-    // iconLocationPrefix: 'static/weather_main/dist/icons/',
     metric: true,
     weather: {},
     currentWeather: '',
@@ -73,9 +69,6 @@ export const store = new Vuex.Store({
     setWeather(state, weatherData) {
       state.weather = weatherData.weatherData;
     },
-    // setCurrentWeather(state, index) {
-    //   state.currentWeather = state.weather.hourly.data[index.index];
-    // },
     setCurrentWeather(state) {
       state.currentWeather = state.weather.currently;
     },

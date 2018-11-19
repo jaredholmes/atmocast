@@ -12,13 +12,10 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
 }
 
-// Router config
 Vue.use(VueRouter);
 
 const routes = [
   { path: '', component: IndexPage },
-  // For Cordova app
-  // { path: '*', component: IndexPage },
 ];
 
 const router = new VueRouter({
@@ -28,15 +25,6 @@ const router = new VueRouter({
 
 Vue.mixin ({
   methods: {
-    // Set different location prefix for app, so that icons can be saved offline
-    // $setAppIconLocation() {
-    //   if (this.$store.state.androidApp) {
-    //     this.$store.commit({
-    //       type: 'setIconLocationPrefix',
-    //       prefix: 'static/weather_main/dist/icons/',
-    //     });
-    //   }
-    // },
     // Gets all the necessary weather and location data and shows (and hides) loading screen
     // Basically a package of functions to set up the weather UI
     $getMainData() {
@@ -211,12 +199,6 @@ Vue.mixin ({
     // Either sets the location to a saved favourite or to the default.
     // Optional boolean argument can be passed to alert the user that their location cannot be retrieved
     $setLocationToFav(alertUser) {
-      // if (this.$store.state.favLocationExists) {
-      //   const favCoords = this.$store.state.favCoords;
-      //   this.$setDefaultLocation(favCoords.lat, favCoords.lon);
-      // } else {
-      //   this.$setDefaultLocation();
-      // }
       if (this.$store.state.favLocationExists) {
         const favLocation = this.$store.state.favLocation[0];
         this.$setDefaultLocation(favLocation.lat, favLocation.lon);
@@ -234,15 +216,6 @@ Vue.mixin ({
     },
     // Set location to specific or default location
     $setDefaultLocation(lat, lon) {
-      // Default location to New York City
-      // if (!lat) {
-      //   lat = 40.7900869;
-      // }
-      //
-      // if (!lon) {
-      //   lon = -73.959829;
-      // }
-
       this.$store.commit({
         type: 'setCoords',
         coords: {
@@ -342,13 +315,7 @@ Vue.mixin ({
   $checkMetric() {
     localforage.getItem('metric')
       .then((value) => {
-        // let bool;
         const bool = value === false ? value : true;
-        // if (value === false) {
-        //   bool = value;
-        // } else {
-        //   bool = true;
-        // }
 
         this.$store.commit({
           type: 'setMetric',
@@ -420,30 +387,36 @@ Vue.mixin ({
         return matchingKeys;
       }
     },
+    // Perfonms function on values of keyArray items in an object
     $convertValuesInObject(keyArray, object, conversionFunction) {
       for (var i = 0; i < keyArray.length; i++) {
         object[keyArray[i]] = conversionFunction(object[keyArray[i]]);
       }
     },
+    // Sets the parameters for and then executes $convertValuesInObject
     $convertValuesByKey(keyString, object, conversionFunction, excludeString) {
       const keyArray = this.$getKeysInObject(keyString, object, excludeString);
       this.$convertValuesInObject(keyArray, object, conversionFunction);
     },
+    // Only converts temperature data
     $convertAllTempsInObject(object, conversionFunction) {
       const keyString = ['temperature', 'Temperature', 'dewPoint'];
       const excludeString = ['Time'];
       this.$convertValuesByKey(keyString, object, conversionFunction, excludeString);
     },
+    // Only converts long distance data
     $convertAllLongDistanceInObject(object, conversionFunction) {
       const keyString = ['wind', 'visibility'];
       const excludeString = ['Bearing'];
       this.$convertValuesByKey(keyString, object, conversionFunction, excludeString);
     },
+    // Only converts short distance data
     $convertAllShortDistanceInObject(object, conversionFunction) {
       const keyString = ['precipIntensity'];
       const excludeString = [' '];
       this.$convertValuesByKey(keyString, object, conversionFunction, excludeString);
     },
+    // Combines the unit-specific conversion functions
     $convertAll(weatherObj, tempConversion, longDistanceConversion, shortDistanceConversion) {
       if (weatherObj) {
         for (var i = 0; i < weatherObj.daily.data.length; i++) {
@@ -514,13 +487,7 @@ Vue.mixin ({
       }
     },
     $hideAlert(id) {
-      // let alert;
       const alert = id ? document.getElementById(id) : document.getElementById('alert-main');
-      // if (id) {
-      //   alert = document.getElementById(id);
-      // } else {
-      //   alert = document.getElementById('alert-main');
-      // }
       alert.classList.remove('shown');
     },
     $hideNavbarSearchButton() {
@@ -561,24 +528,6 @@ Vue.mixin ({
         cardClass[i].classList.remove(colorClass);
       }
     },
-    $weatherHourMatchesCurrent(unixTime) {
-      const currentHourDay = moment().format('H, D');
-      moment.unix(unixTime);
-      // if (moment.unix(unixTime).format('H, D') === currentHourDay) {
-      //   return true;
-      // } else {
-      //   return false;
-      // }
-      return moment.unix(unixTime).format('H, D') === currentHourDay;
-    },
-    // $adjustCurrentWeather(hourlyData) {
-      // if (this.$weatherHourMatchesCurrent(hourlyData[0].time)) {
-      //   this.$store.commit({
-      //     type: 'setCurrentWeather',
-      //     index: 0,
-      //   });
-      // }
-    // },
     $adjustCurrentWeather() {
       this.$store.commit('setCurrentWeather');
     },
@@ -620,7 +569,6 @@ Vue.mixin ({
     },
     $putFavLocations(locations) {
       const putURL = '/rest/location-list/' + this.$store.state.userID + '/';
-      // const jsonLocations = JSON.stringify({'locations' : locations});
       axios.put(
         putURL,
         { params: {'locations': locations} },
@@ -631,6 +579,7 @@ Vue.mixin ({
         }
       );
     },
+    // Convert days into readable format
     $momentAddDays(days) {
       if (days <= 0) {
         return 'Today';
@@ -640,6 +589,7 @@ Vue.mixin ({
         return moment().add(days, 'days').format('dddd');
       }
     },
+    // Calculate time in different timezones based on offset
     $momentOffsetTime(time ,offset) {
       const utc = moment.utc(moment.unix(time));
       const offsetTime = moment(utc).add(offset, 'h');

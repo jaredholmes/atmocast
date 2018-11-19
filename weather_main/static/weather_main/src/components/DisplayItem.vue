@@ -46,12 +46,8 @@ export default {
         lon: this.$store.getters.longitude,
       };
     },
+    // Heart image is filled or outlined based on whether the location is a favourite or not
     favHeartImg() {
-      // if (this.currentIsFav) {
-      //   return this.$store.state.iconLocationPrefix + 'heart-filled.png';
-      // } else {
-      //   return this.$store.state.iconLocationPrefix + 'heart-outline.png';
-      // }
       return this.currentIsFav ? this.$store.state.iconLocationPrefix + 'heart-filled.png' : this.$store.state.iconLocationPrefix + 'heart-outline.png';
     },
     currentTemp() {
@@ -66,6 +62,7 @@ export default {
   },
 
   methods: {
+    // Check if the current location name matches any names in the favourite locations
     checkIfLocationIsFav() {
       let isFav;
 
@@ -74,12 +71,6 @@ export default {
         if (isFav) {
           break;
         }
-        // if (this.favLocation[i].name === this.currentCity) {
-        //   isFav = true;
-        //   break;
-        // } else {
-        //   isFav = false;
-        // }
       }
 
       this.$store.commit({
@@ -104,41 +95,6 @@ export default {
     setGradientFromIcon(icon) {
       const display = document.getElementById('display');
       const grClass = 'gr-' + icon;
-      // let grClass;
-      // switch (icon) {
-      //   case 'clear-day':
-      //     grClass = 'gr-sunny';
-      //     break;
-      //   case 'clear-night':
-      //     grClass = 'gr-night';
-      //     break;
-      //   case 'partly-cloudy-day':
-      //     grClass = 'gr-partly-cloudy-day';
-      //     break;
-      //   case 'partly-cloudy-night':
-      //     grClass = 'gr-partly-cloudy-night';
-      //     break;
-      //   case 'cloudy':
-      //     grClass = 'gr-cloudy';
-      //     break;
-      //   case 'fog':
-      //     grClass = 'gr-fog';
-      //     break;
-      //   case 'rain':
-      //     grClass = 'gr-rain';
-      //     break;
-      //   case 'sleet':
-      //     grClass = 'gr-sleet';
-      //     break;
-      //   case 'snow':
-      //     grClass = 'gr-snow';
-      //     break;
-      //   case 'wind':
-      //     grClass = 'gr-wind';
-      //     break;
-      //   default:
-      //     grClass = 'bc-light';
-      // }
 
       for (var i = 0; i < display.classList.length; i++) {
         if (display.classList[i].includes('gr-')) {

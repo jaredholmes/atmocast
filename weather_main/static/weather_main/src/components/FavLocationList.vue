@@ -50,6 +50,7 @@ export default {
     }
   },
   methods: {
+    // Change location to selected location if connected to the internet
     goToFav(index) {
       if (navigator.onLine) {
         this.$store.commit({

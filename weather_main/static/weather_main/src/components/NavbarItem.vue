@@ -92,6 +92,7 @@ export default {
         this.$showConnAlert();
       }
     },
+    // If in the app, show navbar brand when menu is shown
     toggleMenu() {
       const navCollapse = document.getElementById('nav-collapse');
       navCollapse.classList.toggle('active');
@@ -103,6 +104,7 @@ export default {
         });
       }
     },
+    // Sets background colour class based on the icon
     setBCFromIcon(icon) {
       const navbar = document.getElementById('navbar-main');
       const navCollapse = document.getElementById('nav-collapse');
@@ -111,41 +113,6 @@ export default {
       // let bcClass;
       const bcClass = 'bc-' + icon;
       let bcClassColor;
-
-      // switch (icon) {
-      //   case 'clear-day':
-      //     bcClass = 'bc-clear-day';
-      //     break;
-      //   case 'clear-night':
-      //     bcClass = 'bc-clear-night';
-      //     break;
-      //   case 'partly-cloudy-day':
-      //     bcClass = 'bc-partly-cloudy-day';
-      //     break;
-      //   case 'partly-cloudy-night':
-      //     bcClass = 'bc-partly-cloudy-night';
-      //     break;
-      //   case 'cloudy':
-      //     bcClass = 'bc-cloudy';
-      //     break;
-      //   case 'fog':
-      //     bcClass = 'bc-fog';
-      //     break;
-      //   case 'rain':
-      //     bcClass = 'bc-rain';
-      //     break;
-      //   case 'sleet':
-      //     bcClass = 'bc-sleet';
-      //     break;
-      //   case 'snow':
-      //     bcClass = 'bc-snow';
-      //     break;
-      //   case 'wind':
-      //     bcClass = 'bc-wind';
-      //     break;
-      //   default:
-      //     bcClass = 'bc-light';
-      // }
 
       // Remove other background color classes first
       for (var i = 0; i < navbar.classList.length; i++) {
@@ -162,6 +129,7 @@ export default {
         }
       }
 
+      // Nav collapse is white on smaller screens and coloured on larger screens
       if (window.innerWidth >= 992) {
         navCollapse.classList.add(bcClass);
         navCollapse.classList.remove(whiteClass);

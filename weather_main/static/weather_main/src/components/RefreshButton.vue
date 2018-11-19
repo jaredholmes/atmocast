@@ -12,11 +12,6 @@
   </span>
 </template>
 
-<script>
-export default {
-}
-</script>
-
 <style scoped lang="sass">
   @import "../stylesheets/styles"
 

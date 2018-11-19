@@ -41,31 +41,20 @@ export default {
   props: ['datumIndex', 'modeHourly'],
 
   computed: {
+    // Determines what index of the collapse (displayedCollapseHourly and displayedCollapseDaily are integers representing indexes)
     displayedCollapse() {
-      if (this.modeHourly) {
-        return this.$store.getters.displayedCollapseHourly;
-      } else {
-        return this.$store.getters.displayedCollapseDaily;
-      }
+      return this.modeHourly ? this.$store.getters.displayedCollapseHourly : this.$store.getters.displayedCollapseDaily;
     },
+    // Gets hourly or daily weather data
     weatherDatum() {
-      // if (this.modeHourly) {
-      //   return this.$store.getters.hourlyWeather[this.datumIndex];
-      // } else {
-      //   return this.$store.getters.dailyWeather[this.datumIndex];
-      // }
       return this.modeHourly ? this.$store.getters.hourlyWeather[this.datumIndex] : this.$store.getters.dailyWeather[this.datumIndex];
     },
+    // Offset for timezone
     offset() {
       return this.$store.getters.currentOffset;
     },
+    // Used for IDs in template
     detailsId() {
-      // Used in the template
-      // if (this.modeHourly) {
-      //   return 'details-hourly-' + this.datumIndex;
-      // } else {
-      //   return 'details-daily-' + this.datumIndex;
-      // }
       return this.modeHourly ? 'details-hourly-' + this.datumIndex : 'details-daily-' + this.datumIndex;
     }
   },
@@ -75,21 +64,16 @@ export default {
       const currentCard = document.getElementById(this.detailsId);
       currentCard.classList.add('bc-light-accent');
     },
+
+    // Shows collapse and manipulates $store collapse indexes, which control what data is displayed in the collapse
     selectMoreDetails(index, isHourly) {
       let collapse;
-      // if (this.modeHourly) {
-      //   collapse = document.getElementById('more-details-hourly');
-      // } else {
-      //   collapse = document.getElementById('more-details-daily');
-      // }
       collapse = this.modeHourly ? document.getElementById('more-details-hourly') : document.getElementById('more-details-daily');
 
-      // Overrides Bootstrap's collapse animations, which cause a 'jumping' effect of the collapse when cards are sequentially selected
       if (!collapse.classList.contains('shown')) {
         collapse.classList.add('shown');
       }
 
-      // The indexes in the store are required for synchronisation between the collapse and the details cards
       if (this.modeHourly) {
         this.$store.commit({
           type: 'setDisplayedCollapseHourly',
@@ -101,7 +85,7 @@ export default {
           index: this.datumIndex
         });
       }
-
+      
       this.$removeCardsColor(this.modeHourly);
       this.highlightCard();
     },
